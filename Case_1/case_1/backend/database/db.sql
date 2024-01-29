@@ -1,0 +1,40 @@
+CREATE DATABASE booff;
+
+CREATE TABLE admin(
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    phone INTEGER(255) NOT NULL,
+    bank_account VARCHAR(255) NOT NULL,
+    bank_detail VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE referee(
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    phone INTEGER(255) NOT NULL,
+    bank_account VARCHAR(255) NOT NULL,
+    bank_detail VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE referee_match(
+    id SERIAL PRIMARY KEY,
+    match_id FOREIGN KEY REFERENCES match(id),
+    account_id FOREIGN KEY REFERENCES referee(id),
+    referee_confirm BOOLEAN NOT NULL DEFAULT FALSE,
+    referee_notice BOOLEAN NOT NULL DEFAULT FALSE,
+    referee_on_site BOOLEAN NOT NULL DEFAULT FALSE,
+    referee_paid BOOLEAN NOT NULL DEFAULT FALSE,
+    paid_amount INTEGER(255) DEFAULT 0
+);
+
+CREATE TABLE match(
+    id SERIAL PRIMARY KEY,
+    DATE DATE NOT NULL,
+    LOCATION VARCHAR(255) NOT NULL,
+    TEAM_1 VARCHAR(255) NOT NULL,
+    TEAM_2 VARCHAR(255) NOT NULL
+);
+
