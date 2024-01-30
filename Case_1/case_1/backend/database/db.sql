@@ -40,3 +40,5 @@ CREATE TABLE referee_match(
     referee_paid BOOLEAN NOT NULL DEFAULT FALSE,
     paid_amount NUMERIC(100) DEFAULT 0
 );
+
+INSERT INTO admin(username, password, email, phone, bank_clering, bank_number) VALUES('admin', 'admin', 'admin@secret', '1234', '1234', '1234');
