@@ -3,7 +3,7 @@ import pic from "../Assets/sm_BooFF_Nacka.jpg";
 import "./create_page.css";
 
 function CreatePage() {
-  const [referee, setReferee] = useState({ name: '', age: '', contactInfo: '', email: '', phone: '', bank_clering: '', bank_number: '' });
+  const [referee, setReferee] = useState({ name: '', email: '', phone: '', bank_clering: '', bank_number: '' });
   const [match, setMatch] = useState({ date: '', location: '', field: '', team1: '', team2: '' });
 
   const handleRefereeSubmit = async () => {
@@ -11,7 +11,10 @@ function CreatePage() {
       const post = "http://localhost:5000/referee/add";
       await fetch(post, {
         method: 'POST',
-        headers: { 'Authorization': sessionStorage.getItem('token'), 'Content-Type': 'application/json'},
+        headers: { 
+          'Authorization': sessionStorage.getItem('accessToken'), 
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify(referee),
       });
 
@@ -47,22 +50,6 @@ function CreatePage() {
             type="text"
             value={referee.name}
             onChange={(e) => setReferee({ ...referee, name: e.target.value })}
-          />
-        </label>
-        <label>
-          Age:
-          <input
-            type="text"
-            value={referee.age}
-            onChange={(e) => setReferee({ ...referee, age: e.target.value })}
-          />
-        </label>
-        <label>
-          Contact Info:
-          <input
-            type="text"
-            value={referee.contactInfo}
-            onChange={(e) => setReferee({ ...referee, contactInfo: e.target.value })}
           />
         </label>
         <label>
