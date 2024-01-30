@@ -6,15 +6,10 @@ import password_icon from "../Assets/password.png";
 import booff_logo from "../Assets/booff_logo.png";
 
 
-const Login = ({changeUser}) => {
-  
-  const navigate = useNavigate();
-
-  const [action, setAction] = useState("Login");
-
-  const [name, setName] = useState("");
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSignin = async (event) => {
     try {
@@ -37,10 +32,8 @@ const Login = ({changeUser}) => {
         console.log(response)
           if (response.status !== 401 || response.status !== 403) {
             sessionStorage.setItem("name", response.name);
-            sessionStorage.setItem("role", response.role);
             sessionStorage.setItem("accessToken", response.accessToken);
-            changeUser(response.role);
-            navigate("/home");
+            navigate("/create");
           } else {
             alert("Login Failed");
           }
@@ -49,10 +42,6 @@ const Login = ({changeUser}) => {
       console.log(error);
       alert("Login Failed");
     }
-  };
-
-  const handleNameChange = (event) => {
-    setName(event.target.value);
   };
 
   const handleEmailChange = (event) => {
@@ -70,7 +59,7 @@ const Login = ({changeUser}) => {
       <img className="booff-logga" src={booff_logo} alt=""/>
       <div className="container">
         <div className="header">
-          <div className="text">{action}</div>
+          <div className="text">Login</div>
           <div className="underline"></div>
         </div>
         <div className="inputs">
