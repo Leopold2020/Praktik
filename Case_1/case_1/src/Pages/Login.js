@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
-import user_icon from "../Assets/person.png";
 import email_icon from "../Assets/email.png";
 import password_icon from "../Assets/password.png";
+import booff_logo from "../Assets/booff_logo.png";
 
 
 const Login = ({changeUser}) => {
@@ -66,66 +66,38 @@ const Login = ({changeUser}) => {
   };
 
   return (
-    <div className="container">
-      <div className="header">
-        <div className="text">{action}</div>
-        <div className="underline"></div>
-      </div>
-      <div className="inputs">
-        {action === "Login" ? (
-          <div></div>
-        ) : (
+    <div>
+      <img className="booff-logga" src={booff_logo} alt=""/>
+      <div className="container">
+        <div className="header">
+          <div className="text">{action}</div>
+          <div className="underline"></div>
+        </div>
+        <div className="inputs">
           <div className="input">
-            <img src={user_icon} alt="" />
+            <img src={email_icon} alt="" />
             <input
-              type="text"
-              placeholder="Name"
-              value={name}
-              onChange={handleNameChange}
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={handleEmailChange}
             />
           </div>
-        )}
-        <div className="input">
-          <img src={email_icon} alt="" />
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={handleEmailChange}
-          />
-        </div>
-        <div className="input">
-          <img src={password_icon} alt="" />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={handlePasswordChange}
-          />
-        </div>
-      </div>
-      {action === "Sign Up" ? (
-        <div></div>
-      ) : (
-        <div className="forgot-password">
-          Lost Password? <span>Click Here!</span>
-        </div>
-      )}
-      <div className="submit-container">
-        {action === "Login" ? (
-          <div className="submit" onClick={handleSignin}>
-            Login
+          <div className="input">
+            <img src={password_icon} alt="" />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={handlePasswordChange}
+              />
           </div>
-        ) : (
-          <div
-            className={action === "Sign Up" ? "submit gray" : "submit"}
-            onClick={() => {
-              setAction("Login");
-            }}
-          >
-            Login
-          </div>
-        )}
+        </div>
+          <div className="submit-container">
+              <div className="submit" onClick={handleSignin}>
+                Login
+              </div>
+        </div>
       </div>
     </div>
   );
