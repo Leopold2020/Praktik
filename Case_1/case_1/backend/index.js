@@ -7,14 +7,99 @@ app.use(express.json());
 const port = process.env.REACT_APP_PORT || 5000;
 
 const accounts = require("./components/accounts");
-// const match = require("./components/match");
-// const token = require("./components/token");
+const match = require("./components/match");
+const referee = require("./components/referee");
+const token = require("./components/token");
 
 app.post("/login", async (req, res) => {
     try {
         const { email, password } = req.body;
-        const user = await accounts.login(email, password);
+        const user = await accounts.login(email, password).then((response)=> {
+            if (response === 401) {
+                res.sendStatus(401)
+            } else {
+                token.getToken(response).then((token)=>{
+                    res.json({
+                        name: response.username,
+                        accessToken: token
+                    })
+                })
+            }
+
+        })
         res.json(user);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+app.post("/account/register", token.verifyToken ,async (req, res) => {
+    try {
+        const { username, password, email, phone } = req.body;
+        if (!username || !password || !email || !phone) {
+            return res.status(400).json({ msg: "Not all fields have been entered." });
+        } else {
+            await accounts.register(
+                username, 
+                password, 
+                email, 
+                phone
+            ).then((response) => {
+                console.log(response)
+                res.json(response);
+            })
+        }
+    } catch (err) {
+        console.error(err.message);
+    }
+})
+
+app.post("/referee/add", token.verifyToken, async (req, res) => {
+    try {
+        const { name, email, phone, bank_clering, bank_number} = req.body;
+        if (!name || !email || !phone || !bank_clering || !bank_number) {
+            return res.status(400).json({ msg: "Not all fields have been entered." });
+        } else {
+            await referee.addReferee(
+                name, 
+                email, 
+                phone,
+                bank_clering,
+                bank_number
+            ).then((response) => {
+                res.json(response);
+            })
+        }
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+app.get("/match/get/all", token.verifyToken, async (req, res) => {
+    try {
+        const matchList = await match.getAllMatch();
+        res.json(matchList);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+app.post("/match/add", token.verifyToken, async (req, res) => {
+    try {
+        const { date, location, field, team_1, team_2 } = req.body;
+        if (!date || !location || !field || !team_1 || !team_2) {
+            return res.status(400).json({ msg: "Not all fields have been entered." });
+        } else {
+            await match.addMatch(
+                date, 
+                location, 
+                field, 
+                team_1, 
+                team_2
+            ).then((response) => {
+                res.json(response);
+            })
+        }
     } catch (err) {
         console.error(err.message);
     }
