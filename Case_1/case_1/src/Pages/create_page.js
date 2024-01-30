@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import "./create_page.css";
+import booff_logo from "../Assets/booff_logo.png";
+
 function CreatePage() {
   const [referee, setReferee] = useState({ name: '', age: '', contactInfo: '' });
   const [match, setMatch] = useState({ field: '', date: '' });
@@ -25,7 +27,7 @@ function CreatePage() {
 
   return (
     <div>
-    <img src='https://myclub-member.s3.eu-west-1.amazonaws.com/media/club_images2/16/nacUw242MWbo/sm_BooFF_Nacka.jpg'></img>
+    <img src={booff_logo}/>
       <h2>Create Referee</h2>
       <form>
         <label>
