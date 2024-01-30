@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import pic from "../Assets/sm_BooFF_Nacka.jpg";
 import "./create_page.css";
 function CreatePage() {
   const [referee, setReferee] = useState({ name: '', age: '', contactInfo: '' });
   const [match, setMatch] = useState({ field: '', date: '' });
-
+// This function is used to add a referee to the database through the SQL Api
   const handleRefereeSubmit = async () => {
     try {
         // POST TO SQL
@@ -13,21 +14,23 @@ function CreatePage() {
       console.error('Error adding referee:', error.message);
     }
   };
-
+// This function is used to add a match to the database through the SQL Api
   const handleMatchSubmit = async () => {
     try {
         // POST TO SQL
       console.log('Match added successfully');
-    } catch (error) {
+    } catch (error) {l
       console.error('Error adding match:', error.message);
     }
   };
 
   return (
     <div>
-    <img src='https://myclub-member.s3.eu-west-1.amazonaws.com/media/club_images2/16/nacUw242MWbo/sm_BooFF_Nacka.jpg'></img>
+    <img className="img" src={pic}></img>
       <h2>Create Referee</h2>
       <form>
+        {/* img in form */}
+        
         <label>
           Name:
           <input
