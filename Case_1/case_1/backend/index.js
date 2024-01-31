@@ -33,6 +33,22 @@ app.post("/login", async (req, res) => {
     }
 });
 
+app.post("/account/refresh", async (req, res) => {
+    try {
+        const { accessToken } = req.body;
+        await token.refreshToken(accessToken).then((response) => {
+            if (response === 403) {
+                res.sendStatus(403)
+            } else {
+                
+                res.json(response)
+            }
+        })
+    } catch (err) {
+        console.error(err.message);
+    }
+})
+
 app.post("/account/register", token.verifyToken ,async (req, res) => {
     try {
         const { username, password, email, phone } = req.body;
