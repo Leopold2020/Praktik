@@ -2,20 +2,22 @@ import React, { useState } from 'react';
 import pic from "../Assets/sm_BooFF_Nacka.jpg";
 import "./create_page.css";
 
-function CreatePage() {
+function CreatePage({axiosJWT}) {
   const [referee, setReferee] = useState({ name: '', email: '', phone: '', bank_clering: '', bank_number: '' });
   const [match, setMatch] = useState({ date: '', location: '', field: '', team1: '', team2: '' });
 
   const handleRefereeSubmit = async () => {
     try {
-      const post = "http://localhost:5000/referee/add";
-      await fetch(post, {
-        method: 'POST',
+      await axiosJWT.post("http://localhost:5000/referee/add", {
+        name: referee.name,
+        email: referee.email,
+        phone: referee.phone,
+        bank_clering: referee.bank_clering,
+        bank_number: referee.bank_number
+      }, {
         headers: { 
-          'Authorization': sessionStorage.getItem('accessToken'), 
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(referee),
+          'Authorization': sessionStorage.getItem('accessToken')
+        }
       });
 
       console.log('Referee added successfully');
