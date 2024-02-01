@@ -19,9 +19,10 @@ app.post("/login", async (req, res) => {
                 res.sendStatus(401)
             } else {
                 token.getToken(response).then((token)=>{
-                    res.json({
+                    res.status(200).json({
                         name: response.username,
-                        accessToken: token
+                        accessToken: token,
+                        status: 200
                     })
                 })
             }

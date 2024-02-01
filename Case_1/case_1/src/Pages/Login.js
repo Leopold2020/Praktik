@@ -29,8 +29,7 @@ const Login = () => {
       );
 
       await login.json().then((response) => {
-        console.log(response)
-          if (response.status !== 401 || response.status !== 403) {
+          if (response.status == 200) {
             sessionStorage.setItem("name", response.name);
             sessionStorage.setItem("accessToken", response.accessToken);
             navigate("/create");
