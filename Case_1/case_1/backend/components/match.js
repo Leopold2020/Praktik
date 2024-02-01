@@ -63,10 +63,38 @@ const addRefereeToMatch = async (match_id, referee_id) => {
     }
 };
 
+const removeRefereeFromMatch = async (match_id, referee_id) => {
+    try {
+        return await pool.query(
+            `DELETE FROM referee_match WHERE match_id = '${match_id}' AND account_id = '${referee_id}'`
+        ).then((response) => {
+            if (!response.rowCount == 0) {
+                return {message: "Referee removed successfully"}
+            } else {
+                return {message: "Referee not removed"}
+            }
+        })
+    } catch (err) {
+        console.error(err.message);
+    }
+};
+
+const getRefereeFromMatch = async (match_id) => {
+    try {
+        const referee = await pool.query(
+            `SELECT * FROM referee_match WHERE match_id = '${match_id}'`
+        );
+        return referee.rows;
+    } catch (err) {
+        console.error(err.message);
+    }
+};
 
 module.exports = {
     getAllMatch,
     addMatch,
     getSingleMatch,
-    addRefereeToMatch
+    addRefereeToMatch,
+    removeRefereeFromMatch,
+    getRefereeFromMatch
 }

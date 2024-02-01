@@ -158,6 +158,41 @@ app.post("/match/referee/add", token.verifyToken, async (req, res) => {
     }
 });
 
+app.post("/match/referee/remove", token.verifyToken, async (req, res) => {
+    try {
+        const { match_id, referee_id } = req.body;
+        if (!match_id || !referee_id) {
+            return res.status(400).json({ msg: "Not all fields have been entered." });
+        } else {
+            await match.removeRefereeFromMatch(
+                match_id, 
+                referee_id
+            ).then((response) => {
+                res.json(response);
+            })
+        }
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+app.post("/match/referee/get", token.verifyToken, async (req, res) => {
+    try {
+        const { match_id } = req.body;
+        if (!match_id) {
+            return res.status(400).json({ msg: "Not all fields have been entered." });
+        } else {
+            await match.getRefereeFromMatch(
+                match_id
+            ).then((response) => {
+                res.json(response);
+            })
+        }
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
   });
