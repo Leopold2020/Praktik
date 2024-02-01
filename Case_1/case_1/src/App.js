@@ -6,6 +6,9 @@ import axios from "axios";
 import Login from "./Pages/Login";
 import Create from "./Pages/create_page";
 import Overview from "./Pages/overview";
+import MatchOverview from "./Pages/matchOverview";
+import MatchViewer from "./Pages/matchViewer";
+
 
 function App() {
 
@@ -53,6 +56,8 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/create" element={<Create axiosJWT={axiosJWT} />} />
                     <Route path="/overview" element={<Overview axiosJWT={axiosJWT} />} />
+                    <Route path="/matchoverview" element={<MatchOverview axiosJWT={axiosJWT} />} />
+                    <Route path="/matchviewer/:matchId" element={<MatchViewer axiosJWT={axiosJWT} />} />
                     <Route path="/*" element={<h2>404 not found</h2>} />
                 </Routes>
             </BrowserRouter>

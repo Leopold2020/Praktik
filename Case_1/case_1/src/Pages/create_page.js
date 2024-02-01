@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import pic from "../Assets/sm_BooFF_Nacka.jpg";
+import booff_logo from "../Assets/booff_logo.png";
 import "./create_page.css";
 
 function CreatePage({axiosJWT}) {
@@ -8,7 +8,7 @@ function CreatePage({axiosJWT}) {
 
   const handleRefereeSubmit = async () => {
     try {
-      await axiosJWT.post("http://localhost:5000/referee/add", {
+      await axiosJWT.post(`http://localhost:${process.env.REACT_APP_PORT || 5000}/referee/add`, {
         name: referee.name,
         email: referee.email,
         phone: referee.phone,
@@ -28,7 +28,7 @@ function CreatePage({axiosJWT}) {
 
   const handleMatchSubmit = async () => {
     try {
-      await axiosJWT.post("http://localhost:5000/match/add", {
+      await axiosJWT.post(`http://localhost:${process.env.REACT_APP_PORT || 5000}/match/add`, {
         date: match.date,
         location: match.location,
         field: match.field,
@@ -38,6 +38,7 @@ function CreatePage({axiosJWT}) {
         headers: {
           'Authorization': sessionStorage.getItem('accessToken')
         }
+
       });
 
       console.log('Match added successfully');
@@ -48,7 +49,7 @@ function CreatePage({axiosJWT}) {
 
   return (
     <div>
-      <img className="img" src={pic} alt="Referee" />
+      <img className="img" src={booff_logo} alt="Referee" />
       <h2>Create Referee</h2>
       <form>
         <label>
@@ -76,7 +77,7 @@ function CreatePage({axiosJWT}) {
           />
         </label>
         <label>
-          Bank Claring:
+          Bank Clearing:
           <input
             type="text"
             value={referee.bank_clering}
