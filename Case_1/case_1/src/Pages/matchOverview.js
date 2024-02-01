@@ -7,7 +7,7 @@ function MatchOverview({axiosJWT}) {
 
     const getAllMatches = async () => {
         try {
-            await axiosJWT.get("http://localhost:5000/match/get/all", {
+            await axiosJWT.get(`http://localhost:${process.env.REACT_APP_PORT || 5000}/match/get/all`, {
                 headers: {
                     'Authorization': sessionStorage.getItem('accessToken')
                 }

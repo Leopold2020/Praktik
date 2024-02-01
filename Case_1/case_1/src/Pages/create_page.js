@@ -9,7 +9,7 @@ function CreatePage({axiosJWT}) {
 
   const handleRefereeSubmit = async () => {
     try {
-      await axiosJWT.post("http://localhost:5000/referee/add", {
+      await axiosJWT.post(`http://localhost:${process.env.REACT_APP_PORT || 5000}/referee/add`, {
         name: referee.name,
         email: referee.email,
         phone: referee.phone,
@@ -29,7 +29,7 @@ function CreatePage({axiosJWT}) {
 
   const handleMatchSubmit = async () => {
     try {
-      const post = "http://localhost:5000/match/add";
+      const post = `http://localhost:${process.env.REACT_APP_PORT || 5000}/match/add`;
       await fetch(post, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
