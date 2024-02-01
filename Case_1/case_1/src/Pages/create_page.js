@@ -28,11 +28,16 @@ function CreatePage({axiosJWT}) {
 
   const handleMatchSubmit = async () => {
     try {
-      const post = "http://localhost:5000/match/add";
-      await fetch(post, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(match),
+      await axiosJWT.post("http://localhost:5000/match/add", {
+        date: match.date,
+        location: match.location,
+        field: match.field,
+        team_1: match.team1,
+        team_2: match.team2
+      }, {
+        headers: {
+          'Authorization': sessionStorage.getItem('accessToken')
+        }
       });
 
       console.log('Match added successfully');

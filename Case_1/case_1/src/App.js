@@ -5,6 +5,7 @@ import axios from "axios";
 
 import Login from "./Pages/Login";
 import Create from "./Pages/create_page";
+import Overview from "./Pages/overview";
 
 function App() {
 
@@ -51,6 +52,7 @@ function App() {
                     <Route path="/" element={<Login />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/create" element={<Create axiosJWT={axiosJWT} />} />
+                    <Route path="/overview" element={<Overview axiosJWT={axiosJWT} />} />
                     <Route path="/*" element={<h2>404 not found</h2>} />
                 </Routes>
             </BrowserRouter>
