@@ -101,6 +101,15 @@ app.get("/match/get/all", token.verifyToken, async (req, res) => {
     }
 });
 
+app.get("/match/get/single/:id", token.verifyToken, async (req, res) => {
+    try {
+        const matchList = await match.getSingleMatch(req.params.id);
+        res.json(matchList);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
 app.post("/match/add", token.verifyToken, async (req, res) => {
     try {
         const { date, location, field, team_1, team_2 } = req.body;

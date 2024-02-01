@@ -32,8 +32,24 @@ const addMatch = async (date, location, field, team_1, team_2) => {
     }
 }
 
+const getSingleMatch = async (id) => {
+    try {
+        const match = await pool.query(
+            `SELECT * FROM match WHERE id = '${id}'`
+        );
+        const tzoffset = new Date().getTimezoneOffset() * 60000;
+        match.rows[0].date = new Date(
+            match.rows[0].date - tzoffset
+        ).toISOString().slice(0, -1)
+        return match.rows;
+    } catch (err) {
+        console.error(err.message);
+    }
+};
+
 
 module.exports = {
     getAllMatch,
-    addMatch
+    addMatch,
+    getSingleMatch
 }
