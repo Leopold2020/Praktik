@@ -6,44 +6,45 @@ function MatchViewer({axiosJWT}) {
         date: '',
         location: '',
         field: '',
-        team1: '',
-        team2: ''
+        team_1: '',
+        team_2: ''
     });
     const matchId = useParams();
     
     async function getMatch() {
+        console.log(matchId.matchId)
         const res = await axiosJWT.get(
-            `http://localhost:${process.env.REACT_APP_PORT || 5000}/match/get/single/${matchId}`, {
+            `http://localhost:${process.env.REACT_APP_PORT || 5000}/match/get/single/${matchId.matchId}`, {
                 headers: {
-                    authorization: `Bearer ${sessionStorage.getItem("accessToken")}`
+                    authorization: `${sessionStorage.getItem("accessToken")}`
                 },
             }
-        );  
+        )
         return await res.data;
     }
     
     useEffect(() => {
         getMatch().then((res) => {
-            for(let i = 0; i < res.length; i++) {
-                res[i].tocall = res[i].tocall.split("T")[0];
-            }
+            // for(let i = 0; i < res.length; i++) {
+            //     res[i].date = res[i].date.split("T")[0];
+            // }
+            
+            res.date= res.date.split("T")[0];
             setMatch(res);
         });
     }, []);
     
-
+    console.log(match)
 
     return (
         <div>
             <h1>Match Overview</h1>
-            {match.map((match) => (
-                <div key={match.id}>
-                    <a href={`/matchviewer/${match.id}`}>{match.team_1} vs {match.team_2}</a>
+                <div>
+                    <a>{match.team_1} vs {match.team_2}</a>
                     <p>{match.date}</p>
                     <p>{match.location}</p>
                     <p>{match.field}</p>
                 </div>
-            ))}
         </div>
     );
 }
