@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import pic from "../Assets/sm_BooFF_Nacka.jpg";
+import booff_logo from "../Assets/booff_logo.png";
 import "./create_page.css";
 
 function CreatePage({axiosJWT}) {
@@ -43,7 +44,7 @@ function CreatePage({axiosJWT}) {
 
   return (
     <div>
-      <img className="img" src={pic} alt="Referee" />
+      <img className="img" src={booff_logo} alt="Referee" />
       <h2>Create Referee</h2>
       <form>
         <label>

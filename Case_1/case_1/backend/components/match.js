@@ -5,6 +5,11 @@ const getAllMatch = async () => {
         const match = await pool.query(
             `SELECT * FROM match`
         );
+        const tzoffset = new Date().getTimezoneOffset() * 60000;
+        for (let i = 0; i < match.rows.length; i++) {
+            match.rows[i].date = new Date(
+            match.rows[i].date - tzoffset
+        ).toISOString().slice(0, -1)}
         return match.rows;
     } catch (err) {
         console.error(err.message);
