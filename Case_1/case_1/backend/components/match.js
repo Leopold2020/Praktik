@@ -41,7 +41,7 @@ const getSingleMatch = async (id) => {
         match.rows[0].date = new Date(
             match.rows[0].date - tzoffset
         ).toISOString().slice(0, -1)
-        return match.rows;
+        return match.rows[0];
     } catch (err) {
         console.error(err.message);
     }
