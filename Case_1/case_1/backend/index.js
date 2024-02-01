@@ -19,9 +19,10 @@ app.post("/login", async (req, res) => {
                 res.sendStatus(401)
             } else {
                 token.getToken(response).then((token)=>{
-                    res.json({
+                    res.status(200).json({
                         name: response.username,
-                        accessToken: token
+                        accessToken: token,
+                        status: 200
                     })
                 })
             }
@@ -94,6 +95,15 @@ app.post("/referee/add", token.verifyToken, async (req, res) => {
 app.get("/match/get/all", token.verifyToken, async (req, res) => {
     try {
         const matchList = await match.getAllMatch();
+        res.json(matchList);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+app.get("/match/get/single/:id", token.verifyToken, async (req, res) => {
+    try {
+        const matchList = await match.getSingleMatch(req.params.id);
         res.json(matchList);
     } catch (err) {
         console.error(err.message);
