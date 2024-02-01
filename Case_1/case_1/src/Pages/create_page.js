@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import pic from "../Assets/sm_BooFF_Nacka.jpg";
+import pic from "../Assets/booff_logo.png";
 import "./create_page.css";
 
 function CreatePage({axiosJWT}) {
