@@ -71,7 +71,7 @@ function CreatePage({axiosJWT}) {
           />
         </label>
         <label>
-          Bank Claring:
+          Bank Clearing:
           <input
             type="text"
             value={referee.bank_clering}
