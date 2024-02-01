@@ -19,10 +19,9 @@ app.post("/login", async (req, res) => {
                 res.sendStatus(401)
             } else {
                 token.getToken(response).then((token)=>{
-                    res.status(200).json({
+                    res.json({
                         name: response.username,
-                        accessToken: token,
-                        status: 200
+                        accessToken: token
                     })
                 })
             }
@@ -49,6 +48,7 @@ app.post("/account/refresh", async (req, res) => {
         console.error(err.message);
     }
 })
+
 
 app.post("/account/register", token.verifyToken ,async (req, res) => {
     try {
@@ -92,27 +92,9 @@ app.post("/referee/add", token.verifyToken, async (req, res) => {
     }
 });
 
-app.get("/referee/get/all", token.verifyToken, async (req, res) => {
-    try {
-        const refereeList = await referee.getAllReferee();
-        res.json(refereeList);
-    } catch (err) {
-        console.error(err.message);
-    }
-});
-
 app.get("/match/get/all", token.verifyToken, async (req, res) => {
     try {
         const matchList = await match.getAllMatch();
-        res.json(matchList);
-    } catch (err) {
-        console.error(err.message);
-    }
-});
-
-app.get("/match/get/single/:id", token.verifyToken, async (req, res) => {
-    try {
-        const matchList = await match.getSingleMatch(req.params.id);
         res.json(matchList);
     } catch (err) {
         console.error(err.message);
@@ -140,19 +122,23 @@ app.post("/match/add", token.verifyToken, async (req, res) => {
     }
 });
 
-app.post("/match/referee/add", token.verifyToken, async (req, res) => {
+app.post("/assignment", token.verifyToken, async (req, res) => {
     try {
-        const { match_id, referee_id } = req.body;
-        if (!match_id || !referee_id) {
-            return res.status(400).json({ msg: "Not all fields have been entered." });
-        } else {
-            await match.addRefereeToMatch(
-                match_id, 
-                referee_id
-            ).then((response) => {
-                res.json(response);
-            })
-        }
+      const { matchId, refereeId } = req.body;
+      await match.addRefereeToMatch(matchId, refereeId).then((response) => {
+          res.json(response);
+      })
+      res.json({ message: "Referee assigned successfully" });
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  });
+
+app.get("/referee/get/all", token.verifyToken, async (req, res) => {
+    try {
+        const refereeList = await referee.getAllReferee();
+        res.json(refereeList);
     } catch (err) {
         console.error(err.message);
     }
@@ -161,3 +147,4 @@ app.post("/match/referee/add", token.verifyToken, async (req, res) => {
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
   });
+
