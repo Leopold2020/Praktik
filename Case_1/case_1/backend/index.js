@@ -10,6 +10,7 @@ const accounts = require("./components/accounts");
 const match = require("./components/match");
 const referee = require("./components/referee");
 const token = require("./components/token");
+const assignment = require("./components/assignment");
 
 app.post("/login", async (req, res) => {
     try {
@@ -140,13 +141,13 @@ app.post("/match/add", token.verifyToken, async (req, res) => {
     }
 });
 
-app.post("/match/referee/add", token.verifyToken, async (req, res) => {
+app.post("/assignment/add", token.verifyToken, async (req, res) => {
     try {
         const { match_id, referee_id } = req.body;
         if (!match_id || !referee_id) {
             return res.status(400).json({ msg: "Not all fields have been entered." });
         } else {
-            await match.addRefereeToMatch(
+            await assignment.addRefereeToAssignment(
                 match_id, 
                 referee_id
             ).then((response) => {
@@ -158,13 +159,13 @@ app.post("/match/referee/add", token.verifyToken, async (req, res) => {
     }
 });
 
-app.post("/match/referee/remove", token.verifyToken, async (req, res) => {
+app.post("/assignment/remove", token.verifyToken, async (req, res) => {
     try {
         const { match_id, referee_id } = req.body;
         if (!match_id || !referee_id) {
             return res.status(400).json({ msg: "Not all fields have been entered." });
         } else {
-            await match.removeRefereeFromMatch(
+            await assignment.removeRefereeFromAssignment(
                 match_id, 
                 referee_id
             ).then((response) => {
@@ -176,13 +177,13 @@ app.post("/match/referee/remove", token.verifyToken, async (req, res) => {
     }
 });
 
-app.post("/match/referee/get", token.verifyToken, async (req, res) => {
+app.post("/assignment/get", token.verifyToken, async (req, res) => {
     try {
         const { match_id } = req.body;
         if (!match_id) {
             return res.status(400).json({ msg: "Not all fields have been entered." });
         } else {
-            await match.getRefereeFromMatch(
+            await assignment.getRefereeFromAssignment(
                 match_id
             ).then((response) => {
                 res.json(response);
