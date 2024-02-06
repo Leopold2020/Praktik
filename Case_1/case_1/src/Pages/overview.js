@@ -13,7 +13,7 @@ const Overview = () => {
 
   const getMatches = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/match/get/all", {
+      const response = await axios.get(`http://localhost:${process.env.REACT_APP_PORT || 5000}/match/get/all`, {
         headers: {
           'Authorization': sessionStorage.getItem('accessToken')
         }
@@ -27,7 +27,7 @@ const Overview = () => {
 
   const getReferees = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/referee/get/all", {
+      const response = await axios.get(`http://localhost:${process.env.REACT_APP_PORT || 5000}/referee/get/all`, {
         headers: {
           'Authorization': sessionStorage.getItem('accessToken')
         }
