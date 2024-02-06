@@ -28,7 +28,7 @@ CREATE TABLE match(
     TEAM_2 VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE referee_match(
+CREATE TABLE assignment(
     id SERIAL PRIMARY KEY,
     match_id INTEGER NOT NULL,
     account_id INTEGER NOT NULL,

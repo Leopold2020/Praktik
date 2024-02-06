@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import "./matchOverview.css";
 
 function MatchOverview({axiosJWT}) {
     const [match, setMatch] = useState([]);
@@ -35,13 +36,27 @@ function MatchOverview({axiosJWT}) {
 
     return (
         <div>
-            <h1>Match Overview</h1>
+            <h1 className='overview-title'>Match Overview</h1>
             {match.map((match) => (
-                <div key={match.id}>
-                    <a href={`/matchviewer/${match.id}`}>{match.team_1} vs {match.team_2}</a>
-                    <p>{match.date}</p>
-                    <p>{match.location}</p>
-                    <p>{match.field}</p>
+                <div className='match-form' key={match.id}>
+                    <div>
+                        <div className='item-div'>
+                            <p className='item-title'>Teams:</p>
+                            <a className='match-link' href={`/matchviewer/${match.id}`}>{match.team_1} vs {match.team_2}</a>
+                        </div>
+                        <div className='item-div'>
+                            <p className='item-title'>Date:</p>
+                            <p className='match-date'>{match.date}</p>
+                        </div>
+                        <div className='item-div'>
+                            <p className='item-title'>Location:</p>
+                            <p className='match-location'>{match.location}</p>
+                        </div>
+                        <div className='item-div'>
+                            <p className='item-title'>Field:</p>
+                            <p className='match-field'>{match.field}</p>
+                        </div>
+                    </div>
                 </div>
             ))}
         </div>

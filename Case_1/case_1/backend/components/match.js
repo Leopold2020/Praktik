@@ -41,6 +41,7 @@ const getSingleMatch = async (id) => {
         match.rows[0].date = new Date(
             match.rows[0].date - tzoffset
         ).toISOString().slice(0, -1)
+     
         return match.rows;
     } catch (err) {
         console.error(err.message);
@@ -69,6 +70,5 @@ const addRefereeToMatch = async (match_id, referee_id) => {
 module.exports = {
     getAllMatch,
     addMatch,
-    getSingleMatch,
-    addRefereeToMatch
+    getSingleMatch
 }
