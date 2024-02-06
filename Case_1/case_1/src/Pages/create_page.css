@@ -41,5 +41,10 @@ div {
   h2 {
     color: #333;
     margin-bottom: 15px;
+    cursor: pointer;
   }
+  h2:hover {
+    font-size: 1.55em;
+  }
+
   

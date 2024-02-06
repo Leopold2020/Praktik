@@ -45,13 +45,16 @@ const AssignRefPage = () => {
   };
 
   const handleAssignment = async () => {
+    const matchId = parseInt(selectedMatch, 10);
+    const refereeId = parseInt(selectedReferee, 10);
+
     try {
       // Send the assignment data to your server
       console.log("Selected Match", selectedMatch);
         console.log("Selected Referee", selectedReferee);
       const response = await axios.post("http://localhost:5000/match/referee/add", {
-        match_id: selectedMatch,
-        referee_id: selectedReferee
+        match_id: matchId,
+        referee_id: refereeId
       }, {
         headers: {
           'Authorization': sessionStorage.getItem('accessToken')
@@ -74,7 +77,8 @@ const AssignRefPage = () => {
           <select onChange={(e) => setSelectedMatch(e.target.value)}>
             <option value="" disabled>Select a Match</option>
             {matches.map((match) => (
-              <option key={match.id} value={match.id}>{match.team_1} vs {match.team_2}</option>
+              <option value={match.id}>{match.team_1} vs {match.team_2}</option>
+        
             ))}
           </select>
         </label>

@@ -58,10 +58,12 @@ const addRefereeToMatch = async (match_id, referee_id) => {
                 return {message: "Referee not added"}
             }
         })
+
     } catch (err) {
         console.error(err.message);
     }
 };
+
 
 
 module.exports = {
