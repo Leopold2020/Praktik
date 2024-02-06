@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import "./matchOverview.css";
 
 function MatchViewer({axiosJWT}) {
     const [match, setMatch] = useState({
@@ -39,11 +40,13 @@ function MatchViewer({axiosJWT}) {
     return (
         <div>
             <h1>Match Overview</h1>
-                <div>
-                    <a>{match.team_1} vs {match.team_2}</a>
-                    <p>{match.date}</p>
-                    <p>{match.location}</p>
-                    <p>{match.field}</p>
+                <div className="match-form">
+                    <div className="match-form_2">
+                        <a className="match-link_2">{match.team_1} vs {match.team_2}</a>
+                        <p className="match-date_2">{match.date}</p>
+                        <p className="match-location_2">{match.location}</p>
+                        <p className="match-field_2">{match.field}</p>
+                    </div>
                 </div>
         </div>
     );
