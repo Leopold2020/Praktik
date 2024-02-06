@@ -6,9 +6,9 @@ function Header () {
       <>
       <ul className="links">
           <li><Link to="">Login</Link></li>
-          <li><Link to="home">Home</Link></li>
-          <li><Link to="company/all">Company list</Link></li>
-          <li><Link to="create-item">Create item</Link></li>
+          <li><Link to="create">Create</Link></li>
+          <li><Link to="overview">Overview</Link></li>
+          <li><Link to="matchoverview">Match Overview</Link></li>
       </ul>
       </>
   )

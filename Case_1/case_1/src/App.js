@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import axios from "axios";
-
+import Header from "./Components/Header.js";
 import Login from "./Pages/Login";
 import Create from "./Pages/create_page";
 import Overview from "./Pages/overview";
@@ -51,6 +51,7 @@ function App() {
     return (
         <HelmetProvider>
             <BrowserRouter>
+            <Header />
                 <Routes>
                     <Route path="/" element={<Login />} />
                     <Route path="/login" element={<Login />} />

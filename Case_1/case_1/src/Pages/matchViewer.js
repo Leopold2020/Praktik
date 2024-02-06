@@ -29,7 +29,7 @@ function MatchViewer({axiosJWT}) {
             // for(let i = 0; i < res.length; i++) {
             //     res[i].date = res[i].date.split("T")[0];
             // }
-            
+            console.log(res)
             res.date= res.date.split("T")[0];
             setMatch(res);
         });
