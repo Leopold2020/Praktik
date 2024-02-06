@@ -5,6 +5,11 @@ import "./create_page.css";
 function CreatePage({axiosJWT}) {
   const [referee, setReferee] = useState({ name: '', email: '', phone: '', bank_clering: '', bank_number: '' });
   const [match, setMatch] = useState({ date: '', location: '', field: '', team1: '', team2: '' });
+  const [arrow_ref, setArrowRef] = useState('↓');
+  const [arrow_match, setArrowMatch] = useState('↓');
+
+  const [showRefereeFields, setShowRefereeFields] = useState(false);
+  const [showMatchFields, setShowMatchFields] = useState(false);
 
   const handleRefereeSubmit = async () => {
     try {
@@ -46,11 +51,21 @@ function CreatePage({axiosJWT}) {
       console.error('Error adding match:', error.message);
     }
   };
+  const toggleRefereeFields = () => {
+    setShowRefereeFields(!showRefereeFields);
+    setArrowRef(arrow_ref === '↓' ? '↑' : '↓');
+    
+  };
 
+  const toggleMatchFields = () => {
+    setShowMatchFields(!showMatchFields);
+    setArrowMatch(arrow_match === '↓' ? '↑' : '↓');
+  };
   return (
     <div>
       <img className="img" src={booff_logo} alt="Referee" />
-      <h2>Create Referee</h2>
+      <h2 onClick={toggleRefereeFields}>Create Referee {arrow_ref}</h2>
+      {showRefereeFields && (
       <form>
         <label>
           Name:
@@ -96,8 +111,9 @@ function CreatePage({axiosJWT}) {
           Add Referee
         </button>
       </form>
-
-      <h2>Create Match</h2>
+      )}
+      <h2 onClick={toggleMatchFields}>Create Match {arrow_match}</h2>
+      {showMatchFields && (
       <form>
         <label>
           Date:
@@ -143,6 +159,7 @@ function CreatePage({axiosJWT}) {
           Add Match
         </button>
       </form>
+      )}
     </div>
   );
 }

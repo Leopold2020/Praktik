@@ -41,11 +41,30 @@ const getSingleMatch = async (id) => {
         match.rows[0].date = new Date(
             match.rows[0].date - tzoffset
         ).toISOString().slice(0, -1)
-        return match.rows[0];
+     
+        return match.rows;
     } catch (err) {
         console.error(err.message);
     }
 };
+
+const addRefereeToMatch = async (match_id, referee_id) => {
+    try {
+        return await pool.query(
+            `INSERT INTO referee_match (match_id, account_id) VALUES ('${match_id}', '${referee_id}')`
+        ).then((response) => {
+            if (!response.rowCount == 0) {
+                return {message: "Referee added successfully"}
+            } else {
+                return {message: "Referee not added"}
+            }
+        })
+
+    } catch (err) {
+        console.error(err.message);
+    }
+};
+
 
 
 module.exports = {
