@@ -41,7 +41,6 @@ const getSingleMatch = async (id) => {
         match.rows[0].date = new Date(
             match.rows[0].date - tzoffset
         ).toISOString().slice(0, -1)
-     
         return match.rows;
     } catch (err) {
         console.error(err.message);
@@ -59,16 +58,15 @@ const addRefereeToMatch = async (match_id, referee_id) => {
                 return {message: "Referee not added"}
             }
         })
-
     } catch (err) {
         console.error(err.message);
     }
 };
 
 
-
 module.exports = {
     getAllMatch,
     addMatch,
-    getSingleMatch
+    getSingleMatch,
+    addRefereeToMatch
 }
