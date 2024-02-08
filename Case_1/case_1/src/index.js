@@ -9,9 +9,6 @@ root.render(
     <App />
   </React.StrictMode>
 );
-// <HelmetProvider context={{}}>
-//   <RouterProvider router={router}/>
-// </HelmetProvider>
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

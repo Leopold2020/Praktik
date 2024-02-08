@@ -15,11 +15,13 @@ const assignment = require("./components/assignment");
 app.post("/login", async (req, res) => {
     try {
         const { email, password } = req.body;
-        const user = await accounts.login(email, password).then((response)=> {
+        console.log(email, password)
+        accounts.login(email, password).then((response)=> {
             if (response === 401) {
                 res.sendStatus(401)
             } else {
                 token.getToken(response).then((token)=>{
+                    console.log(response)
                     res.status(200).json({
                         name: response.username,
                         accessToken: token,
@@ -27,9 +29,7 @@ app.post("/login", async (req, res) => {
                     })
                 })
             }
-
         })
-        res.json(user);
     } catch (err) {
         console.error(err.message);
     }

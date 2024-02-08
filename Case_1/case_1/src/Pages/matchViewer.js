@@ -21,7 +21,7 @@ function MatchViewer({axiosJWT}) {
                 },
             }
         )
-        return await res.data;
+        return await res.data[0];
     }
     
     useEffect(() => {
@@ -30,7 +30,7 @@ function MatchViewer({axiosJWT}) {
             //     res[i].date = res[i].date.split("T")[0];
             // }
             console.log(res)
-            res.date= res.date.split("T")[0];
+            res.date = res.date.split("T")[0];
             setMatch(res);
         });
     }, []);

@@ -36,7 +36,7 @@ CREATE TABLE assignment(
     FOREIGN KEY(account_id) REFERENCES referee(id),
     referee_confirm BOOLEAN NOT NULL DEFAULT FALSE,
     referee_notice BOOLEAN NOT NULL DEFAULT FALSE,
-    referee_on_site BOOLEAN NOT NULL DEFAULT FALSE,
+    referee_on_site BOOLEAN NOT NULL DEFAULT TRUE,
     referee_paid BOOLEAN NOT NULL DEFAULT FALSE,
     paid_amount NUMERIC(100) DEFAULT 0
 );
