@@ -24,7 +24,7 @@ const Login = () => {
   const handleSignin = async (event) => {
     try {
       event.preventDefault();
-      fetch(
+      const login = await fetch(
         `http://localhost:${process.env.REACT_APP_PORT || 5000}/login`,
         {
           method: "POST",
@@ -36,13 +36,13 @@ const Login = () => {
             password: password,
           }),
         }
-      ).then((response) => {
+      );
 
-        console.log(response);
+      await login.json().then((response) => {
           if (response.status == 200) {
             sessionStorage.setItem("name", response.name);
             sessionStorage.setItem("accessToken", response.accessToken);
-            // navigate("/create");
+            navigate("/create");
           } else {
             alert("Login Failed");
           }
