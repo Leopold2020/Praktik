@@ -68,12 +68,12 @@ const AssignRefPage = ({axiosJWT}) => {
 
   return (
     <div className="assign-referee-container">
-      <h1>Assign Referee to Match</h1>
+      <h1 className='refheader'>Assign Referee to Match</h1>
 
-      <div className="form">
-        <label>
+      <form className="ref_form">
+        <label className='reflabel'>
           Select Match:
-          <select onChange={(e) => setSelectedMatch(e.target.value)}>
+          <select className='refselect' onChange={(e) => setSelectedMatch(e.target.value)}>
             <option value="" disabled>Select a Match</option>
             {matches.map((match) => (
               <option value={match.id}>{match.team_1} vs {match.team_2}</option>
@@ -82,7 +82,7 @@ const AssignRefPage = ({axiosJWT}) => {
           </select>
         </label>
 
-        <label>
+        <label className='reflabel'>
           Select Referee:
           <select onChange={(e) => setSelectedReferee(e.target.value)}>
             <option value="" disabled>Select a Referee</option>
@@ -92,8 +92,8 @@ const AssignRefPage = ({axiosJWT}) => {
           </select>
         </label>
 
-        <button onClick={handleAssignment}>Assign Referee</button>
-      </div>
+        <button className='refbutton' onClick={handleAssignment}>Assign Referee</button>
+      </form>
     </div>
   );
 };
