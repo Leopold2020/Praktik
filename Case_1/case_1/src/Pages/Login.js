@@ -11,10 +11,20 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  /*
+  * Function to handle the login of the user
+  * 
+  * @param event - the event that triggered the function
+  * @param {string} email - the email of the user
+  * @param {string} password - the password of the user
+  * @return - the user is logged in and redirected to the create page
+  * @throws - if the login failed, it is intentionaly 
+  * vague to not give away too much information
+  */
   const handleSignin = async (event) => {
     try {
       event.preventDefault();
-      const login = await fetch(
+      fetch(
         `http://localhost:${process.env.REACT_APP_PORT || 5000}/login`,
         {
           method: "POST",
@@ -26,13 +36,13 @@ const Login = () => {
             password: password,
           }),
         }
-      );
+      ).then((response) => {
 
-      await login.json().then((response) => {
+        console.log(response);
           if (response.status == 200) {
             sessionStorage.setItem("name", response.name);
             sessionStorage.setItem("accessToken", response.accessToken);
-            navigate("/create");
+            // navigate("/create");
           } else {
             alert("Login Failed");
           }

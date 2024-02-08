@@ -6,11 +6,11 @@ const Overview = () => {
   const [matches, setMatches] = useState([]);
   const [referees, setReferees] = useState([]);
 
-  useEffect(() => {
-    getMatches();
-    getReferees();
-  }, []);
-
+  /*
+  * Fetch all matches from the server
+  * 
+  * @throws {error} - if the request is unsuccessful
+  */
   const getMatches = async () => {
     try {
       const response = await axios.get(`http://localhost:${process.env.REACT_APP_PORT || 5000}/match/get/all`, {
@@ -38,6 +38,11 @@ const Overview = () => {
       console.error(error.message);
     }
   };
+
+  useEffect(() => {
+    getMatches();
+    getReferees();
+  }, []);
 
   return (
     <div className="overview-container">
