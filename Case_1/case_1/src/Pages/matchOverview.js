@@ -6,6 +6,7 @@ function MatchOverview({axiosJWT}) {
     const [match, setMatch] = useState([]);
     const navigate = useNavigate();
 
+
     const getAllMatches = async () => {
         try {
             await axiosJWT.get(`http://localhost:${process.env.REACT_APP_PORT || 5000}/match/get/all`, {
@@ -17,16 +18,13 @@ function MatchOverview({axiosJWT}) {
                     case 200:
                         setMatch(response.data);
                         break;
-                    case undefined:
-                        alert("You need to login first");
-                        break;
                     default:
                         alert("Something went wrong");
                         break;
                 }
             });
         } catch (error) {
-            alert("You need to login")
+            console.error(error.message);
         }
     }
 
