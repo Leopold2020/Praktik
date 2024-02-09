@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './overview.css'; // Import your CSS file for styling
+import { useNavigate } from 'react-router-dom';
 
 const Overview = () => {
   const [matches, setMatches] = useState([]);
   const [referees, setReferees] = useState([]);
+  const navigate = useNavigate();
 
   /*
   * Fetch all matches from the server
@@ -53,6 +55,7 @@ const Overview = () => {
             <h3>{match.team_1} - {match.team_2}</h3>
             <p>Location: {match.location}</p>
             <p>Field: {match.field}</p>
+            <button onClick={(e) => {navigate(`/matchedit/${match.id}`)}} className="button">Edit</button>
           </div>
         ))}
       </div>

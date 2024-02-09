@@ -70,10 +70,26 @@ const addRefereeToMatch = async (match_id, referee_id) => {
     }
 };
 
+const updatematch = async (date, location, field, team_1, team_2) => {
+    try {
+        return await pool.query(
+            `UPDATE match SET date = '${date}', location = '${location}', field = '${field}', team_1 = '${team_1}', team_2 = '${team_2}' WHERE id = '${id}'`
+        ).then((response) => {
+            if (!response.rowCount == 0) {
+                return {message: "Match updated successfully"}
+            } else {
+                return {message: "Match not updated"}
+            }
+        })
+    } catch (err) {
+        console.error(err.message);
+    }
+}
 
 module.exports = {
     getAllMatch,
     addMatch,
     getSingleMatch,
-    addRefereeToMatch
+    addRefereeToMatch,
+    updatematch
 }
