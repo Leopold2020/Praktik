@@ -3,12 +3,12 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import axios from "axios";
 import Header from "./Components/Header.js";
-import Login from "./Pages/Login";
-import Create from "./Pages/create_page";
-import Overview from "./Pages/overview";
-import MatchOverview from "./Pages/matchOverview";
-import MatchViewer from "./Pages/matchViewer";
-import AssignRefPage from "./Pages/assignref";
+import Login from "./Pages/Login.js";
+import Create from "./Pages/create_page.js";
+import Overview from "./Pages/overview.js";
+import MatchOverview from "./Pages/matchOverview.js";
+import MatchViewer from "./Pages/matchViewer.js";
+import AssignRefPage from "./Pages/assignref.js";
 
 function App() {
 
@@ -65,9 +65,17 @@ function App() {
                         break;
                 }
             });
-        } catch (error) {
-        alert("You need to login")
+        } catch (error) {    
+            alert("You need to login")
         }
+    }
+
+    function encryptMessage(message) {
+
+    }
+
+    async function decryptMessage(message) {
+
     }
 
     return (
