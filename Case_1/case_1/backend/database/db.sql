@@ -1,22 +1,19 @@
 CREATE DATABASE booff;
 
-CREATE TABLE admin(
+\c booff;
+
+CREATE TYPE role AS ENUM('referee', 'coach', 'admin');
+CREATE TYPE assignment_role AS ENUM('referee', 'coach');
+
+CREATE TABLE account(
     id SERIAL PRIMARY KEY,
-    username VARCHAR(100) NOT NULL,
+    username VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
     phone VARCHAR(100) NOT NULL,
+    assigned_role role NOT NULL DEFAULT 'referee',
     bank_clering VARCHAR(100),
     bank_number VARCHAR(100)
-);
-
-CREATE TABLE referee(
-    id SERIAL PRIMARY KEY,
-    username VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL,
-    phone VARCHAR(100) NOT NULL,
-    bank_clering VARCHAR(100) NOT NULL,
-    bank_number VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE match(
@@ -32,13 +29,16 @@ CREATE TABLE assignment(
     id SERIAL PRIMARY KEY,
     match_id INTEGER NOT NULL,
     account_id INTEGER NOT NULL,
+    account_role assignment_role NOT NULL DEFAULT 'referee',
     FOREIGN KEY(match_id) REFERENCES match(id),
-    FOREIGN KEY(account_id) REFERENCES referee(id),
-    referee_confirm BOOLEAN NOT NULL DEFAULT FALSE,
-    referee_notice BOOLEAN NOT NULL DEFAULT FALSE,
-    referee_on_site BOOLEAN NOT NULL DEFAULT TRUE,
-    referee_paid BOOLEAN NOT NULL DEFAULT FALSE,
+    FOREIGN KEY(account_id) REFERENCES account(id),
+    account_confirm BOOLEAN NOT NULL DEFAULT FALSE,
+    account_notice BOOLEAN NOT NULL DEFAULT FALSE,
+    account_on_site BOOLEAN NOT NULL DEFAULT TRUE,
+    account_paid BOOLEAN NOT NULL DEFAULT FALSE,
     paid_amount NUMERIC(100) DEFAULT 0
 );
 
-INSERT INTO admin(username, password, email, phone, bank_clering, bank_number) VALUES('admin', 'admin', 'admin@secret', '1234', '1234', '1234');
+INSERT INTO account(username, password, email, phone, assigned_role, bank_clering, bank_number) VALUES('admin', 'admin', 'admin@secret', '1234', 'admin', '1234', '1234');
+
+SELECT * FROM match WHERE location LIKE '%some%' and date::text LIKE '%10:13%';

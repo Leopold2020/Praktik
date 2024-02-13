@@ -1,7 +1,7 @@
 
 
 
-const ViewAssignments = () => {
+function ViewAssignments() {
     const [assignments, setAssignments] = useState([]);
     const [referees, setReferees] = useState([]);
     const [selectedAssignment, setSelectedAssignment] = useState('');

@@ -6,7 +6,7 @@ import password_icon from "../Assets/password.png";
 import booff_logo from "../Assets/booff_logo.png";
 
 
-const Login = () => {
+function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ const Login = () => {
     try {
       event.preventDefault();
       const login = await fetch(
-        `http://localhost:${process.env.REACT_APP_PORT || 5000}/login`,
+        `http://localhost:${process.env.REACT_APP_PORT || 5000}/account/login`,
         {
           method: "POST",
           headers: {

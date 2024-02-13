@@ -3,42 +3,51 @@ import booff_logo from "../Assets/booff_logo.png";
 import "./create_page.css";
 
 function CreatePage({axiosJWT}) {
-  const [referee, setReferee] = useState({ name: '', email: '', phone: '', bank_clering: '', bank_number: '' });
+  const [account, setAccount] = useState({ 
+    name: '',
+    password: '',
+    email: '', 
+    phone: '', 
+    role: 'referee',
+    bank_clering: undefined, 
+    bank_number: undefined });
   const [match, setMatch] = useState({ date: '', location: '', field: '', team1: '', team2: '' });
   const [arrow_ref, setArrowRef] = useState('↓');
   const [arrow_match, setArrowMatch] = useState('↓');
 
-  const [showRefereeFields, setShowRefereeFields] = useState(false);
+  const [showaccountFields, setShowaccountFields] = useState(false);
   const [showMatchFields, setShowMatchFields] = useState(false);
 
   /*
-  * Function to handle the creation of a referee
+  * Function to handle the creation of a account
   *
-  * @param {string} name - the name of the referee
-  * @param {string} email - the email of the referee
-  * @param {string} phone - the phone number of the referee
-  * @param {string} bank_clering - the bank clearing number of the referee
-  * @param {string} bank_number - the bank account number of the referee
-  * @return - the referee is added to the database
-  * @throws - if the referee is not added
+  * @param {string} name - the name of the account
+  * @param {string} email - the email of the account
+  * @param {string} phone - the phone number of the account
+  * @param {string} bank_clering - the bank clearing number of the account
+  * @param {string} bank_number - the bank account number of the account
+  * @return - the account is added to the database
+  * @throws - if the account is not added
   */
-  const handleRefereeSubmit = async () => {
+  const handleAccountSubmit = async () => {
     try {
-      await axiosJWT.post(`http://localhost:${process.env.REACT_APP_PORT || 5000}/referee/add`, {
-        name: referee.name,
-        email: referee.email,
-        phone: referee.phone,
-        bank_clering: referee.bank_clering,
-        bank_number: referee.bank_number
+      await axiosJWT.post(`http://localhost:${process.env.REACT_APP_PORT || 5000}/account/register`, {
+        username: account.name,
+        password: account.password,
+        email: account.email,
+        phone: account.phone,
+        role: account.role,
+        bank_clering: account.bank_clering,
+        bank_number: account.bank_number
       }, {
         headers: { 
           'Authorization': sessionStorage.getItem('accessToken')
         }
       });
 
-      console.log('Referee added successfully');
+      console.log('account added successfully');
     } catch (error) {
-      console.error('Error adding referee:', error.message);
+      console.error('Error adding account:', error.message);
     }
   };
 
@@ -66,6 +75,7 @@ function CreatePage({axiosJWT}) {
           'Authorization': sessionStorage.getItem('accessToken')
         }
       }).then((response) => {
+        console.log(response)
         if (response.status === 200) {
           console.log('Match added successfully');
         }
@@ -76,8 +86,8 @@ function CreatePage({axiosJWT}) {
     }
   };
 
-  const toggleRefereeFields = () => {
-    setShowRefereeFields(!showRefereeFields);
+  const toggleaccountFields = () => {
+    setShowaccountFields(!showaccountFields);
     setArrowRef(arrow_ref === '↓' ? '↑' : '↓');
   };
 
@@ -88,17 +98,26 @@ function CreatePage({axiosJWT}) {
 
   return (
     <div className='create-div'>
-      <img className="img" src={booff_logo} alt="Referee" />
-      <h2 onClick={toggleRefereeFields}>Create Referee {arrow_ref}</h2>
-      {showRefereeFields && (
+      <img className="img" src={booff_logo} alt="account" />
+      <h2 onClick={toggleaccountFields}>Create Account {arrow_ref}</h2>
+      {showaccountFields && (
       <form className='create-form'>
         <label className='create-label'>
           Name:
           <input
             type="text"
             className='create-input'
-            value={referee.name}
-            onChange={(e) => setReferee({ ...referee, name: e.target.value })}
+            value={account.name}
+            onChange={(e) => setAccount({ ...account, name: e.target.value })}
+          />
+        </label>
+        <label className='create-label'>
+          Password:
+          <input
+            type="password"
+            className='create-input'
+            value={account.password}
+            onChange={(e) => setAccount({ ...account, password: e.target.value })}
           />
         </label>
         <label className='create-label'>
@@ -106,8 +125,8 @@ function CreatePage({axiosJWT}) {
           <input
             type="text"
             className='create-input'
-            value={referee.email}
-            onChange={(e) => setReferee({ ...referee, email: e.target.value })}
+            value={account.email}
+            onChange={(e) => setAccount({ ...account, email: e.target.value })}
           />
         </label>
         <label className='create-label'>
@@ -115,17 +134,28 @@ function CreatePage({axiosJWT}) {
           <input
             type="text"
             className='create-input'
-            value={referee.phone}
-            onChange={(e) => setReferee({ ...referee, phone: e.target.value })}
+            value={account.phone}
+            onChange={(e) => setAccount({ ...account, phone: e.target.value })}
           />
+        </label>
+        <label className='create-label'>
+          Role:
+          <select 
+            className='create-input'
+            onChange={(e) => {setAccount({ ...account, role: e.target.value })}}>
+            <option value="">--Please select a role--</option>
+            <option value="referee">Referee</option>
+            <option value="coach">Coach</option>
+            <option value="admin">Admin</option>
+          </select>
         </label>
         <label className='create-label'>
           Bank Clearing:
           <input
             type="text"
             className='create-input'
-            value={referee.bank_clering}
-            onChange={(e) => setReferee({ ...referee, bank_clering: e.target.value })}
+            value={account.bank_clering}
+            onChange={(e) => setAccount({ ...account, bank_clering: e.target.value })}
           />
         </label>
         <label className='create-label'>
@@ -133,16 +163,16 @@ function CreatePage({axiosJWT}) {
           <input
             type="text"
             className='create-input'
-            value={referee.bank_number}
-            onChange={(e) => setReferee({ ...referee, bank_number: e.target.value })}
+            value={account.bank_number}
+            onChange={(e) => setAccount({ ...account, bank_number: e.target.value })}
           />
         </label>
         <button
           type="button"
           className='create-button'
-          onClick={handleRefereeSubmit}
+          onClick={handleAccountSubmit}
         >
-          Add Referee
+          Add account
         </button>
       </form>
       )}

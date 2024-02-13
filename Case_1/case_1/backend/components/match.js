@@ -54,17 +54,12 @@ const getSingleMatch = async (id) => {
     }
 };
 
-const addRefereeToMatch = async (match_id, referee_id) => {
+const filterMatch = async (date, location, field, team_1, team_2) => {
     try {
-        return await pool.query(
-            `INSERT INTO referee_match (match_id, account_id) VALUES ('${match_id}', '${referee_id}')`
-        ).then((response) => {
-            if (!response.rowCount == 0) {
-                return {message: "Referee added successfully"}
-            } else {
-                return {message: "Referee not added"}
-            }
-        })
+        const match = await pool.query(
+            `SELECT * FROM match WHERE date::text LIKE '%${date}%' AND location lIKE '%${location}%' AND field LIKE '%${field}%' AND TEAM_1 LIKE '%${team_1}%' AND TEAM_2 LIKE '%${team_2}%'`
+        );
+        return match.rows;
     } catch (err) {
         console.error(err.message);
     }
@@ -90,6 +85,6 @@ module.exports = {
     getAllMatch,
     addMatch,
     getSingleMatch,
-    addRefereeToMatch,
+    filterMatch,
     updatematch
 }
