@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './assignref.css';
 
-const AssignRefPage = ({axiosJWT}) => {
+function AssignRefPage({axiosJWT}) {
   const [matches, setMatches] = useState([]);
   const [referees, setReferees] = useState([]);
   const [selectedMatch, setSelectedMatch] = useState();
@@ -25,7 +25,7 @@ const AssignRefPage = ({axiosJWT}) => {
   
   const getReferees = async () => {
     try {
-      await axiosJWT.get(`http://localhost:${process.env.REACT_APP_PORT || 5000}/referee/get/all`, {
+      await axiosJWT.get(`http://localhost:${process.env.REACT_APP_PORT || 5000}/account/referee/get/all`, {
         headers: {
           "Content-Type": "application/json",
           'Authorization': sessionStorage.getItem('accessToken')
@@ -44,7 +44,8 @@ const AssignRefPage = ({axiosJWT}) => {
     try {
       await axiosJWT.post(`http://localhost:${process.env.REACT_APP_PORT || 5000}/assignment/add`, {
         match_id: selectedMatch,
-        referee_id: selectedReferee
+        account_id: selectedReferee,
+        role: "s"
       }, {
         headers: {
           "Content-Type": "application/json",
@@ -88,7 +89,7 @@ const AssignRefPage = ({axiosJWT}) => {
 
         <label className='reflabel'>
           Select Referee:
-          <select onChange={(e) => setSelectedReferee(e.target.value)}>
+          <select onChange={(e) => {console.log(e.target); setSelectedReferee(e.target.value)}}>
             <option value="">Select a Referee</option>
             {referees.map((referee) => (
               <option key={referee.id} value={referee.id}>{referee.username}</option>

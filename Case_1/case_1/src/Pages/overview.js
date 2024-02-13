@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './overview.css'; // Import your CSS file for styling
+import MatchSearch from '../Components/matchSearch';
 
-const Overview = () => {
+function Overview({axiosJWT}) {
   const [matches, setMatches] = useState([]);
   const [referees, setReferees] = useState([]);
 
@@ -13,7 +14,7 @@ const Overview = () => {
   */
   const getMatches = async () => {
     try {
-      const response = await axios.get(`http://localhost:${process.env.REACT_APP_PORT || 5000}/match/get/all`, {
+      const response = await axiosJWT.get(`http://localhost:${process.env.REACT_APP_PORT || 5000}/match/get/all`, {
         headers: {
           'Authorization': sessionStorage.getItem('accessToken')
         }
@@ -27,7 +28,7 @@ const Overview = () => {
 
   const getReferees = async () => {
     try {
-      const response = await axios.get(`http://localhost:${process.env.REACT_APP_PORT || 5000}/referee/get/all`, {
+      const response = await axiosJWT.get(`http://localhost:${process.env.REACT_APP_PORT || 5000}/referee/get/all`, {
         headers: {
           'Authorization': sessionStorage.getItem('accessToken')
         }
@@ -48,11 +49,13 @@ const Overview = () => {
     <div className="overview-container">
       <div className="column">
         <h1>Matches</h1>
+        {/* <MatchSearch props={{setMatches, axiosJWT}}/> */}
         {matches.map((match) => (
           <div key={match.id} className="card">
             <h3>{match.team_1} - {match.team_2}</h3>
             <p>Location: {match.location}</p>
             <p>Field: {match.field}</p>
+            <p>Date: {match.date} {match.time}</p>
           </div>
         ))}
       </div>

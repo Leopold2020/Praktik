@@ -1,14 +1,14 @@
 const pool = require("../database/db");
 
-const addRefereeToAssignment = async (match_id, referee_id) => {
+const addAssignment = async (match_id, account_id, account_role) => {
     try {
         return await pool.query(
-            `INSERT INTO assignment (match_id, account_id) VALUES ('${match_id}', '${referee_id}')`
+            `INSERT INTO assignment (match_id, account_id, account_role) VALUES ('${match_id}', '${account_id}', '${account_role}')`
         ).then((response) => {
             if (!response.rowCount == 0) {
-                return {message: "Referee added successfully"}
+                return {message: "Assignment added successfully"}
             } else {
-                return {message: "Referee not added"}
+                return {message: "Assingment not added"}
             }
         })
     } catch (err) {
@@ -16,15 +16,15 @@ const addRefereeToAssignment = async (match_id, referee_id) => {
     }
 };
 
-const removeRefereeFromAssignment = async (match_id, referee_id) => {
+const removeAssignment = async (id) => {
     try {
         return await pool.query(
-            `DELETE FROM assignment WHERE match_id = '${match_id}' AND account_id = '${referee_id}'`
+            `DELETE FROM assignment WHERE id = '${id}'`
         ).then((response) => {
             if (!response.rowCount == 0) {
-                return {message: "Referee removed successfully"}
+                return {message: "Assignment removed successfully"}
             } else {
-                return {message: "Referee not removed"}
+                return {message: "Assignment not removed"}
             }
         })
     } catch (err) {
@@ -32,10 +32,10 @@ const removeRefereeFromAssignment = async (match_id, referee_id) => {
     }
 };
 
-const getRefereeFromAssignment = async (match_id) => {
+const getAssignment = async (account_id) => {
     try {
         const referee = await pool.query(
-            `SELECT * FROM assignment WHERE match_id = '${match_id}'`
+            `SELECT * FROM assignment WHERE account_id = '${account_id}'`
         );
         return referee.rows;
     } catch (err) {
@@ -44,7 +44,7 @@ const getRefereeFromAssignment = async (match_id) => {
 };
 
 module.exports = {
-    addRefereeToAssignment,
-    removeRefereeFromAssignment,
-    getRefereeFromAssignment
+    addAssignment,
+    removeAssignment,
+    getAssignment
 }
