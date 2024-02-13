@@ -6,7 +6,7 @@ import Header from "./Components/Header.js";
 import Login from "./Pages/Login.js";
 import Create from "./Pages/create_page.js";
 import Overview from "./Pages/overview.js";
-import MatchOverview from "./Pages/matchOverview.js";
+// import MatchOverview from "./Pages/matchOverview.js";
 import MatchViewer from "./Pages/matchViewer.js";
 import AssignRefPage from "./Pages/assignref.js";
 import MatchEdit from "./Pages/matchEdit.js";
@@ -88,7 +88,7 @@ function App() {
                     <Route path="/create" element={<Create axiosJWT={axiosJWT} />} />
                     <Route path="/overview" element={<Overview axiosJWT={axiosJWT} />} />
                     <Route path="/assignref" element={<AssignRefPage axiosJWT={axiosJWT} />} />
-                    <Route path="/matchoverview" element={<MatchOverview axiosJWT={axiosJWT} />} />
+                    {/* <Route path="/matchoverview" element={<MatchOverview axiosJWT={axiosJWT} />} /> */}
                     <Route path="/matchviewer/:matchId" element={<MatchViewer axiosJWT={axiosJWT} />} />
                     <Route path="/matchedit/:matchId" element={<MatchEdit axiosJWT={axiosJWT} />} />
                     <Route path="/*" element={<h2>404 not found</h2>} />

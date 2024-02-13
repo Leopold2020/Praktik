@@ -11,14 +11,14 @@ function MatchEdit({axiosJWT}) {
     const location = data.get("location");
     const date = data.get("date");
     const field = data.get("field");
-    const team_1 = data.get("team_1");
-    const team_2 = data.get("team_2");
+    const TEAM_1 = data.get("TEAM_1");
+    const TEAM_2 = data.get("TEAM_1");
     await axiosJWT.post(`http://localhost:${process.env.REACT_APP_PORT || 5000}/match/update`, {
       date: date, 
       location: location, 
       field: field, 
-      team_1: team_1, 
-      team_2: team_2
+      team_1: TEAM_1, 
+      team_2: TEAM_2
     }, {
       headers: {
         authorization: `Bearer ${sessionStorage.getItem("accessToken")}`
