@@ -2,10 +2,17 @@ const pool = require("../../database/db");
 
 const getAllReferee = async () => {
     try {
-        const referee = await pool.query(
-            `SELECT * FROM account WHERE role = 'referee'`
-        );
-        return referee.rows;
+        return await pool.query(
+            `SELECT * FROM account WHERE assigned_role = 'referee'`
+        ).then((response) => {
+            if (!response.rowCount == 0) {
+                return response.rows
+            } else {
+                console.log(response)
+                return {message: "No referee found"}
+            }
+        });
+        // return referee.rows;
     } catch (err) {
         console.error(err.message);
     }
