@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './overview.css'; // Import your CSS file for styling
 import MatchSearch from '../Components/matchSearch';
+import { useNavigate } from 'react-router-dom';
 
 function Overview({axiosJWT}) {
   const [matches, setMatches] = useState([]);
   const [referees, setReferees] = useState([]);
+  const navigate = useNavigate();
 
   /*
   * Fetch all matches from the server
@@ -56,6 +58,7 @@ function Overview({axiosJWT}) {
             <p>Location: {match.location}</p>
             <p>Field: {match.field}</p>
             <p>Date: {match.date} {match.time}</p>
+            <button onClick={(e) => {navigate(`/matchedit/${match.id}`)}} className="button">Edit</button>
           </div>
         ))}
       </div>

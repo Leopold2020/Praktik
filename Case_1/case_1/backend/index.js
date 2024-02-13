@@ -177,6 +177,27 @@ app.post("/match/add", token.verifyToken, async (req, res) => {
     }
 });
 
+app.post("/match/update", token.verifyToken, async (req, res) => {
+    try {
+        const { date, location, field, team_1, team_2 } = req.body;
+        if (!date || !location || !field || !team_1 || !team_2) {
+            return res.status(400).json({ msg: "Not all fields have been entered." });
+        } else {
+            await match.updatematch(
+                date, 
+                location, 
+                field, 
+                team_1, 
+                team_2
+            ).then((response) => {
+                res.json(response);
+            })
+        }
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
 app.post("/assignment/add", token.verifyToken, async (req, res) => {
     try {
         const { match_id, account_id, role } = req.body;
