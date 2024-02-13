@@ -87,8 +87,8 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/create" element={<Create axiosJWT={axiosJWT} />} />
                     <Route path="/overview" element={<Overview axiosJWT={axiosJWT} />} />
-                    <Route path="/assignref" element={<AssignRefPage axiosJWT={axiosJWT} />} />
-                    {/* <Route path="/matchoverview" element={<MatchOverview axiosJWT={axiosJWT} />} /> */}
+                    {/* <Route path="/assignref" element={<AssignRefPage axiosJWT={axiosJWT} />} /> */}
+                    <Route path="/matchoverview" element={<MatchOverview axiosJWT={axiosJWT} />} />
                     <Route path="/matchviewer/:matchId" element={<MatchViewer axiosJWT={axiosJWT} />} />
                     <Route path="/matchedit/:matchId" element={<MatchEdit axiosJWT={axiosJWT} />} />
                     <Route path="/*" element={<h2>404 not found</h2>} />

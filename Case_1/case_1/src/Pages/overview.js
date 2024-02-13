@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './overview.css'; // Import your CSS file for styling
+import MatchSearch from '../Components/matchSearch';
 import { useNavigate } from 'react-router-dom';
 
-const Overview = () => {
+function Overview({axiosJWT}) {
   const [matches, setMatches] = useState([]);
   const [referees, setReferees] = useState([]);
   const navigate = useNavigate();
@@ -15,12 +16,11 @@ const Overview = () => {
   */
   const getMatches = async () => {
     try {
-      const response = await axios.get(`http://localhost:${process.env.REACT_APP_PORT || 5000}/match/get/all`, {
+      const response = await axiosJWT.get(`http://localhost:${process.env.REACT_APP_PORT || 5000}/match/get/all`, {
         headers: {
           'Authorization': sessionStorage.getItem('accessToken')
         }
       });
-      console.log("RES", response);
       setMatches(response.data);
     } catch (error) {
       console.error(error.message);
@@ -29,12 +29,11 @@ const Overview = () => {
 
   const getReferees = async () => {
     try {
-      const response = await axios.get(`http://localhost:${process.env.REACT_APP_PORT || 5000}/referee/get/all`, {
+      const response = await axiosJWT.get(`http://localhost:${process.env.REACT_APP_PORT || 5000}/account/referee/get/all`, {
         headers: {
           'Authorization': sessionStorage.getItem('accessToken')
         }
       });
-      console.log(response.data);
       setReferees(response.data);
     } catch (error) {
       console.error(error.message);
@@ -50,11 +49,13 @@ const Overview = () => {
     <div className="overview-container">
       <div className="column">
         <h1>Matches</h1>
+        {/* <MatchSearch props={{setMatches, axiosJWT}}/> */}
         {matches.map((match) => (
           <div key={match.id} className="card">
             <h3>{match.team_1} - {match.team_2}</h3>
             <p>Location: {match.location}</p>
             <p>Field: {match.field}</p>
+            <p>Date: {match.date} {match.time}</p>
             <button onClick={(e) => {navigate(`/matchedit/${match.id}`)}} className="button">Edit</button>
           </div>
         ))}
@@ -62,7 +63,7 @@ const Overview = () => {
 
       <div className="column">
         <h1>Referees</h1>
-        {referees.map((referee) => (
+        { referees !== null ? ( referees.map((referee) => (
           <div key={referee.id} className="card">
             <p>Referee ID: {referee.id}</p>
             <h3>Name: {referee.username}</h3>
@@ -71,7 +72,8 @@ const Overview = () => {
             <p>Bank clearing: {referee.bank_clering}</p>
             <hr />
           </div>
-        ))}
+        ))
+        ):null}
       </div>
     </div>
   );
