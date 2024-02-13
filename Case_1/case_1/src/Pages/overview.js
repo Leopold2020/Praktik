@@ -21,7 +21,6 @@ function Overview({axiosJWT}) {
           'Authorization': sessionStorage.getItem('accessToken')
         }
       });
-      console.log("RES", response);
       setMatches(response.data);
     } catch (error) {
       console.error(error.message);
@@ -30,12 +29,11 @@ function Overview({axiosJWT}) {
 
   const getReferees = async () => {
     try {
-      const response = await axiosJWT.get(`http://localhost:${process.env.REACT_APP_PORT || 5000}/referee/get/all`, {
+      const response = await axiosJWT.get(`http://localhost:${process.env.REACT_APP_PORT || 5000}/account/referee/get/all`, {
         headers: {
           'Authorization': sessionStorage.getItem('accessToken')
         }
       });
-      console.log(response.data);
       setReferees(response.data);
     } catch (error) {
       console.error(error.message);
@@ -65,7 +63,7 @@ function Overview({axiosJWT}) {
 
       <div className="column">
         <h1>Referees</h1>
-        {referees.map((referee) => (
+        { referees !== null ? ( referees.map((referee) => (
           <div key={referee.id} className="card">
             <p>Referee ID: {referee.id}</p>
             <h3>Name: {referee.username}</h3>
@@ -74,7 +72,8 @@ function Overview({axiosJWT}) {
             <p>Bank clearing: {referee.bank_clering}</p>
             <hr />
           </div>
-        ))}
+        ))
+        ):null}
       </div>
     </div>
   );
