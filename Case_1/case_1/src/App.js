@@ -9,8 +9,12 @@ import Overview from "./Pages/overview.js";
 import MatchOverview from "./Pages/matchOverview.js";
 import MatchViewer from "./Pages/matchViewer.js";
 import AssignRefPage from "./Pages/assignref.js";
+<<<<<<< HEAD
 import ViewAssignments from "./Pages/viewassignments.js";
 
+=======
+import MatchEdit from "./Pages/matchEdit.js";
+>>>>>>> a19bbf75c444a045ccb7e3abcb77bbf4d3a80388
 function App() {
 
     /*
@@ -88,10 +92,14 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/create" element={<Create axiosJWT={axiosJWT} />} />
                     <Route path="/overview" element={<Overview axiosJWT={axiosJWT} />} />
-                    <Route path="/assignref" element={<AssignRefPage axiosJWT={axiosJWT} />} />
+                    {/* <Route path="/assignref" element={<AssignRefPage axiosJWT={axiosJWT} />} /> */}
                     <Route path="/matchoverview" element={<MatchOverview axiosJWT={axiosJWT} />} />
                     <Route path="/matchviewer/:matchId" element={<MatchViewer axiosJWT={axiosJWT} />} />
+<<<<<<< HEAD
                     <Route path="/viewassignments" element={<ViewAssignments axiosJWT={axiosJWT} />} />
+=======
+                    <Route path="/matchedit/:matchId" element={<MatchEdit axiosJWT={axiosJWT} />} />
+>>>>>>> a19bbf75c444a045ccb7e3abcb77bbf4d3a80388
                     <Route path="/*" element={<h2>404 not found</h2>} />
                 </Routes>
             </BrowserRouter>
