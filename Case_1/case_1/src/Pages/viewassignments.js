@@ -1,4 +1,5 @@
-
+import React, { useState } from 'react';
+import axios from 'axios';
 
 
 const ViewAssignments = () => {
@@ -25,7 +26,7 @@ const ViewAssignments = () => {
         <div>
             <h1>View Assignments</h1>
             {assignments.map((assignment) => (
-                <div key={assignment.id}>
+                <div>
                     <p>Match: {assignment.match_id}</p>
                     <p>Referee: {assignment.referee_id}</p>
                 </div>
