@@ -7,9 +7,9 @@ app.use(express.json());
 const port = process.env.REACT_APP_PORT || 5000;
 let ElasticEmail = require('@elasticemail/elasticemail-client');
 
-const accounts = require("./components/accounts");
+const accounts = require("./components/accounts/account");
 const match = require("./components/match");
-const referee = require("./components/referee");
+const referee = require("./components/accounts/referee");
 const token = require("./components/token");
 const assignment = require("./components/assignment");
 
@@ -225,10 +225,6 @@ app.post("/assignment/get", token.verifyToken, async (req, res) => {
 });
 
 
-app.post("send/email", token.verifyToken, async (req,res => {
-    api.emailsPost(email, callback)
-
-}));
 
  
 app.listen(port, () => {
