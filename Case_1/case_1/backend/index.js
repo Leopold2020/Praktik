@@ -79,35 +79,28 @@ app.post("/account/register", token.verifyToken ,async (req, res) => {
     }
 })
 
-// app.post("/referee/add", token.verifyToken, async (req, res) => {
-//     try {
-//         if (req.user.role = "admin") {
-//             const { name, email, phone, bank_clering, bank_number} = req.body;
-//             if (!name || !email || !phone || !bank_clering || !bank_number) {
-//                 return res.status(400).json({ msg: "Not all fields have been entered." });
-//             } else {
-//                 await referee.addReferee(
-//                     name, 
-//                     email, 
-//                     phone,
-//                     bank_clering,
-//                     bank_number
-//                 ).then((response) => {
-//                     res.json(response);
-//                 })
-//             }
-//         } else {
-//             res.status(403)
-//         }
-//     } catch (err) {
-//         console.error(err.message);
-//     }
-// });
-
 app.get("/account/referee/get/all", token.verifyToken, async (req, res) => {
     try {
-        const refereeList = await referee.getAllReferee();
+        const refereeList = await referee.getAllReferees();
         res.json(refereeList);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+app.get("/account/coach/get/all", token.verifyToken, async (req, res) => {
+    try {
+        const coachList = await coach.getAllCoaches();
+        res.json(coachList);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+app.get("/account/admin/get/all", token.verifyToken, async (req, res) => {
+    try {
+        const adminList = await admin.getAllAdmins();
+        res.json(adminList);
     } catch (err) {
         console.error(err.message);
     }

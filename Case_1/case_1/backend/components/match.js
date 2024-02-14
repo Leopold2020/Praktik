@@ -12,7 +12,7 @@ const getAllMatch = async () => {
             ).toISOString().slice(0, -1)
             var fullDate = match.rows[i].date.split("T");
             match.rows[i].date = fullDate[0]
-            match.rows[i].time = fullDate[1]
+            match.rows[i].time = fullDate[1].slice(0, 5)
         }
         return match.rows;
     } catch (err) {
@@ -47,7 +47,7 @@ const getSingleMatch = async (id) => {
         ).toISOString().slice(0, -1)
         var fullDate = match.rows[0].date.split("T");
         match.rows[0].date = fullDate[0]
-        match.rows[0].time = fullDate[1]
+        match.rows[0].time = fullDate[1].slice(0, 5)
         return match.rows;
     } catch (err) {
         console.error(err.message);
