@@ -101,6 +101,7 @@ app.post("/account/register", token.verifyToken ,async (req, res) => {
     }
 })
 
+<<<<<<< HEAD
 app.post("/referee/add", token.verifyToken, async (req, res) => {
     try {
         const { name, email, phone, bank_clering, bank_number} = req.body;
@@ -123,9 +124,30 @@ app.post("/referee/add", token.verifyToken, async (req, res) => {
 });
 
 app.get("/referee/get/all", token.verifyToken, async (req, res) => {
+=======
+app.get("/account/referee/get/all", token.verifyToken, async (req, res) => {
+>>>>>>> 2fc48cd367691fa3f4878f6e174ef0619d76efb7
     try {
-        const refereeList = await referee.getAllReferee();
+        const refereeList = await referee.getAllReferees();
         res.json(refereeList);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+app.get("/account/coach/get/all", token.verifyToken, async (req, res) => {
+    try {
+        const coachList = await coach.getAllCoaches();
+        res.json(coachList);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+app.get("/account/admin/get/all", token.verifyToken, async (req, res) => {
+    try {
+        const adminList = await admin.getAllAdmins();
+        res.json(adminList);
     } catch (err) {
         console.error(err.message);
     }

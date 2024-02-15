@@ -7,9 +7,19 @@ const getAllMatch = async () => {
         );
         const tzoffset = new Date().getTimezoneOffset() * 60000;
         for (let i = 0; i < match.rows.length; i++) {
+<<<<<<< HEAD
             match.rows[i].date = new Date(
             match.rows[i].date - tzoffset
         ).toISOString().slice(0, -1)}
+=======
+                match.rows[i].date = new Date(
+                match.rows[i].date - tzoffset
+            ).toISOString().slice(0, -1)
+            var fullDate = match.rows[i].date.split("T");
+            match.rows[i].date = fullDate[0]
+            match.rows[i].time = fullDate[1].slice(0, 5)
+        }
+>>>>>>> 2fc48cd367691fa3f4878f6e174ef0619d76efb7
         return match.rows;
     } catch (err) {
         console.error(err.message);
@@ -41,6 +51,12 @@ const getSingleMatch = async (id) => {
         match.rows[0].date = new Date(
             match.rows[0].date - tzoffset
         ).toISOString().slice(0, -1)
+<<<<<<< HEAD
+=======
+        var fullDate = match.rows[0].date.split("T");
+        match.rows[0].date = fullDate[0]
+        match.rows[0].time = fullDate[1].slice(0, 5)
+>>>>>>> 2fc48cd367691fa3f4878f6e174ef0619d76efb7
         return match.rows;
     } catch (err) {
         console.error(err.message);
