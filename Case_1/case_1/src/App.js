@@ -10,6 +10,7 @@ import Overview from "./Pages/overview.js";
 import MatchViewer from "./Pages/matchViewer.js";
 // import AssignRefPage from "./Pages/assignref.js";
 import MatchEdit from "./Pages/matchEdit.js";
+import Mymatch from "./Pages/mymatches.js";
 function App() {
 
     /*
@@ -91,6 +92,7 @@ function App() {
                     {/* <Route path="/matchoverview" element={<MatchOverview axiosJWT={axiosJWT} />} /> */}
                     <Route path="/matchviewer/:matchId" element={<MatchViewer axiosJWT={axiosJWT} />} />
                     <Route path="/matchedit/:matchId" element={<MatchEdit axiosJWT={axiosJWT} />} />
+                    <Route path="/mymatches" element={<Mymatch axiosJWT={axiosJWT} />} />
                     <Route path="/*" element={<h2>404 not found</h2>} />
                 </Routes>
             </BrowserRouter>
