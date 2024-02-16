@@ -3,6 +3,8 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import axios from "axios";
 import Header from "./Components/Header.js";
+import Home from "./Pages/public_access/Home.js";
+import MatchInfo from "./Pages/public_access/matchInfo.js";
 import Login from "./Pages/Login.js";
 import Create from "./Pages/create_page.js";
 import Overview from "./Pages/overview.js";
@@ -84,7 +86,8 @@ function App() {
             <BrowserRouter>
             <Header />
                 <Routes>
-                    <Route path="/" element={<Login />} />
+                    <Route path="/" element={<Home />} />
+                    <Route path="/match/info/:matchId" element={<MatchInfo />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/create" element={<Create axiosJWT={axiosJWT} />} />
                     <Route path="/overview" element={<Overview axiosJWT={axiosJWT} />} />
