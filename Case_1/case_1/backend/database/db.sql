@@ -40,5 +40,3 @@ CREATE TABLE assignment(
 );
 
 INSERT INTO account(username, password, email, phone, assigned_role, bank_clering, bank_number) VALUES('admin', 'admin', 'admin@secret', '1234', 'admin', '1234', '1234');
-
-SELECT * FROM match WHERE location LIKE '%some%' and date::text LIKE '%10:13%';

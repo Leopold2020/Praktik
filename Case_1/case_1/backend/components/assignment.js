@@ -43,8 +43,32 @@ const getAssignment = async (account_id) => {
     }
 };
 
+const getMatchAssignment = async (match_id) => {
+    try {
+        return pool.query(
+            `SELECT account.id, account.username, account.email, account.phone, account.assigned_role
+            FROM (assignment
+            INNER JOIN account ON assignment.account_id = account.id)
+            WHERE assignment.match_id = ${match_id} AND account.assigned_role = 'referee';`
+        ).then( async (refereeList) => {
+            return pool.query(
+                `SELECT account.id, account.username, account.email, account.phone, account.assigned_role
+                FROM (assignment
+                INNER JOIN account ON assignment.account_id = account.id)
+                WHERE assignment.match_id = ${match_id} AND account.assigned_role = 'coach';`
+            ).then((coachList) => {
+                return {refereeList: refereeList.rows, coachList: coachList.rows}
+            })
+        })
+    } catch (err) {
+        console.error(err.message);
+    }
+};
+
+
 module.exports = {
     addAssignment,
     removeAssignment,
-    getAssignment
+    getAssignment,
+    getMatchAssignment
 }
