@@ -3,12 +3,13 @@ const ElasticEmail = require('@elasticemail/elasticemail-client');
 
 const defaultClient = ElasticEmail.ApiClient.instance;
 const apikey = defaultClient.authentications['apikey'];
-apikey.apiKey = "8643020A0F6167897D6FBDD81B60D6F17E3E160275F9384218F3A47009D4AB140DA4C43B03578E99233474810BD9748A";
+apikey.apiKey = "B429588BA4813F45490F41701ACFDEFF0A9BA2EF0D3FC9B0A94FF5005BC3EA192FB21B2B30EA1BE1CA6F22CA4A84DDE2";
 
 const api = new ElasticEmail.EmailsApi();
 
 const sendMail = (to, subject, content) => {
     // Construct email message data
+    const reciev = to;
     const email = ElasticEmail.EmailMessageData.constructFromObject({
         Recipients: [
             new ElasticEmail.EmailRecipient(to)
@@ -21,18 +22,19 @@ const sendMail = (to, subject, content) => {
                 })
             ],
             Subject: subject,
-            From: "t42023@gmail.com"
+            From: "te42023@gmail.com"
         }
     });
-
-    // Send email
-    api.emailsPost({ body: email }, (error, data, response) => {
+    var callback = function(error, data, response) {
         if (error) {
-            console.error('Error sending email:', error);
+          console.error(error);
         } else {
-            console.log('Email sent successfully:', data);
+          console.log('API called successfully.');
         }
-    });
+      };
+    // Send email
+    api.emailsPost(email, callback);
 };
+
 
 module.exports = sendMail;

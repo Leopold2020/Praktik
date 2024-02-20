@@ -7,11 +7,6 @@ const getAllMatch = async () => {
         );
         const tzoffset = new Date().getTimezoneOffset() * 60000;
         for (let i = 0; i < match.rows.length; i++) {
-<<<<<<< HEAD
-            match.rows[i].date = new Date(
-            match.rows[i].date - tzoffset
-        ).toISOString().slice(0, -1)}
-=======
                 match.rows[i].date = new Date(
                 match.rows[i].date - tzoffset
             ).toISOString().slice(0, -1)
@@ -19,7 +14,6 @@ const getAllMatch = async () => {
             match.rows[i].date = fullDate[0]
             match.rows[i].time = fullDate[1].slice(0, 5)
         }
->>>>>>> 2fc48cd367691fa3f4878f6e174ef0619d76efb7
         return match.rows;
     } catch (err) {
         console.error(err.message);
@@ -51,40 +45,46 @@ const getSingleMatch = async (id) => {
         match.rows[0].date = new Date(
             match.rows[0].date - tzoffset
         ).toISOString().slice(0, -1)
-<<<<<<< HEAD
-=======
         var fullDate = match.rows[0].date.split("T");
         match.rows[0].date = fullDate[0]
         match.rows[0].time = fullDate[1].slice(0, 5)
->>>>>>> 2fc48cd367691fa3f4878f6e174ef0619d76efb7
         return match.rows;
     } catch (err) {
         console.error(err.message);
     }
 };
 
-const addRefereeToMatch = async (match_id, referee_id) => {
+const filterMatch = async (date, location, field, team_1, team_2) => {
     try {
-        return await pool.query(
-            `INSERT INTO referee_match (match_id, account_id) VALUES ('${match_id}', '${referee_id}')`
-        ).then((response) => {
-            if (!response.rowCount == 0) {
-                return {message: "Referee added successfully"}
-            } else {
-                return {message: "Referee not added"}
-            }
-        })
+        const match = await pool.query(
+            `SELECT * FROM match WHERE date::text LIKE '%${date}%' AND location lIKE '%${location}%' AND field LIKE '%${field}%' AND TEAM_1 LIKE '%${team_1}%' AND TEAM_2 LIKE '%${team_2}%'`
+        );
+        return match.rows;
     } catch (err) {
         console.error(err.message);
     }
 };
 
+const updatematch = async (date, location, field, team_1, team_2) => {
+    try {
+        return await pool.query(
+            `UPDATE match SET date = '${date}', location = '${location}', field = '${field}', team_1 = '${team_1}', team_2 = '${team_2}' WHERE id = '${id}'`
+        ).then((response) => {
+            if (!response.rowCount == 0) {
+                return {message: "Match updated successfully"}
+            } else {
+                return {message: "Match not updated"}
+            }
+        })
+    } catch (err) {
+        console.error(err.message);
+    }
+}
 
 module.exports = {
     getAllMatch,
     addMatch,
     getSingleMatch,
-    addRefereeToMatch
+    filterMatch,
+    updatematch
 }
-
-

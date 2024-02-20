@@ -17,6 +17,19 @@ const getAllReferees = async () => {
     }
 };
 
+const getRefereeById = async (id) => {
+    try {
+        const referee = await pool.query(
+            `SELECT * FROM account WHERE id = '${id}'`
+        );
+        return referee.rows[0];
+    } catch (err) {
+        console.error(err.message);
+    }
+};
+
+
 module.exports = {
   getAllReferees,
+    getRefereeById
 }

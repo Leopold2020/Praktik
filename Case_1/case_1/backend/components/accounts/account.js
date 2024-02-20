@@ -14,10 +14,10 @@ const login = async (email, password) => {
     }
 };
 
-const register = async (username, password, email, phone, role) => {
+const register = async (username, password, email, phone, role, bank_number, bank_clering) => {
     try {
         return await pool.query(
-            `INSERT INTO account (username, password, email, phone, assigned_role) VALUES ('${username}', '${password}', '${email}', '${phone}', '${role}')`
+            `INSERT INTO account (username, password, email, phone, assigned_role, bank_number, bank_clering) VALUES ('${username}', '${password}', '${email}', '${phone}', '${role}', '${bank_number}', '${bank_clering}')`
         ).then((response) => {
             if (!response.rowCount == 0) {
                 return {message: "User added successfully"}
