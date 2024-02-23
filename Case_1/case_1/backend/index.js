@@ -117,9 +117,18 @@ app.get("/match/get/all", token.verifyToken, async (req, res) => {
     }
 });
 
-app.get("/match/get/single/:id", token.verifyToken, async (req, res) => {
+app.get("/match/get/single/:id", async (req, res) => {
     try {
         const matchList = await match.getSingleMatch(req.params.id);
+        res.json(matchList);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+app.get("/match/get/today/after", async (req, res) => {
+    try {
+        const matchList = await match.getTodayAfterMatch();
         res.json(matchList);
     } catch (err) {
         console.error(err.message);
@@ -264,6 +273,15 @@ app.post("/assignment/get", token.verifyToken, async (req, res) => {
         } else {
             res.status(403)
         }
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+app.get("/assignment/get/match/:id", async (req, res) => {
+    try{
+        const assignmentList = await assignment.getMatchAssignment(req.params.id);
+        res.json(assignmentList);
     } catch (err) {
         console.error(err.message);
     }
