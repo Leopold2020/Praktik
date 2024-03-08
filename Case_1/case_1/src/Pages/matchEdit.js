@@ -1,80 +1,63 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import "./matchEdit.css";
+import AddRefAndCoach from "../Components/matchEdit/addRef&coach";
 
 function MatchEdit({axiosJWT}) {
   const [Match, setMatch] = useState({});
   const matchId = useParams();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const data = new FormData(e.target);
-    const location = data.get("location");
-    const date = data.get("date");
-    const field = data.get("field");
-    const team_1 = data.get("team_1");
-    const team_2 = data.get("team_2");
-    await axiosJWT.post(`http://localhost:${process.env.REACT_APP_PORT || 5000}/match/update`, {
-      date: date, 
-      location: location, 
-      field: field, 
-      team_1: team_1, 
-      team_2: team_2
-    }, {
-      headers: {
-        authorization: `Bearer ${sessionStorage.getItem("accessToken")}`
-      },
-    }).then((res) => {
-      if (res.status === 401) {
-        alert("Unauthorized");
-      }
-      if (res.status === 403) {
-        alert("Forbidden");
-      }
-      if (res === undefined) {
-        alert("You need to login first");
-      }
-      if (res.status === 200) {
-        alert("Match updated");
-      }
-    });
+  async function handleSubmit(e) {
+    try {
+      e.preventDefault();
+      await axiosJWT.post(`http://localhost:${process.env.REACT_APP_PORT || 5000}/match/update`, {
+        id: matchId.matchId,
+        location: Match.location,
+        date: Match.date,
+        field: Match.field,
+        team_1: Match.team_1,
+        team_2: Match.team_2
+      }, {
+        headers: {
+          authorization: `${sessionStorage.getItem("accessToken")}`
+        },
+      }).then((res) => {
+        if (res.status === 200) {
+          alert("Match updated");
+        } else {
+          alert("Something went wrong");
+        }
+      });
+    } catch (error) {
+      console.error(error.message);
+    } 
   };
 
-  const getMatch = async () => {
-
-    console.log(matchId.matchId)
-    return await axiosJWT.get(
-        `http://localhost:${process.env.REACT_APP_PORT || 5000}/match/get/single/${matchId.matchId}`,
-      {
-        headers: { 
-            'Authorization': sessionStorage.getItem('accessToken')
+  async function getMatch() {
+    try {
+      axiosJWT.get(
+          `http://localhost:${process.env.REACT_APP_PORT || 5000}/match/get/single/${matchId.matchId}`,
+        {
+          headers: { 
+              'Authorization': sessionStorage.getItem('accessToken')
+          }
         }
-      }
-    ).then((res) => {
-      if (res.status === 200) {
-        console.log(res.data);
-        return res.data;
-      }
-      if (res.status === 401) {
-        alert("Unauthorized");
-        return [];
-      }
-      if (res.status === 403) {
-        alert("Forbidden");
-        return [];
-      }
-      
-      }
-    )
+      ).then((res) => {
+          if (res.status === 200) {
+            setMatch(res.data[0]);
+          } else {
+            alert("Something went wrong");
+          }      
+        }
+      )
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
   useEffect(() => {
-    getMatch().then((res) => {
-      setMatch(res)
-      console.log(res)
-    });
+    getMatch()
   }, []);
-
-//   console.log(Match)
 
   return (
     <>
@@ -90,6 +73,7 @@ function MatchEdit({axiosJWT}) {
             type="text"
             name="Match"
             defaultValue={Match.location}
+            onChange={(e) => setMatch({...Match, location: e.target.value})}
           />
         </label>
         <label className="create-titles">
@@ -99,6 +83,7 @@ function MatchEdit({axiosJWT}) {
             type="date"
             name="date"
             defaultValue={Match.date}
+            onChange={(e) => setMatch({...Match, date: e.target.value})}
           />
         </label>
         <label className="create-titles">
@@ -108,15 +93,19 @@ function MatchEdit({axiosJWT}) {
             type="text"
             name="field"
             defaultValue={Match.field}
+            onChange={(e) => setMatch({...Match, field: e.target.value})}
           />
         </label>
-        Team 1:
-          <input
-            className="Team_1"
-            type="text"
-            name="Team 1"
-            defaultValue={Match.team_1}
-          />
+        <label className="create-titles">
+          Team 1:
+            <input
+              className="Team_1"
+              type="text"
+              name="Team 1"
+              defaultValue={Match.team_1}
+              onChange={(e) => setMatch({...Match, team_1: e.target.value})}
+            />
+        </label>
         <label className="create-titles">
             Team 2:
             <input
@@ -124,9 +113,11 @@ function MatchEdit({axiosJWT}) {
                 type="text"
                 name="Team 2"
                 defaultValue={Match.team_2}
+                onChange={(e) => setMatch({...Match, team_2: e.target.value})}
                 />
-            </label>
+          </label> 
             <input className="submit-button" type="submit" value="Submit" />
+            <AddRefAndCoach axiosJWT={axiosJWT} matchId={matchId.matchId} />
         </form>
       ) : <a className="detail-title">You need to login</a> }
     </>

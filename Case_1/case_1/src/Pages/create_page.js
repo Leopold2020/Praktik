@@ -4,7 +4,8 @@ import "./create_page.css";
 
 function CreatePage({axiosJWT}) {
   const [account, setAccount] = useState({ 
-    name: '',
+    firstname: '',
+    lastname: '',
     password: '',
     email: '', 
     phone: '', 
@@ -32,7 +33,8 @@ function CreatePage({axiosJWT}) {
   const handleAccountSubmit = async () => {
     try {
       await axiosJWT.post(`http://localhost:${process.env.REACT_APP_PORT || 5000}/account/register`, {
-        username: account.name,
+        firstname: account.firstname,
+        lastname: account.lastname,
         password: account.password,
         email: account.email,
         phone: account.phone,
@@ -107,12 +109,21 @@ function CreatePage({axiosJWT}) {
       {showaccountFields && (
       <form className='create-form'>
         <label className='create-label'>
-          Name:
+          Firstame:
           <input
             type="text"
             className='create-input'
-            value={account.name}
-            onChange={(e) => setAccount({ ...account, name: e.target.value })}
+            value={account.firstname}
+            onChange={(e) => setAccount({ ...account, firstname: e.target.value })}
+          />
+        </label>
+        <label className='create-label'>
+          Lastname:
+          <input
+            type="text"
+            className='create-input'
+            value={account.lastname}
+            onChange={(e) => setAccount({ ...account, lastname: e.target.value })}
           />
         </label>
         <label className='create-label'>
