@@ -13,7 +13,8 @@ CREATE TABLE account(
     phone VARCHAR(100) NOT NULL,
     assigned_role role NOT NULL DEFAULT 'referee',
     bank_clering VARCHAR(100),
-    bank_number VARCHAR(100)
+    bank_number VARCHAR(100),
+    confirm BOOLEAN NOT NULL DEFAULT FALSE,
 );
 
 CREATE TABLE match(
@@ -40,3 +41,6 @@ CREATE TABLE assignment(
 );
 
 INSERT INTO account(username, password, email, phone, assigned_role, bank_clering, bank_number) VALUES('admin', 'admin', 'admin@secret', '1234', 'admin', '1234', '1234');
+
+
+ALTER TABLE account ADD COLUMN IF NOT EXISTS confirm BOOLEAN NOT NULL DEFAULT FALSE;

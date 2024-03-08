@@ -8,13 +8,23 @@ function Confirmation() {
     useEffect(() => {
         const confirmAssignment = async () => {
             const token = window.location.pathname.split("/").pop();
+            console.log(token);
             try {
-                const response = await axios.get(`http://localhost:${process.env.REACT_APP_PORT || 5000}/confirm/${token}`);
+                const response = await axios.get(`http://localhost:${process.env.REACT_APP_PORT || 5000}/confirm/${token}`, 
+                {
+                    headers: {
+                        'Authorization': sessionStorage.getItem('accessToken')
+                    },
+                    
+                }
+                );
+
                 alert(response.data);
-                navigate("/"); // Redirect to home after confirmation
+                navigate("/"); // 
             } catch (error) {
+                console.log(error);
                 alert("Error confirming assignment");
-                navigate("/"); // Redirect to home in case of error
+                navigate("/"); //  
             }
         };
         confirmAssignment();

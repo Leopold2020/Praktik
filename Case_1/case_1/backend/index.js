@@ -202,6 +202,18 @@ app.post("/match/update", token.verifyToken, async (req, res) => {
     }
 });
 
+app.post("/confirm/:token", token.verifyToken, async (req, res) => {
+    try {
+        const token = req.params.token;
+        await account.confirmAccount(token).then((response) => {
+            res.json(response);
+        })
+    } catch (err) {
+        console.error(err.message);
+    }
+
+});
+
 app.post("/assignment/add", token.verifyToken, async (req, res) => {
     try {
         const { match_id, account_id, role } = req.body;
@@ -230,17 +242,16 @@ async function sendMailConfirmation(referee_id) {
         const refereeData = await referee.getRefereeById(referee_id);
         const to = refereeData.email;
         const subject = 'Confirmation: Referee Assignment';
-        const match = await match.getSingleMatch(referee_id);
-        const content = 'You have been assigned as a referee for a match.';
+        const token = to; // You need to implement this function
+        const confirmationLink = `localhost:3000/confirm/${token}`; // Replace with your actual server URL
+        const content = `You have been assigned as a referee for a match. Please confirm your assignment by clicking <a href="${confirmationLink}">here</a>.`;
     
-        
         sendMail(to, subject, content);
-       console.log("Email sent to: ", to, subject, content); 
+        console.log("Email sent to: ", to, subject, content); 
     } catch (error) {
         console.error('Error sending confirmation email:', error);
     }
 }
-
 
 app.post("/assignment/remove", token.verifyToken, async (req, res) => {
     try {

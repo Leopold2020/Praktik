@@ -30,11 +30,25 @@ const register = async (username, password, email, phone, role, bank_number, ban
         return {message: "User not added"}
     }
 }
+const confirmAccount = async (token) => {
+    try {
+        const result = await pool.query(`UPDATE account SET confirmed = true WHERE token = '${token}'`);
+        if (result.rowCount > 0) {
+            return { message: "Account confirmed successfully" };
+        } else {
+            return { message: "Invalid token or account not found" };
+        }
+    } catch (err) {
+        console.error(err.message);
+        return { message: "Error confirming account" };
+    }
+};
 
 
 
 
 module.exports = {
     login,
-    register
+    register,
+    confirmAccount
 }
