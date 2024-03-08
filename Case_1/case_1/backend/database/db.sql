@@ -7,9 +7,11 @@ CREATE TYPE assignment_role AS ENUM('referee', 'coach');
 
 CREATE TABLE account(
     id SERIAL PRIMARY KEY,
-    username VARCHAR(100) NOT NULL UNIQUE,
+    firstname VARCHAR(100) NOT NULL,
+    lastname VARCHAR(100) NOT NULL,
     password VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
+    confirm BOOLEAN NOT NULL DEFAULT FALSE,
     phone VARCHAR(100) NOT NULL,
     assigned_role role NOT NULL DEFAULT 'referee',
     bank_clering VARCHAR(100),
@@ -39,4 +41,13 @@ CREATE TABLE assignment(
     paid_amount NUMERIC(100) DEFAULT 0
 );
 
-INSERT INTO account(username, password, email, phone, assigned_role, bank_clering, bank_number) VALUES('admin', 'admin', 'admin@secret', '1234', 'admin', '1234', '1234');
+INSERT INTO account(firstname, lastname, password, email, phone, assigned_role, bank_clering, bank_number) VALUES('admin', 'administrator', 'admin', 'admin@secret', '1234', 'admin', '1234', '1234');
+
+
+
+
+
+
+
+
+ALTER TABLE account ADD COLUMN IF NOT EXISTS confirm BOOLEAN NOT NULL DEFAULT FALSE;
