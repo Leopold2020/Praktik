@@ -65,10 +65,69 @@ const getMatchAssignment = async (match_id) => {
     }
 };
 
+const getAllAccountsAssignment = async (account_id) => {
+    try {
+        return await pool.query(
+            `SELECT assignment.id, assignment.match_id, match.date, match.location, match.field, account.assigned_role, match.TEAM_1, match.TEAM_2
+            FROM (assignment
+                INNER JOIN account ON assignment.account_id = account.id
+                INNER JOIN match ON assignment.match_id = match.id)
+                WHERE assignment.account_id = '${account_id}' ORDER BY match.date DESC`
+        ).then((response) => {
+            if (!response.rowCount == 0) {
+                const tzoffset = new Date().getTimezoneOffset() * 60000;
+                for (let i = 0; i < response.rows.length; i++) {
+                    response.rows[i].date = new Date(
+                        response.rows[i].date - tzoffset
+                    ).toISOString().slice(0, -1)
+                    var fullDate = response.rows[i].date.split("T");
+                    response.rows[i].date = fullDate[0]
+                    response.rows[i].time = fullDate[1].slice(0, 5)
+                }
+                return response.rows
+            } else {
+                return null
+            }
+        });
+    } catch (err) {
+        console.error(err.message);
+    }
+};
+
+const getComingAccountsAssignment = async (account_id) => {
+    try {
+        return await pool.query(
+            `SELECT assignment.id, assignment.match_id, match.date, match.location, match.field, account.assigned_role, match.TEAM_1, match.TEAM_2
+            FROM (assignment
+                INNER JOIN account ON assignment.account_id = account.id
+                INNER JOIN match ON assignment.match_id = match.id)
+                WHERE assignment.account_id = '${account_id}' AND match.date >= CURRENT_DATE ORDER BY match.date DESC`
+        ).then((response) => {
+            if (!response.rowCount == 0) {
+                const tzoffset = new Date().getTimezoneOffset() * 60000;
+                for (let i = 0; i < response.rows.length; i++) {
+                    response.rows[i].date = new Date(
+                        response.rows[i].date - tzoffset
+                    ).toISOString().slice(0, -1)
+                    var fullDate = response.rows[i].date.split("T");
+                    response.rows[i].date = fullDate[0]
+                    response.rows[i].time = fullDate[1].slice(0, 5)
+                }
+                return response.rows
+            } else {
+                return null
+            }
+        });
+    } catch (err) {
+        console.error(err.message);
+    }
+};
 
 module.exports = {
     addAssignment,
     removeAssignment,
     getAssignment,
-    getMatchAssignment
+    getMatchAssignment,
+    getAllAccountsAssignment,
+    getComingAccountsAssignment
 }

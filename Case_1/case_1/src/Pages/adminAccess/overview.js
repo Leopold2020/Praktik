@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './overview.css'; // Import your CSS file for styling
-import MatchSearch from '../Components/matchSearch';
-import SelectOptions from '../Components/overview/SelectOptions';
-import Matches from '../Components/overview/Matches';
-import Referees from '../Components/overview/Referees';
-import Coaches from '../Components/overview/Coaches';
-import Admins from '../Components/overview/Admins';
+import MatchSearch from '../../Components/matchSearch';
+import SelectOptions from '../../Components/overview/SelectOptions';
+import Matches from '../../Components/overview/Matches';
+import Referees from '../../Components/overview/Referees';
+import Coaches from '../../Components/overview/Coaches';
+import Admins from '../../Components/overview/Admins';
 
 function Overview({axiosJWT}) {
   const [picker, setPicker] = useState([]);
