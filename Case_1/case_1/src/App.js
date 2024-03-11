@@ -13,6 +13,7 @@ import MatchViewer from "./Pages/matchViewer.js";
 // import AssignRefPage from "./Pages/assignref.js";
 import MatchEdit from "./Pages/matchEdit.js";
 import Mymatch from "./Pages/mymatches.js";
+import ExcelToJsonConverter from "./Pages/excelconvert.js";
 function App() {
 
     /*
@@ -97,6 +98,7 @@ function App() {
                     <Route path="/matchedit/:matchId" element={<MatchEdit axiosJWT={axiosJWT} />} />
                     <Route path="/mymatches" element={<Mymatch axiosJWT={axiosJWT} />} />
                     <Route path="/*" element={<h2>404 not found</h2>} />
+                    <Route path="/excelconvert" element={<ExcelToJsonConverter />} />
                 </Routes>
             </BrowserRouter>
         </HelmetProvider>
