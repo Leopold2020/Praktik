@@ -17,7 +17,6 @@ import MatchEdit from "./Pages/adminAccess/matchEdit.js";
 // import MatchViewer from "./Pages/matchViewer.js";
 // import AssignmentPage from "./Pages/assignment/chooseAssignment.js";
 // import AssignRefPage from "./Pages/assignref.js";
-import MatchEdit from "./Pages/matchEdit.js";
 import "./App.css";
 
 function App() {
