@@ -6,7 +6,7 @@ import password_icon from "../Assets/password.png";
 import booff_logo from "../Assets/booff_logo.png";
 
 
-function Login() {
+function Login({roleChange}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -41,10 +41,24 @@ function Login() {
       await login.json().then((response) => {
           if 
             (response.status == 200) {
-            sessionStorage.setItem("name", response.name);
+            sessionStorage.setItem("firstname", response.firstname);
+            sessionStorage.setItem("lastname", response.lastname);
             sessionStorage.setItem("role", response.role);
             sessionStorage.setItem("accessToken", response.accessToken);
-            navigate("/overview");
+            roleChange(response.role);
+            switch (response.role) {
+              case "admin":
+                navigate("/overview");
+                break;
+              case "referee":
+                navigate("/");
+                break;
+              case "coach":
+                navigate("/");
+                break;
+              default:
+                navigate("/");
+            }
           } else {
             alert("Login Failed");
           }

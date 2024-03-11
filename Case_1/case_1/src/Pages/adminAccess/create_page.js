@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import booff_logo from "../Assets/booff_logo.png";
+import booff_logo from "../../Assets/booff_logo.png";
 import "./create_page.css";
 
 function CreatePage({axiosJWT}) {
@@ -105,7 +105,7 @@ function CreatePage({axiosJWT}) {
   return (
     <div className='create-div'>
       <img className="img" src={booff_logo} alt="account" />
-      <h2 onClick={toggleaccountFields}>Create Account {arrow_ref}</h2>
+      <h2 className='create-page-button' onClick={toggleaccountFields}>Create Account {arrow_ref}</h2>
       {showaccountFields && (
       <form className='create-form'>
         <label className='create-label'>
@@ -191,7 +191,7 @@ function CreatePage({axiosJWT}) {
         </button>
       </form>
       )}
-      <h2 onClick={toggleMatchFields}>Create Match {arrow_match}</h2>
+      <h2 className='create-page-button' onClick={toggleMatchFields}>Create Match {arrow_match}</h2>
       {showMatchFields && (
       <form className='create-form'>
         <label className='create-label'>
