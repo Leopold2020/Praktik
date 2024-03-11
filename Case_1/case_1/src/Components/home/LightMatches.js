@@ -16,7 +16,7 @@ function LightMatches({matches}) {
               <td>Date:</td>
             </tr>
             {matches.map((match) => (
-            <tr className="instance" key={match.id} onClick={() => navigate(`match/info/${match.id}`)}>
+            <tr className="instance" key={match.id} onClick={() => navigate(`/match/info/${match.id}`)}>
                 <td>{match.team_1} - {match.team_2}</td>
                 <td>{match.location}</td>
                 <td>{match.field}</td>

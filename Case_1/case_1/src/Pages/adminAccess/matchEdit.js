@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./matchEdit.css";
-import AddRefAndCoach from "../Components/matchEdit/addRef&coach";
+import AddRefAndCoach from "../../Components/matchEdit/addRef&coach";
 
 function MatchEdit({axiosJWT}) {
   const [Match, setMatch] = useState({});

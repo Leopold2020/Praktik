@@ -23,7 +23,9 @@ app.post("/account/login", async (req, res) => {
             } else {
                 token.getToken(response).then((token)=>{
                     res.status(200).json({
-                        name: response.username,
+                        firstname: response.firstname,
+                        lastname: response.lastname,
+                        role: response.assigned_role,
                         accessToken: token,
                         status: 200
                     })
@@ -282,9 +284,74 @@ app.post("/assignment/get", token.verifyToken, async (req, res) => {
 });
 
 app.get("/assignment/get/match/:id", async (req, res) => {
-    try{
-        const assignmentList = await assignment.getMatchAssignment(req.params.id);
+    try {
+        let id = req.params.id;
+        if (!id) {
+            return res.status(400).json({ msg: "Not all fields have been entered." });
+        } else {
+            const assignmentList = await assignment.getMatchAssignment(id);
+            res.json(assignmentList);
+        }
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+app.get("/assignment/get/account/all", token.verifyToken, async (req, res) => {
+    try {
+        const assignmentList = await assignment.getAllAccountsAssignment(req.user.id);
         res.json(assignmentList);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// work in progress
+app.get("/assignment/get/account/coming", token.verifyToken, async (req, res) => {
+    try {
+        const assignmentList = await assignment.getComingAccountsAssignment(req.user.id);
+        res.json(assignmentList);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// work in progress
+app.post("/assignment/confirm", token.verifyToken, async (req, res) => {
+    try {
+        const { match_id } = req.body;
+        if (!match_id) {
+            return res.status(400).json({ msg: "Not all fields have been entered." });
+        } else {
+            await assignment.confirmAssignment(
+                match_id,
+                req.user.id
+            ).then((response) => {
+                res.json(response);
+            })
+        }
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// work in progress
+app.post("/assignment/confirm/onsite", token.verifyToken, async (req, res) => {
+    try {
+        if (req.user.role === "admin" || req.user.role === "coach") {
+            const { id } = req.body;
+            if (!id) {
+                return res.status(400).json({ msg: "Not all fields have been entered." });
+            } else {
+                await assignment.confirmOnsiteAssignment(
+                    id
+                ).then((response) => {
+                    res.json(response);
+                })
+            }
+        } else {
+            res.status(403)
+        }
     } catch (err) {
         console.error(err.message);
     }

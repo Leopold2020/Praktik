@@ -34,16 +34,17 @@
   cursor: pointer;
 }
 
-button:hover {
+.create-button:hover {
   background-color: #45a049;
 }
 
-h2 {
+.create-page-button {
   color: #333;
   margin-bottom: 15px;
   cursor: pointer;
 }
-h2:hover {
+
+.create-page-button:hover {
   font-size: 1.55em;
 }
 

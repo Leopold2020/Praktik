@@ -13,3 +13,19 @@ SELECT account.username, account.email, account.phone, account.assigned_role
 FROM (assignment
 INNER JOIN account ON assignment.account_id = account.id)
 WHERE assignment.match_id = 1 AND assignment.account_confirm = TRUE;
+
+
+SELECT * FROM assignment WHERE account_id = 2 AND match_id >= (SELECT id FROM match WHERE match_date >= CURRENT_DATE);
+
+SELECT assignment.id, match.date, match.location, match.field, account.assigned_role, match.TEAM_1, match.TEAM_2
+FROM (assignment
+INNER JOIN account ON assignment.account_id = account.id
+INNER JOIN match ON assignment.match_id = match.id)
+WHERE assignment.account_id = 2 ORDER BY match.date DESC;
+
+SELECT assignment.id, match.date, match.location, match.field, account.assigned_role, match.TEAM_1, match.TEAM_2
+FROM (assignment
+INNER JOIN account ON assignment.account_id = account.id
+INNER JOIN match ON assignment.match_id = match.id)
+WHERE assignment.account_id = 2 AND match.date >= CURRENT_DATE ORDER BY match.date DESC;
+

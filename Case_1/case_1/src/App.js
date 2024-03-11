@@ -1,21 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import axios from "axios";
-import Header from "./Components/Header.js";
+import UnifiedHeader from "./Components/headers/unifedHeader.js";
+import Login from "./Pages/Login.js";
 import Home from "./Pages/publicAccess/Home.js";
 import MatchInfo from "./Pages/publicAccess/matchInfo.js";
-import Login from "./Pages/Login.js";
-import Create from "./Pages/create_page.js";
-import Overview from "./Pages/overview.js";
+import PersonalAssignment from "./Pages/personalAssignment.js";
+import RefereeHomepage from "./Pages/refereeAccess/refereeHomepage.js";
+import CoachHomepage from "./Pages/coachAccess/coachHomepage.js";
+import CoachMatchReview from "./Pages/coachAccess/coachMatchReview.js";
+import Create from "./Pages/adminAccess/create_page.js";
+import Overview from "./Pages/adminAccess/overview.js";
+import MatchEdit from "./Pages/adminAccess/matchEdit.js";
 // import MatchOverview from "./Pages/matchOverview.js";
-import MatchViewer from "./Pages/matchViewer.js";
+// import MatchViewer from "./Pages/matchViewer.js";
 // import AssignmentPage from "./Pages/assignment/chooseAssignment.js";
 // import AssignRefPage from "./Pages/assignref.js";
 import MatchEdit from "./Pages/matchEdit.js";
 import "./App.css";
 
 function App() {
+    const [role, setRole] = useState("public");
 
     /*
     * Axios instance with interceptor to refresh token
@@ -75,6 +81,10 @@ function App() {
         }
     }
 
+    function roleChangeHandler(new_role) {
+        setRole(new_role);
+    }
+
     function encryptMessage(message) {
 
     }
@@ -83,28 +93,39 @@ function App() {
 
     }
 
+    useEffect(() => {
+        let sessionRole = sessionStorage.getItem("role");
+        if (sessionRole !== null) {
+            roleChangeHandler(sessionStorage.getItem("role"));
+        }
+    }, []);
+
     return (
         <HelmetProvider>
             <BrowserRouter>
-                <Header />
+                <UnifiedHeader role={role} />
                 <div className="universal-div">
-                    <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/match/info/:matchId" element={<MatchInfo />} />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/create" element={<Create axiosJWT={axiosJWT} />} />
-                        <Route path="/overview" element={<Overview axiosJWT={axiosJWT} />} />
-                        {/* <Route path="/assignment" element={<AssignRefPage axiosJWT={axiosJWT} />} /> */}
-                        {/* <Route path="/assignref" element={<AssignRefPage axiosJWT={axiosJWT} />} /> */}
-                        {/* <Route path="/matchoverview" element={<MatchOverview axiosJWT={axiosJWT} />} /> */}
-                        <Route path="/matchviewer/:matchId" element={<MatchViewer axiosJWT={axiosJWT} />} />
-                        <Route path="/matchedit/:matchId" element={<MatchEdit axiosJWT={axiosJWT} />} />
-                        <Route path="/*" element={<h2>404 not found</h2>} />
-                    </Routes>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/match/info/:matchId" element={<MatchInfo />} />
+                    <Route path="/login" element={<Login roleChange={roleChangeHandler} />} />
+                    {/* <Route path="/assignment" element={<AssignRefPage axiosJWT={axiosJWT} />} /> */}
+                    {/* <Route path="/assignref" element={<AssignRefPage axiosJWT={axiosJWT} />} /> */}
+                    {/* <Route path="/matchoverview" element={<MatchOverview axiosJWT={axiosJWT} />} /> */}
+                    {/* <Route path="/matchviewer/:matchId" element={<MatchViewer axiosJWT={axiosJWT} />} /> */}
+                    <Route path="/personalassignment" element={<PersonalAssignment axiosJWT={axiosJWT} />} />
+                    <Route path="/referee/homepage" element={<RefereeHomepage axiosJWT={axiosJWT} />} />
+                    <Route path="/coach/homepage" element={<CoachHomepage axiosJWT={axiosJWT} />} />
+                    <Route path="/coach/matchreview/:matchId" element={<CoachMatchReview axiosJWT={axiosJWT} />} />
+                    <Route path="/create" element={<Create axiosJWT={axiosJWT} />} />
+                    <Route path="/overview" element={<Overview axiosJWT={axiosJWT} />} />
+                    <Route path="/matchedit/:matchId" element={<MatchEdit axiosJWT={axiosJWT} />} />
+                    <Route path="/*" element={<h2>404 not found</h2>} />
+                </Routes>
                 </div>
             </BrowserRouter>
         </HelmetProvider>
     );
-}
+};
 
 export default App;
