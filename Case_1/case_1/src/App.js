@@ -13,6 +13,8 @@ import MatchViewer from "./Pages/matchViewer.js";
 // import AssignmentPage from "./Pages/assignment/chooseAssignment.js";
 // import AssignRefPage from "./Pages/assignref.js";
 import MatchEdit from "./Pages/matchEdit.js";
+import "./App.css";
+
 function App() {
 
     /*
@@ -84,21 +86,22 @@ function App() {
     return (
         <HelmetProvider>
             <BrowserRouter>
-            <Header />
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/match/info/:matchId" element={<MatchInfo />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/create" element={<Create axiosJWT={axiosJWT} />} />
-                    <Route path="/overview" element={<Overview axiosJWT={axiosJWT} />} />
-                    {/* <Route path="/assignment" element={<AssignRefPage axiosJWT={axiosJWT} />} /> */}
-                    <Route path="/matchoverview" element={<MatchOverview axiosJWT={axiosJWT} />} />
-                    {/* <Route path="/assignref" element={<AssignRefPage axiosJWT={axiosJWT} />} /> */}
-                    {/* <Route path="/matchoverview" element={<MatchOverview axiosJWT={axiosJWT} />} /> */}
-                    <Route path="/matchviewer/:matchId" element={<MatchViewer axiosJWT={axiosJWT} />} />
-                    <Route path="/matchedit/:matchId" element={<MatchEdit axiosJWT={axiosJWT} />} />
-                    <Route path="/*" element={<h2>404 not found</h2>} />
-                </Routes>
+                <Header />
+                <div className="universal-div">
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/match/info/:matchId" element={<MatchInfo />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/create" element={<Create axiosJWT={axiosJWT} />} />
+                        <Route path="/overview" element={<Overview axiosJWT={axiosJWT} />} />
+                        {/* <Route path="/assignment" element={<AssignRefPage axiosJWT={axiosJWT} />} /> */}
+                        {/* <Route path="/assignref" element={<AssignRefPage axiosJWT={axiosJWT} />} /> */}
+                        {/* <Route path="/matchoverview" element={<MatchOverview axiosJWT={axiosJWT} />} /> */}
+                        <Route path="/matchviewer/:matchId" element={<MatchViewer axiosJWT={axiosJWT} />} />
+                        <Route path="/matchedit/:matchId" element={<MatchEdit axiosJWT={axiosJWT} />} />
+                        <Route path="/*" element={<h2>404 not found</h2>} />
+                    </Routes>
+                </div>
             </BrowserRouter>
         </HelmetProvider>
     );

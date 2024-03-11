@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import './Home.css'
 import axios from 'axios';
 import LightMatches from '../../Components/home/LightMatches';
 
