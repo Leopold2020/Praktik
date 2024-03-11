@@ -17,6 +17,8 @@ import MatchEdit from "./Pages/adminAccess/matchEdit.js";
 // import MatchViewer from "./Pages/matchViewer.js";
 // import AssignmentPage from "./Pages/assignment/chooseAssignment.js";
 // import AssignRefPage from "./Pages/assignref.js";
+import MatchEdit from "./Pages/matchEdit.js";
+import "./App.css";
 
 function App() {
     const [role, setRole] = useState("public");
@@ -102,6 +104,7 @@ function App() {
         <HelmetProvider>
             <BrowserRouter>
                 <UnifiedHeader role={role} />
+                <div className="universal-div">
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/match/info/:matchId" element={<MatchInfo />} />
@@ -119,6 +122,7 @@ function App() {
                     <Route path="/matchedit/:matchId" element={<MatchEdit axiosJWT={axiosJWT} />} />
                     <Route path="/*" element={<h2>404 not found</h2>} />
                 </Routes>
+                </div>
             </BrowserRouter>
         </HelmetProvider>
     );
