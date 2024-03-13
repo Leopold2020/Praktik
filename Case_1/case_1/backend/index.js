@@ -23,7 +23,9 @@ app.post("/account/login", async (req, res) => {
             } else {
                 token.getToken(response).then((token)=>{
                     res.status(200).json({
-                        name: response.username,
+                        firstname: response.firstname,
+                        lastname: response.lastname,
+                        role: response.assigned_role,
                         accessToken: token,
                         status: 200
                     })
@@ -53,12 +55,13 @@ app.post("/account/refresh", async (req, res) => {
 app.post("/account/register", token.verifyToken ,async (req, res) => {
     try {
         if (req.user.role === "admin") {
-            const { username, password, email, phone, role } = req.body;
-            if (!username || !password || !email || !phone || !role) {
+            const { firstname, lastname, password, email, phone, role } = req.body;
+            if (!firstname || !lastname || !password || !email || !phone || !role) {
                 return res.status(422).json({ msg: "Not all fields have been entered." });
             } else {
                 await account.register(
-                    username, 
+                    firstname,
+                    lastname,
                     password, 
                     email, 
                     phone,
@@ -81,8 +84,12 @@ app.post("/account/register", token.verifyToken ,async (req, res) => {
 
 app.get("/account/referee/get/all", token.verifyToken, async (req, res) => {
     try {
-        const refereeList = await referee.getAllReferees();
-        res.json(refereeList);
+        if (req.user.role === "admin") {
+            const refereeList = await referee.getAllReferees();
+            res.json(refereeList);
+        } else {
+            res.status(403)
+        }
     } catch (err) {
         console.error(err.message);
     }
@@ -90,8 +97,12 @@ app.get("/account/referee/get/all", token.verifyToken, async (req, res) => {
 
 app.get("/account/coach/get/all", token.verifyToken, async (req, res) => {
     try {
-        const coachList = await coach.getAllCoaches();
-        res.json(coachList);
+        if (req.user.role === "admin") {
+            const coachList = await coach.getAllCoaches();
+            res.json(coachList);
+        } else {
+            res.status(403)
+        }
     } catch (err) {
         console.error(err.message);
     }
@@ -99,8 +110,12 @@ app.get("/account/coach/get/all", token.verifyToken, async (req, res) => {
 
 app.get("/account/admin/get/all", token.verifyToken, async (req, res) => {
     try {
-        const adminList = await admin.getAllAdmins();
-        res.json(adminList);
+        if (req.user.role === "admin") {
+            const adminList = await admin.getAllAdmins();
+            res.json(adminList);
+        } else {
+            res.status(403)
+        }
     } catch (err) {
         console.error(err.message);
     }
@@ -108,8 +123,12 @@ app.get("/account/admin/get/all", token.verifyToken, async (req, res) => {
 
 app.get("/match/get/all", token.verifyToken, async (req, res) => {
     try {
-        const matchList = await match.getAllMatch();
-        res.json(matchList);
+        // if (req.user.role === "admin") {
+            const matchList = await match.getAllMatch();
+            res.json(matchList);
+        // } else {
+        //     res.status(403)
+        // }
     } catch (err) {
         console.error(err.message);
     }
@@ -181,19 +200,24 @@ app.post("/match/add", token.verifyToken, async (req, res) => {
 
 app.post("/match/update", token.verifyToken, async (req, res) => {
     try {
-        const { date, location, field, team_1, team_2 } = req.body;
-        if (!date || !location || !field || !team_1 || !team_2) {
-            return res.status(400).json({ msg: "Not all fields have been entered." });
+        if (req.user.role = "admin") {
+            const {id, date, location, field, team_1, team_2 } = req.body;
+            if (!id || !date || !location || !field || !team_1 || !team_2) {
+                return res.status(400).json({ msg: "Not all fields have been entered." });
+            } else {
+                await match.updatematch(
+                    id,
+                    date, 
+                    location, 
+                    field, 
+                    team_1, 
+                    team_2
+                ).then((response) => {
+                    res.json(response);
+                })
+            }
         } else {
-            await match.updatematch(
-                date, 
-                location, 
-                field, 
-                team_1, 
-                team_2
-            ).then((response) => {
-                res.json(response);
-            })
+            res.status(403)
         }
     } catch (err) {
         console.error(err.message);
@@ -202,17 +226,21 @@ app.post("/match/update", token.verifyToken, async (req, res) => {
 
 app.post("/assignment/add", token.verifyToken, async (req, res) => {
     try {
-        const { match_id, account_id, role } = req.body;
-        if (!match_id || !account_id || !role ) {
-            return res.status(422).json({ msg: "Not all fields have been entered." });
+        if (req.user.role = "admin") {
+            const { match_id, account_id, role } = req.body;
+            if (!match_id || !account_id || !role ) {
+                return res.status(422).json({ msg: "Not all fields have been entered." });
+            } else {
+                await assignment.addAssignment(
+                    match_id, 
+                    account_id,
+                    role
+                ).then((response) => {
+                    res.json(response);
+                })
+            }
         } else {
-            await assignment.addAssignment(
-                match_id, 
-                account_id,
-                role
-            ).then((response) => {
-                res.json(response);
-            })
+            res.status(403)
         }
     } catch (err) {
         console.error(err.message);
@@ -256,9 +284,74 @@ app.post("/assignment/get", token.verifyToken, async (req, res) => {
 });
 
 app.get("/assignment/get/match/:id", async (req, res) => {
-    try{
-        const assignmentList = await assignment.getMatchAssignment(req.params.id);
+    try {
+        let id = req.params.id;
+        if (!id) {
+            return res.status(400).json({ msg: "Not all fields have been entered." });
+        } else {
+            const assignmentList = await assignment.getMatchAssignment(id);
+            res.json(assignmentList);
+        }
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+app.get("/assignment/get/account/all", token.verifyToken, async (req, res) => {
+    try {
+        const assignmentList = await assignment.getAllAccountsAssignment(req.user.id);
         res.json(assignmentList);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// work in progress
+app.get("/assignment/get/account/coming", token.verifyToken, async (req, res) => {
+    try {
+        const assignmentList = await assignment.getComingAccountsAssignment(req.user.id);
+        res.json(assignmentList);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// work in progress
+app.post("/assignment/confirm", token.verifyToken, async (req, res) => {
+    try {
+        const { match_id } = req.body;
+        if (!match_id) {
+            return res.status(400).json({ msg: "Not all fields have been entered." });
+        } else {
+            await assignment.confirmAssignment(
+                match_id,
+                req.user.id
+            ).then((response) => {
+                res.json(response);
+            })
+        }
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// work in progress
+app.post("/assignment/confirm/onsite", token.verifyToken, async (req, res) => {
+    try {
+        if (req.user.role === "admin" || req.user.role === "coach") {
+            const { id } = req.body;
+            if (!id) {
+                return res.status(400).json({ msg: "Not all fields have been entered." });
+            } else {
+                await assignment.confirmOnsiteAssignment(
+                    id
+                ).then((response) => {
+                    res.json(response);
+                })
+            }
+        } else {
+            res.status(403)
+        }
     } catch (err) {
         console.error(err.message);
     }

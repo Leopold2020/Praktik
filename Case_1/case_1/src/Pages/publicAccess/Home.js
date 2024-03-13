@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import './Home.css'
 import axios from 'axios';
 import LightMatches from '../../Components/home/LightMatches';
 
@@ -26,7 +25,6 @@ function Home() {
     return (
         <div>
             {/* <button value="matches" onClick={}>match</button> */}
-            <h1>Home</h1>
             {/* <div className="overview-container"> */}
             <LightMatches matches={content}/>
             {/* </div> */}
