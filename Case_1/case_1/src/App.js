@@ -19,6 +19,8 @@ import MatchEdit from "./Pages/adminAccess/matchEdit.js";
 // import AssignRefPage from "./Pages/assignref.js";
 import "./App.css";
 
+import Mymatch from "./Pages/mymatches.js";
+import ExcelToJsonConverter from "./Pages/excelconvert.js";
 function App() {
     const [role, setRole] = useState("public");
 
@@ -119,7 +121,9 @@ function App() {
                     <Route path="/create" element={<Create axiosJWT={axiosJWT} />} />
                     <Route path="/overview" element={<Overview axiosJWT={axiosJWT} />} />
                     <Route path="/matchedit/:matchId" element={<MatchEdit axiosJWT={axiosJWT} />} />
+                    <Route path="/mymatches" element={<Mymatch axiosJWT={axiosJWT} />} />
                     <Route path="/*" element={<h2>404 not found</h2>} />
+                    <Route path="/excelconvert" element={<ExcelToJsonConverter />} />
                 </Routes>
                 </div>
             </BrowserRouter>
