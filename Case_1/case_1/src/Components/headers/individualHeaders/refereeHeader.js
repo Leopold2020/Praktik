@@ -8,6 +8,7 @@ function refereeHeader () {
           <li><Link to="">Home</Link></li>
           <li><Link to="/login">Login</Link></li>
           <li><Link to="/referee/homepage">referee homepage</Link></li>
+          <li><Link to="/referee/matches">Personal assignments test</Link></li>
           <li><Link to="/personalassignment">Personal assignments</Link></li>
       </ul>
       </>

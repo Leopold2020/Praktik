@@ -6,15 +6,13 @@ import CoachHeader from "./individualHeaders/coachHeader.js";
 function unifiedHeader({role}) {
   return(
     <div>
-        {   role === "public" ? (
-            <GeneralHeader />
-        ) : role === "referee" ? (
+        {   role === "referee" ? (
             <RefereeHeader />
         ) : role === "coach" ? (
             <CoachHeader />
         ) : role === "admin" ? (
             <AdminHeader />
-        ) : null}
+        ) : <GeneralHeader />}
     </div>
   )
 }

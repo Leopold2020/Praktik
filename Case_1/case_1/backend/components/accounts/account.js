@@ -3,7 +3,9 @@ const pool = require("../../database/db");
 const login = async (email, password) => {
     try {
         const user = await pool.query(
-        `SELECT * FROM account WHERE email = '${email}' AND password = '${password}'`);
+        // `SELECT * FROM account WHERE email = '${email}' AND password = '${password}'`
+        `SELECT * FROM login('${email}', '${password}')`
+        );
         if (user.rows.length === 0) {
             return 401
         } else {
@@ -17,9 +19,17 @@ const login = async (email, password) => {
 const register = async (firstname, lastname, password, email, phone, role) => {
     try {
         return await pool.query(
-            `INSERT INTO account 
-                (firstname, lastname, password, email, phone, assigned_role) 
-                VALUES ('${firstname}', '${lastname}', '${password}', '${email}', '${phone}', '${role}')`
+            `SELECT * FROM register(
+                '${firstname}', 
+                '${lastname}', 
+                '${password}', 
+                '${email}', 
+                '${phone}', 
+                '${role}'
+            )`
+            // `INSERT INTO account 
+            //     (firstname, lastname, password, email, phone, assigned_role) 
+            //     VALUES ('${firstname}', '${lastname}', '${password}', '${email}', '${phone}', '${role}')`
         ).then((response) => {
             if (!response.rowCount == 0) {
                 return {message: "User added successfully"}

@@ -4,6 +4,7 @@ const app = express();
 require("dotenv").config();
 app.use(cors());
 app.use(express.json());
+const pool = require("./database/db");
 const port = process.env.REACT_APP_PORT || 5000;
 
 const account = require("./components/accounts/account");
@@ -306,7 +307,6 @@ app.get("/assignment/get/account/all", token.verifyToken, async (req, res) => {
     }
 });
 
-// work in progress
 app.get("/assignment/get/account/coming", token.verifyToken, async (req, res) => {
     try {
         const assignmentList = await assignment.getComingAccountsAssignment(req.user.id);
@@ -316,16 +316,16 @@ app.get("/assignment/get/account/coming", token.verifyToken, async (req, res) =>
     }
 });
 
-// work in progress
 app.post("/assignment/confirm", token.verifyToken, async (req, res) => {
     try {
-        const { match_id } = req.body;
-        if (!match_id) {
+        const { assignmentId, newState } = req.body;
+
+        if (!assignmentId || newState===undefined) {
             return res.status(400).json({ msg: "Not all fields have been entered." });
         } else {
-            await assignment.confirmAssignment(
-                match_id,
-                req.user.id
+            await assignment.confirmChange(
+                assignmentId,
+                newState
             ).then((response) => {
                 res.json(response);
             })
@@ -335,16 +335,38 @@ app.post("/assignment/confirm", token.verifyToken, async (req, res) => {
     }
 });
 
-// work in progress
-app.post("/assignment/confirm/onsite", token.verifyToken, async (req, res) => {
+app.post("/assignment/onsite", token.verifyToken, async (req, res) => {
     try {
         if (req.user.role === "admin" || req.user.role === "coach") {
-            const { id } = req.body;
-            if (!id) {
+            const { assignmentId, newState } = req.body;
+            if (!assignmentId || newState===undefined ) {
                 return res.status(400).json({ msg: "Not all fields have been entered." });
             } else {
-                await assignment.confirmOnsiteAssignment(
-                    id
+                await assignment.onSiteChange(
+                    assignmentId,
+                    newState
+                ).then((response) => {
+                    res.json(response);
+                })
+            }
+        } else {
+            res.status(403)
+        }
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+app.post("/assignment/notice", token.verifyToken, async (req, res) => {
+    try {
+        if (req.user.role === "admin" || req.user.role === "coach") {
+            const { assignmentId, newState } = req.body;
+            if (!assignmentId || newState===undefined ) {
+                return res.status(400).json({ msg: "Not all fields have been entered." });
+            } else {
+                await assignment.noticeChange(
+                    assignmentId,
+                    newState
                 ).then((response) => {
                     res.json(response);
                 })

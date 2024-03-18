@@ -7,9 +7,15 @@ import Login from "./Pages/Login.js";
 import Home from "./Pages/publicAccess/Home.js";
 import MatchInfo from "./Pages/publicAccess/matchInfo.js";
 import PersonalAssignment from "./Pages/personalAssignment.js";
+
 import RefereeHomepage from "./Pages/refereeAccess/refereeHomepage.js";
+import RefereeMatches from "./Pages/refereeAccess/refereeMatches.js";
+import RefereeMatchReview from "./Pages/refereeAccess/refereeMatchreview.js";
+
 import CoachHomepage from "./Pages/coachAccess/coachHomepage.js";
+import CoachMatches from "./Pages/coachAccess/coachMatches.js";
 import CoachMatchReview from "./Pages/coachAccess/coachMatchReview.js";
+
 import Create from "./Pages/adminAccess/create_page.js";
 import Overview from "./Pages/adminAccess/overview.js";
 import MatchEdit from "./Pages/adminAccess/matchEdit.js";
@@ -20,7 +26,7 @@ import MatchEdit from "./Pages/adminAccess/matchEdit.js";
 import "./App.css";
 
 function App() {
-    const [role, setRole] = useState("public");
+    const [role, setRole] = useState("");
 
     /*
     * Axios instance with interceptor to refresh token
@@ -114,7 +120,10 @@ function App() {
                     {/* <Route path="/matchviewer/:matchId" element={<MatchViewer axiosJWT={axiosJWT} />} /> */}
                     <Route path="/personalassignment" element={<PersonalAssignment axiosJWT={axiosJWT} />} />
                     <Route path="/referee/homepage" element={<RefereeHomepage axiosJWT={axiosJWT} />} />
+                    <Route path="/referee/matches" element={<RefereeMatches axiosJWT={axiosJWT} />} />
+                    <Route path="/referee/matchreview/:matchId" element={<RefereeMatchReview axiosJWT={axiosJWT} />} />
                     <Route path="/coach/homepage" element={<CoachHomepage axiosJWT={axiosJWT} />} />
+                    <Route path="/coach/matches" element={<CoachMatches axiosJWT={axiosJWT} />} />
                     <Route path="/coach/matchreview/:matchId" element={<CoachMatchReview axiosJWT={axiosJWT} />} />
                     <Route path="/create" element={<Create axiosJWT={axiosJWT} />} />
                     <Route path="/overview" element={<Overview axiosJWT={axiosJWT} />} />

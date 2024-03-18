@@ -8,6 +8,7 @@ function coachHeader () {
           <li><Link to="">Home</Link></li>
           <li><Link to="/login">Login</Link></li>
           <li><Link to="/coach/homepage">Coach homepage</Link></li>
+          <li><Link to="/coach/matches">Personal assignments test</Link></li>
           <li><Link to="/personalassignment">Personal assignments</Link></li>
       </ul>
       </>
