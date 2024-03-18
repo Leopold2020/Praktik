@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import "./coachMatchReview.css";
 
-function PersonalAssignment({axiosJWT}) {
+function CoachMatches({axiosJWT}) {
     const [allAssignments, setAllAssignments] = useState([]);
     const [comingAssignments, setComingAssignments] = useState([]);
     const navigate = useNavigate();
@@ -43,10 +44,58 @@ function PersonalAssignment({axiosJWT}) {
         getComingAssignments();
     }, []);
 
+
     return (
         <div>
             <h1>Personal Assignment</h1>
-            <div>
+
+            <h2>Coming Assignments</h2>
+            <table className="coachTable">
+                <tbody>
+                    <tr>
+                        <td>Match</td>
+                        <td>Field</td>
+                        <td>Date</td>
+                        <td>Time</td>
+                        <td>Teams</td>
+                    </tr>
+                    {comingAssignments.map((comingAssignment) => (
+                        <tr key={comingAssignment.id} className="coachInstance" onClick={() => navigate(`/coach/matchreview/${comingAssignment.match_id}`)}>
+                            <td>{comingAssignment.location}</td>
+                            <td>{comingAssignment.field}</td>
+                            <td>{comingAssignment.date}</td>
+                            <td>{comingAssignment.time}</td>
+                            <td>{comingAssignment.team_1} - {comingAssignment.team_2}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+
+            <h2>All Assignments</h2>
+            <table className="coachTable">
+                <tbody>
+                    <tr>
+                        <td>Match</td>
+                        <td>Field</td>
+                        <td>Date</td>
+                        <td>Time</td>
+                        <td>Teams</td>
+                    </tr>
+                    {allAssignments.map((assignment) => (
+                        <tr key={assignment.id} className="coachInstance" onClick={() => navigate(`/coach/matchreview/${assignment.match_id}`)}>
+                            <td>{assignment.location}</td>
+                            <td>{assignment.field}</td>
+                            <td>{assignment.date}</td>
+                            <td>{assignment.time}</td>
+                            <td>{assignment.team_1} - {assignment.team_2}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+
+            
+
+            {/* <div>
                 <h2>All Assignments</h2>
                 {allAssignments.map((assignment) => (
                     <div key={assignment.id} onClick={() => navigate(`/match/info/${assignment.match_id}`)}>
@@ -70,10 +119,10 @@ function PersonalAssignment({axiosJWT}) {
                         <p>Teams: {assignment.team_1} - {assignment.team_2}</p>
                     </div>
                 ))}
-            </div>
+            </div> */}
 
         </div>
-    );
-};
+    )
+}
 
-export default PersonalAssignment;
+export default CoachMatches;

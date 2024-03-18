@@ -3,7 +3,12 @@ const pool = require("../database/db");
 const addAssignment = async (match_id, account_id, account_role) => {
     try {
         return await pool.query(
-            `INSERT INTO assignment (match_id, account_id, account_role) VALUES ('${match_id}', '${account_id}', '${account_role}')`
+            // `INSERT INTO assignment (match_id, account_id, account_role) VALUES ('${match_id}', '${account_id}', '${account_role}')`
+            `SELECT * FROM insertAssignment(
+                '${match_id}',
+                '${account_id}',
+                '${account_role}'
+            )`
         ).then((response) => {
             if (!response.rowCount == 0) {
                 return {message: "Assignment added successfully"}
@@ -13,6 +18,54 @@ const addAssignment = async (match_id, account_id, account_role) => {
         })
     } catch (err) {
         console.error(err.message);
+    }
+};
+
+const confirmChange = async (id, state) => {
+    try {
+        return await pool.query(
+            `SELECT * FROM assignementConfirmChange('${id}', '${state}')`
+        ).then((response) => {
+            if (!response.rowCount == 0) {
+                return {message: "Assignment confirmed successfully"}
+            } else {
+                return {message: "Assingment not confirmed"}
+            }
+        })
+    } catch (error) {
+        console.error(error)
+    }
+};
+
+const noticeChange = async (id, state) => {
+    try {
+        return await pool.query(
+            `SELECT * FROM assignementNoticeChange('${id}', '${state}')`
+        ).then((response) => {
+            if (!response.rowCount == 0) {
+                return {message: "Assignment noticed successfully"}
+            } else {
+                return {message: "Assingment not noticed"}
+            }
+        })
+    } catch (error) {
+        console.error(error)
+    }
+};
+
+const onSiteChange = async (id, state) => {
+    try {
+        return await pool.query(
+            `SELECT * FROM assignementOnSiteChange('${id}', '${state}')`
+        ).then((response) => {
+            if (!response.rowCount == 0) {
+                return {message: "Assignment onsite status changed successfully"}
+            } else {
+                return {message: "Assingment onsite status not changed"}
+            }
+        })
+    } catch (error) {
+        console.error(error)
     }
 };
 
@@ -46,13 +99,13 @@ const getAssignment = async (account_id) => {
 const getMatchAssignment = async (match_id) => {
     try {
         return pool.query(
-            `SELECT account.id, account.firstname, account.lastname, account.email, account.phone, account.assigned_role
+            `SELECT account.id AS accountId, assignment.id AS assignmentId, account.firstname, account.lastname, account.email, account.phone, account.assigned_role, assignment.account_on_site, assignment.account_confirm
             FROM (assignment
             INNER JOIN account ON assignment.account_id = account.id)
             WHERE assignment.match_id = ${match_id} AND account.assigned_role = 'referee';`
         ).then( async (refereeList) => {
             return pool.query(
-                `SELECT account.id, account.firstname, account.lastname, account.email, account.phone, account.assigned_role
+                `SELECT account.id AS accountId, assignment.id AS assignmentId, account.firstname, account.lastname, account.email, account.phone, account.assigned_role, assignment.account_confirm
                 FROM (assignment
                 INNER JOIN account ON assignment.account_id = account.id)
                 WHERE assignment.match_id = ${match_id} AND account.assigned_role = 'coach';`
@@ -123,11 +176,32 @@ const getComingAccountsAssignment = async (account_id) => {
     }
 };
 
+const onsiteAssignment = async (matchId, refereeId, newState) => {
+    try {
+        return await pool.query(
+            `UPDATE assignment SET account_on_site = '${newState}' WHERE match_id = '${matchId}' AND account_id = '${refereeId}'`
+        ).then((response) => {
+            if (!response.rowCount == 0) {
+                return {message: "Onsite status updated"}
+            } else {
+                return {message: "Onsite status not updated"}
+            }
+        })
+    } catch (err) {
+        console.error(err.message);
+        return {message: "Error"}
+    }
+};
+
 module.exports = {
     addAssignment,
+    confirmChange,
+    noticeChange,
+    onSiteChange,
     removeAssignment,
     getAssignment,
     getMatchAssignment,
     getAllAccountsAssignment,
-    getComingAccountsAssignment
+    getComingAccountsAssignment,
+    onsiteAssignment
 }

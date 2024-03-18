@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 
 function CoachHomepage({axiosJWT}) {
     const [assignments, setAssignments] = useState([]);
-    
+
 
     async function getAssignment() {}
+
 
     return (
         <div>

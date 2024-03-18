@@ -25,6 +25,28 @@ const verifyToken = (req, res, next) => {
     }
 }
 
+// Testing, NOT WORKING CURRENTLY
+const verifyTokenTest = (req, res, next) => {
+    const authHead = req.headers.authorization
+    if (authHead){
+        const token = authHead
+        jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+            if (err) {
+                return res.sendStatus(403)
+            } else {
+                if (allowance.includes(user.assigned_role || user.role)){
+                    req.user = user
+                    next()
+                } else {
+                    return res.sendStatus(403)
+                }
+            }
+        })
+    } else {
+        res.sendStatus(401)
+    }
+};
+
 async function refreshToken(oldToken) {
     if (oldToken){
         return jwt.verify(oldToken, process.env.ACCESS_TOKEN_SECRET, async (err, user) => {
@@ -43,5 +65,6 @@ async function refreshToken(oldToken) {
 module.exports = {
     getToken,
     verifyToken,
+    verifyTokenTest,
     refreshToken
 };

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import "./coachMatchReview.css";
+import "./refereeMatches.css";
 
-function MatchReview({axiosJWT}) {
+function RefereeMatchReview({axiosJWT}) {
     const [match, setMatch] = useState({
         date: '',
         location: '',
@@ -10,6 +10,7 @@ function MatchReview({axiosJWT}) {
         team_1: '',
         team_2: ''
     });
+    const [assignment, setAssignment] = useState();
     const [referees, setReferees] = useState([]);
     const [coach, setCoach] = useState([]);
     const matchId = useParams();
@@ -31,6 +32,14 @@ function MatchReview({axiosJWT}) {
 
     async function getAssignment() {
         try {
+            await axiosJWT.get(`http://localhost:${process.env.REACT_APP_PORT || 5000}/assignment/`,)
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
+
+    async function getAssignments() {
+        try {
             await axiosJWT.get(`http://localhost:${process.env.REACT_APP_PORT || 5000}/assignment/get/match/${matchId.matchId}`, {
                 headers: {
                     authorization: `${sessionStorage.getItem("accessToken")}`
@@ -38,25 +47,47 @@ function MatchReview({axiosJWT}) {
             }).then((res) => {
                 setReferees(res.data.refereeList);
                 setCoach(res.data.coachList);
+                setAssignment(res.data.refereeList.find(
+                    (referee) => referee.firstname === sessionStorage.getItem("firstname") && referee.lastname === sessionStorage.getItem("lastname")
+                ));
             });
         } catch (error) {
             console.log(error.message);
         }
     };
 
-    async function handleReferee(assignmentId, state) {
+    async function handleReferee(state) {
         try {
+            console.log(state);
             await axiosJWT.post(`http://localhost:${process.env.REACT_APP_PORT || 5000}/assignment/onsite`, {
-                assignmentId: assignmentId,
+                assignmentId: assignment.assignmentid,
                 newState: !state
             }, {
                 headers: {
                     authorization: `${sessionStorage.getItem("accessToken")}`
                 }
             }).then((res) => {
-                getAssignment();
+                getAssignments();
                 console.log(res.data);
             })
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
+
+    function confirmAssignment(state) {
+        try {
+            axiosJWT.post(`http://localhost:${process.env.REACT_APP_PORT || 5000}/assignment/confirm`, {
+                assignmentId: assignment.assignmentid,
+                newState: !state
+            }, {
+                headers: {
+                    authorization: `${sessionStorage.getItem("accessToken")}`
+                }
+            }).then((res) => {
+                getAssignments();
+                console.log(res.data);
+            });
         } catch (error) {
             console.log(error.message);
         }
@@ -64,10 +95,9 @@ function MatchReview({axiosJWT}) {
 
     useEffect(() => {
         getMatch();
-        getAssignment();
+        getAssignments();
     }, []);
-
-    
+        
     return (
         <div>
             <h1>Match Review</h1>
@@ -80,33 +110,47 @@ function MatchReview({axiosJWT}) {
                 </div>
             </div>
 
+            {/* {assignment ? (
+                <button onClick={() => handleReferee(assignment.account_on_site)}>
+                    {assignment.account_on_site ? "Onsite" : "Not Onsite"}
+                </button>
+            ) : (
+                <p>Not Assigned</p>
+            )} */}
+
+            {assignment ? (
+                <button onClick={() => confirmAssignment(assignment.account_confirm)}>
+                    {assignment.account_confirm ? "Confirmed" : "Not Confirmed"}
+                </button>
+            ) : (
+                <p>Not Assigned</p>
+            )}
+
             <h2>Referees</h2>
-            <table className="coachTable">
+            <table className="refereeTable">
                 <tbody>
                     <tr>
                         <td>First Name</td>
                         <td>Last Name</td>
-                        <td>Onsite</td>
+                        <td>Confirmed</td>
                     </tr>
                     {referees.map((referee) => (
                         <tr key={referee.accountid}>
                             <td>{referee.firstname}</td>
                             <td>{referee.lastname}</td>
-                            {referee.account_on_site ? (
+
+                            {referee.account_confirm ? (
                                 <td>yes</td>
                             ) : (
                                 <td>No</td>
                             )}
-                            <td>
-                                <button onClick={() => handleReferee(referee.assignmentid, referee.account_on_site)}>Onsite</button>
-                            </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
 
             <h2>Coaches</h2>
-            <table className="coachTable">
+            <table className="refereeTable">
                 <tbody>
                     <tr>
                         <td>First Name</td>
@@ -124,4 +168,4 @@ function MatchReview({axiosJWT}) {
     )
 };
 
-export default MatchReview;
+export default RefereeMatchReview;
