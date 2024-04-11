@@ -1,9 +1,19 @@
 import React, { useState } from "react";
 import * as XLSX from "xlsx";
+import { CSVLink, CSVDownload } from "react-csv";
+
+
 
 function ExcelToJsonConverter() {
   const [file, setFile] = useState(null);
   const [jsonData, setJsonData] = useState("");
+
+  const csvData = [
+    ["firstname", "lastname", "email"],
+    ["Ahmed", "Tomi", "ah@smthing.co.com"],
+    ["Raed", "Labes", "rl@smthing.co.com"],
+    ["Yezzi", "Min l3b", "ymin@cocococo.com"]
+  ];
 
   const handleConvert = () => {
     if (file) {
@@ -29,6 +39,8 @@ function ExcelToJsonConverter() {
       />
       <button onClick={handleConvert}>Convert</button>
       <pre>{jsonData}</pre>
+      <CSVLink data={csvData}>Download me</CSVLink>;
+      <CSVDownload data={csvData} target="_blank" />;
     </div>
   );
 }
