@@ -40,10 +40,12 @@ function Login() {
       );
 
       await login.json().then((response) => {
-          if (response.status == 200) {
+          if 
+            (response.status == 200) {
             sessionStorage.setItem("name", response.name);
+            sessionStorage.setItem("role", response.role);
             sessionStorage.setItem("accessToken", response.accessToken);
-            navigate("/create");
+            navigate("/overview");
           } else {
             alert("Login Failed");
           }
@@ -93,9 +95,9 @@ function Login() {
           </div>
         </div>
           <div className="submit-container">
-              <div className="submit" onClick={handleSignin}>
+              <button type="submit" className="submit" onClick={handleSignin}>
                 Login
-              </div>
+              </button>
         </div>
       </div>
     </div>

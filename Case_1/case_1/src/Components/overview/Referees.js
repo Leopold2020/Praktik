@@ -20,7 +20,8 @@ function Referees({ referees }) {
           <tbody>
             <tr>
               {/* <td>Referee ID</td> */}
-              <td>Name:</td>
+              <td>Firstname:</td>
+              <td>Lastname:</td>
               <td>Email:</td>
               <td>Phone:</td>
               <td>Bank number:</td>

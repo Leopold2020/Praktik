@@ -3,16 +3,16 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import axios from "axios";
 import Header from "./Components/Header.js";
-import Home from "./Pages/public_access/Home.js";
-import MatchInfo from "./Pages/public_access/matchInfo.js";
+import Home from "./Pages/publicAccess/Home.js";
+import MatchInfo from "./Pages/publicAccess/matchInfo.js";
 import Login from "./Pages/Login.js";
 import Create from "./Pages/create_page.js";
 import Overview from "./Pages/overview.js";
 import MatchViewer from "./Pages/matchViewer.js";
-import AssignRefPage from "./Pages/assignref.js";
+import AssignRefPage from "./Pages/assignment.js";
 import ViewAssignments from "./Pages/viewassignments.js";
 import Confirmation from "./confirmation.js";
-
+import Login_conf from "./Pages/login-confirm.js";
 function App() {
     const axiosJWT = axios.create();
     axiosJWT.interceptors.request.use(async (config) => {
@@ -60,6 +60,7 @@ function App() {
                     <Route path="/matchviewer/:matchId" element={<MatchViewer axiosJWT={axiosJWT} />} />
                     <Route path="/viewassignments" element={<ViewAssignments axiosJWT={axiosJWT} />} />
                     <Route path="/confirm/:token" element={<Confirmation />} />
+                    <Route path="/login-confirm" element={<Login_conf />} />
                     <Route path="/*" element={<h2>404 not found</h2>} />
                 </Routes>
             </BrowserRouter>

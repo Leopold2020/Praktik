@@ -85,7 +85,7 @@ const addMatch = async (date, location, field, team_1, team_2) => {
     }
 }
 
-const updatematch = async (date, location, field, team_1, team_2) => {
+const updatematch = async (id, date, location, field, team_1, team_2) => {
     try {
         return await pool.query(
             `UPDATE match SET date = '${date}', location = '${location}', field = '${field}', team_1 = '${team_1}', team_2 = '${team_2}' WHERE id = '${id}'`

@@ -7,9 +7,11 @@ CREATE TYPE assignment_role AS ENUM('referee', 'coach');
 
 CREATE TABLE account(
     id SERIAL PRIMARY KEY,
-    username VARCHAR(100) NOT NULL UNIQUE,
+    firstname VARCHAR(100) NOT NULL,
+    lastname VARCHAR(100) NOT NULL,
     password VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
+    confirm BOOLEAN NOT NULL DEFAULT FALSE,
     phone VARCHAR(100) NOT NULL,
     assigned_role role NOT NULL DEFAULT 'referee',
     bank_clering VARCHAR(100),
