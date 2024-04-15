@@ -10,6 +10,7 @@ const addAssignment = async (match_id, account_id, account_role) => {
             } else {
                 return {message: "Assingment not added"}
             }
+
         })
     } catch (err) {
         console.error(err.message);
@@ -32,6 +33,7 @@ const removeAssignment = async (id) => {
     }
 };
 
+
 const getAssignment = async (account_id) => {
     try {
         const referee = await pool.query(
@@ -41,6 +43,7 @@ const getAssignment = async (account_id) => {
     } catch (err) {
         console.error(err.message);
     }
+    
 };
 
 const getMatchAssignment = async (match_id) => {

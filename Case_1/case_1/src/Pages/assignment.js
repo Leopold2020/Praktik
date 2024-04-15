@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import './chooseAssignment.css';
 
 function AssignRefPage({axiosJWT}) {
   const [matches, setMatches] = useState([]);
