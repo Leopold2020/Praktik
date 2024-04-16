@@ -18,8 +18,7 @@ function MatchSearch(props) {
     async function handleFilter() {
         try {
             props.axiosJWT.post(`http://localhost:${process.env.REACT_APP_PORT || 5000}/match/filter`, {
-                team_1: searchMatch.team_1,
-                team_2: searchMatch.team_2,
+                teams: searchMatch.teams,
                 location: searchMatch.location,
                 field: searchMatch.field,
                 date: `${searchMatch.year}-${searchMatch.month}-${searchMatch.day}`
@@ -46,10 +45,8 @@ function MatchSearch(props) {
     return (
         <div>
             <form>
-                <label>Team 1</label> 
-                <input name='team_1' onChange={(e) => {handleMatchSearch(e)}}/>
-                <label>Team 2</label>
-                <input name='team_2' onChange={(e) => {handleMatchSearch(e)}}/><br></br>
+                <label>Teams</label> 
+                <input name='teams' onChange={(e) => {handleMatchSearch(e)}}/>
                 <label>location</label>
                 <input name='location' onChange={(e) => {handleMatchSearch(e)}}/>
                 <label>Field</label>
@@ -62,8 +59,7 @@ function MatchSearch(props) {
                 <input name='day' onChange={(e) => {handleMatchSearch(e)}}/>
                 <button onClick={handleFilter}>Search</button>
             </form>
-            {searchMatch.team_1} <br/>
-            {searchMatch.team_2} <br/>
+            {searchMatch.teams} <br/>
             {searchMatch.location} <br/>
             {searchMatch.field} <br/>
             {searchMatch.year}-{searchMatch.month}-{searchMatch.day}

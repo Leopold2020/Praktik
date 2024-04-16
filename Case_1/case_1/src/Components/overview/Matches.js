@@ -20,7 +20,7 @@ function Matches({matches}) {
               </tr>
               {matches.map((match) => (
                 <tr key={match.id} className="card">
-                  <td>{match.team_1} - {match.team_2}</td>
+                  <td>{match.teams}</td>
                   <td>{match.location}</td>
                   <td>{match.field}</td>
                   <td>{match.date} {match.time}</td>

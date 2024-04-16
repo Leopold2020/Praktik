@@ -38,25 +38,65 @@ CREATE OR REPLACE FUNCTION insertAccount(
     END;
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION deleteAccount(
+    sentId INTEGER
+) RETURNS SETOF account AS $$
+    BEGIN
+        RETURN QUERY DELETE FROM account WHERE id = sentId RETURNING firstname, lastname, email, phone, assigned_role;
+    END;
+$$ LANGUAGE plpgsql;
+
 CREATE OR REPLACE FUNCTION updateAccount(
     sentId INTEGER,
     sentFirstname VARCHAR, 
     sentLastname VARCHAR, 
     sentEmail VARCHAR, 
-    sentPassword VARCHAR, 
-    sentPhone VARCHAR, 
-    sentRole role, 
-    sentBank_clering VARCHAR, 
-    sentBank_number VARCHAR
+    sentPhone VARCHAR
 ) RETURNS SETOF account AS $$
     BEGIN
         RETURN QUERY UPDATE account SET
             firstname = sentFirstname,
             lastname = sentLastname,
             email = sentEmail,
-            password = sentPassword,
-            phone = sentPhone,
-            assigned_role = sentRole,
+            phone = sentPhone
+        WHERE id = sentId RETURNING *;
+    END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION updatePassword(
+    sentId INTEGER,
+    sentOldPassword VARCHAR,
+    sentNewPassword VARCHAR
+) RETURNS SETOF account AS $$
+    BEGIN
+        IF (SELECT password FROM account WHERE id = sentId) != sentOldPassword THEN
+            RAISE EXCEPTION 'Old password is incorrect';
+        ELSE
+            RETURN QUERY UPDATE account SET
+                password = sentNewPassword
+            WHERE id = sentId RETURNING *;
+        END IF;
+    END;
+$$ LANGUAGE plpgsql;
+
+-- CREATE OR REPLACE FUNCTION updateRole(
+--     sentId INTEGER,
+--     sentRole role
+-- ) RETURNS SETOF account AS $$
+--     BEGIN
+--         RETURN QUERY UPDATE account SET
+--             assigned_role = sentRole
+--         WHERE id = sentId RETURNING *;
+--     END;
+-- $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION updateBankInfo(
+    sentId INTEGER,
+    sentBank_clering VARCHAR,
+    sentBank_number VARCHAR
+) RETURNS SETOF account AS $$
+    BEGIN
+        RETURN QUERY UPDATE account SET
             bank_clering = sentBank_clering,
             bank_number = sentBank_number
         WHERE id = sentId RETURNING *;
@@ -67,22 +107,19 @@ CREATE OR REPLACE FUNCTION insertMatch(
     sentDate TIMESTAMP, 
     sentLocation VARCHAR, 
     sentField VARCHAR, 
-    sentTeam_1 VARCHAR, 
-    sentTeam_2 VARCHAR
+    sentTeams VARCHAR
 ) RETURNS SETOF match AS $$
     BEGIN
         RETURN QUERY INSERT INTO match(
             date, 
             location, 
             field, 
-            TEAM_1, 
-            TEAM_2
+            teams
         ) VALUES(
             sentDate, 
             sentLocation, 
             sentField, 
-            sentTeam_1, 
-            sentTeam_2
+            sentTeams
         ) RETURNING *;
     END;
 $$ LANGUAGE plpgsql;
@@ -92,16 +129,14 @@ CREATE OR REPLACE FUNCTION updateMatch(
     sentDate TIMESTAMP,
     sentLocation VARCHAR,
     sentField VARCHAR,
-    sentTeam_1 VARCHAR,
-    sentTeam_2 VARCHAR
+    sentTeams VARCHAR
 ) RETURNS SETOF match AS $$
     BEGIN
         RETURN QUERY UPDATE match SET
             date = sentDate,
             location = sentLocation,
             field = sentField,
-            TEAM_1 = sentTeam_1,
-            TEAM_2 = sentTeam_2
+            teams = sentTeams
         WHERE id = sentId RETURNING *;
     END;
 $$ LANGUAGE plpgsql;
@@ -110,15 +145,13 @@ CREATE OR REPLACE FUNCTION filterMatch(
     sentDate VARCHAR,
     sentLocation VARCHAR,
     sentField VARCHAR,
-    sentTeam_1 VARCHAR,
-    sentTeam_2 VARCHAR
+    sentTeams VARCHAR
 ) RETURNS SETOF match AS $$
     BEGIN
         RETURN QUERY SELECT * FROM match WHERE date::text LIKE '%' || sentDate::text || '%' 
         AND location lIKE '%' || sentLocation || '%'
         AND field LIKE '%' || sentField || '%'
-        AND TEAM_1 LIKE  '%' || sentTeam_1 || '%'
-        AND TEAM_2 LIKE '%' || sentTeam_2 || '%';
+        AND teams LIKE  '%' || sentTeams || '%';
     END;
 $$ LANGUAGE plpgsql;
 

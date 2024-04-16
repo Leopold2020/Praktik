@@ -6,6 +6,8 @@ import UnifiedHeader from "./Components/headers/unifedHeader.js";
 import Login from "./Pages/Login.js";
 import Home from "./Pages/publicAccess/Home.js";
 import MatchInfo from "./Pages/publicAccess/matchInfo.js";
+
+import UserAccount from "./Pages/userAccount.js";
 import PersonalAssignment from "./Pages/personalAssignment.js";
 
 import RefereeHomepage from "./Pages/refereeAccess/refereeHomepage.js";
@@ -19,6 +21,8 @@ import CoachMatchReview from "./Pages/coachAccess/coachMatchReview.js";
 import Create from "./Pages/adminAccess/create_page.js";
 import Overview from "./Pages/adminAccess/overview.js";
 import MatchEdit from "./Pages/adminAccess/matchEdit.js";
+import ImportAccount from "./Pages/adminAccess/accountImport.js";
+import ImportMatch from "./Pages/adminAccess/matchImport.js";
 // import MatchOverview from "./Pages/matchOverview.js";
 // import MatchViewer from "./Pages/matchViewer.js";
 // import AssignmentPage from "./Pages/assignment/chooseAssignment.js";
@@ -26,7 +30,6 @@ import MatchEdit from "./Pages/adminAccess/matchEdit.js";
 import "./App.css";
 
 import Mymatch from "./Pages/mymatches.js";
-import ExcelToJsonConverter from "./Pages/excelconvert.js";
 function App() {
     const [role, setRole] = useState("");
 
@@ -67,7 +70,9 @@ function App() {
             }).then((response) => {
                 switch (response.status) {
                     case 200:
+                        setRole(response.data.role);
                         sessionStorage.setItem("accessToken", response.data.accessToken);
+                        sessionStorage.setItem("role", response.data.role);
                         break;
                     case 401:
                         alert("Unauthorized");
@@ -101,10 +106,11 @@ function App() {
     }
 
     useEffect(() => {
-        let sessionRole = sessionStorage.getItem("role");
-        if (sessionRole !== null) {
-            roleChangeHandler(sessionStorage.getItem("role"));
-        }
+        refreshToken();
+        // let sessionRole = sessionStorage.getItem("role");
+        // if (sessionRole !== null) {
+        //     roleChangeHandler(sessionStorage.getItem("role"));
+        // }
     }, []);
 
     return (
@@ -121,18 +127,44 @@ function App() {
                     {/* <Route path="/matchoverview" element={<MatchOverview axiosJWT={axiosJWT} />} /> */}
                     {/* <Route path="/matchviewer/:matchId" element={<MatchViewer axiosJWT={axiosJWT} />} /> */}
                     <Route path="/personalassignment" element={<PersonalAssignment axiosJWT={axiosJWT} />} />
-                    <Route path="/referee/homepage" element={<RefereeHomepage axiosJWT={axiosJWT} />} />
-                    <Route path="/referee/matches" element={<RefereeMatches axiosJWT={axiosJWT} />} />
-                    <Route path="/referee/matchreview/:matchId" element={<RefereeMatchReview axiosJWT={axiosJWT} />} />
-                    <Route path="/coach/homepage" element={<CoachHomepage axiosJWT={axiosJWT} />} />
-                    <Route path="/coach/matches" element={<CoachMatches axiosJWT={axiosJWT} />} />
-                    <Route path="/coach/matchreview/:matchId" element={<CoachMatchReview axiosJWT={axiosJWT} />} />
-                    <Route path="/create" element={<Create axiosJWT={axiosJWT} />} />
-                    <Route path="/overview" element={<Overview axiosJWT={axiosJWT} />} />
-                    <Route path="/matchedit/:matchId" element={<MatchEdit axiosJWT={axiosJWT} />} />
                     <Route path="/mymatches" element={<Mymatch axiosJWT={axiosJWT} />} />
+                    <Route path="/useraccount" element={<UserAccount axiosJWT={axiosJWT} />} />
+
+                    {role === "admin" || role === "referee" ? <>
+                        <Route path="/referee/homepage" element={<RefereeHomepage axiosJWT={axiosJWT} />} />
+                        <Route path="/referee/matches" element={<RefereeMatches axiosJWT={axiosJWT} />} />
+                        <Route path="/referee/matchreview/:matchId" element={<RefereeMatchReview axiosJWT={axiosJWT} />} />
+                    </> : <>
+                        <Route path="/referee/homepage" element={<h2>Unauthorized</h2>} />
+                        <Route path="/referee/matches" element={<h2>Unauthorized</h2>} />
+                        <Route path="/referee/matchreview/:matchId" element={<h2>Unauthorized</h2>} />
+                    </> }
+
+                    {role === "admin" || role === "coach" ? <>
+                        <Route path="/coach/homepage" element={<CoachHomepage axiosJWT={axiosJWT} />} />
+                        <Route path="/coach/matches" element={<CoachMatches axiosJWT={axiosJWT} />} />
+                        <Route path="/coach/matchreview/:matchId" element={<CoachMatchReview axiosJWT={axiosJWT} />} />
+                    </> : <>
+                        <Route path="/coach/homepage" element={<h2>Unauthorized</h2>} />
+                        <Route path="/coach/matches" element={<h2>Unauthorized</h2>} />
+                        <Route path="/coach/matchreview/:matchId" element={<h2>Unauthorized</h2>} />
+                    </> }
+
+                    {role === "admin" ? <>
+                        <Route path="/create" element={<Create axiosJWT={axiosJWT} />} />
+                        <Route path="/overview" element={<Overview axiosJWT={axiosJWT} />} />
+                        <Route path="/matchedit/:matchId" element={<MatchEdit axiosJWT={axiosJWT} />} />
+                        <Route path="/import/account" element={<ImportAccount axiosJWT={axiosJWT} />} />
+                        <Route path="/import/match" element={<ImportMatch axiosJWT={axiosJWT} />} />
+                    </> : <>
+                        <Route path="/create" element={<h2>Unauthorized</h2>} />
+                        <Route path="/overview" element={<h2>Unauthorized</h2>} />
+                        <Route path="/matchedit/:matchId" element={<h2>Unauthorized</h2>} />
+                        <Route path="/import/account" element={<h2>Unauthorized</h2>} />
+                        <Route path="/import/match" element={<h2>Unauthorized</h2>} />
+                    </> }
+
                     <Route path="/*" element={<h2>404 not found</h2>} />
-                    <Route path="/excelconvert" element={<ExcelToJsonConverter />} />
                 </Routes>
                 </div>
             </BrowserRouter>
