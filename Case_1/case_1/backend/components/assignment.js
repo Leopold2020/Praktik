@@ -193,6 +193,88 @@ const onsiteAssignment = async (matchId, refereeId, newState) => {
     }
 };
 
+
+const testMacthes = [
+    [
+        {
+            id: 1,
+            date: "2021-06-01",
+            location: "test1",
+            field: "A"
+        },
+        {
+            id: 2,
+            date: "2021-06-01",
+            location: "test1",
+            field: "A"
+        },
+        {
+            id: 3,
+            date: "2021-06-01",
+            location: "test2",
+            field: "B"
+        }
+    ], 
+    [
+        {
+            id: 4,
+            date: "2021-06-02",
+            location: "test1",
+            field: "A"
+        },
+        {
+            id: 5,
+            date: "2021-06-02",
+            location: "test1",
+            field: "A"
+        },
+        {
+            id: 6,
+            date: "2021-06-02",
+            location: "test2",
+            field: "B"
+        }
+    ]
+]
+
+const testReferees = [
+    {
+        id: 1,
+        firstname: "Test1",
+        lastname: "Test1"
+    }
+]
+
+const testAssign = async () => {
+    try {
+        let assignments = []
+        for (i = 0; i < testMacthes.length; i++) {
+            for (j = 0; j < testMacthes[i].length; j++) {
+                console.log(testMacthes[i][j])
+
+            }
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+// testAssign()
+
+const autoAssignReferee = async (matches, referees) => {
+    try {
+
+        for (let i = 0; i < matches.length; i++) {
+            for (let j = 0; j < referees.length; j++) {
+                
+            }
+        }
+    } catch (err) {
+        console.error(err.message);
+        return {message: "Error"}
+    }
+};
+
 module.exports = {
     addAssignment,
     confirmChange,

@@ -46,6 +46,16 @@
   background-color: #04AA6D;
 }
 
+.account {
+  /* float: right; */
+  /* align-self: flex-end; */
+  /* margin-left: auto; */
+  /* justify-self: flex-end; */
+  /* flex-flow: row-reverse; */
+  /* flex: 1; */
+  justify-self: flex-end;
+}
+
 @media screen and (max-width: 600px) {
   .links {
     flex-direction: column;

@@ -12,7 +12,7 @@ CREATE TABLE account(
     password VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     confirm BOOLEAN NOT NULL DEFAULT FALSE,
-    phone VARCHAR(100) NOT NULL,
+    phone VARCHAR(100) UNIQUE,
     assigned_role role NOT NULL DEFAULT 'referee',
     bank_clering VARCHAR(100),
     bank_number VARCHAR(100)
@@ -23,8 +23,7 @@ CREATE TABLE match(
     date TIMESTAMP NOT NULL,
     location VARCHAR(255) NOT NULL,
     field VARCHAR(255),
-    TEAM_1 VARCHAR(255) NOT NULL,
-    TEAM_2 VARCHAR(255) NOT NULL
+    teams VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE assignment(

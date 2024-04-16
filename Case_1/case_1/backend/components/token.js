@@ -54,7 +54,7 @@ async function refreshToken(oldToken) {
                 return 403
             } else {
                 const newToken = await getToken(user)
-                return {accessToken: newToken}
+                return {accessToken: newToken, role: user.assigned_role || user.role}
             }
         })
     } else {

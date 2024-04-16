@@ -70,7 +70,7 @@ const getTodayAfterMatch = async () => {
     }
 };
 
-const addMatch = async (date, location, field, team_1, team_2) => {
+const addMatch = async (date, location, field, teams) => {
     try {
         return await pool.query(
             // `INSERT INTO match (date, location, field, TEAM_1, TEAM_2) VALUES ('${date}', '${location}', '${field}', '${team_1}', '${team_2}')`
@@ -78,8 +78,7 @@ const addMatch = async (date, location, field, team_1, team_2) => {
                 '${date}', 
                 '${location}', 
                 '${field}', 
-                '${team_1}', 
-                '${team_2}'
+                '${teams}'
             )`
         ).then((response) => {
             if (!response.rowCount == 0) {
@@ -93,7 +92,7 @@ const addMatch = async (date, location, field, team_1, team_2) => {
     }
 }
 
-const updatematch = async (id, date, location, field, team_1, team_2) => {
+const updatematch = async (id, date, location, field, teams) => {
     try {
         return await pool.query(
                 // `UPDATE match SET date = '${date}', location = '${location}', field = '${field}', team_1 = '${team_1}', team_2 = '${team_2}' WHERE id = '${id}'`
@@ -102,8 +101,7 @@ const updatematch = async (id, date, location, field, team_1, team_2) => {
                     '${date}',
                     '${location}',
                     '${field}',
-                    '${team_1}',
-                    '${team_2}'
+                    '${teams}'
                 )`
             ).then((response) => {
                 if (!response.rowCount == 0) {

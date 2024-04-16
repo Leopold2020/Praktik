@@ -15,8 +15,7 @@ function MatchEdit({axiosJWT}) {
         location: Match.location,
         date: Match.date,
         field: Match.field,
-        team_1: Match.team_1,
-        team_2: Match.team_2
+        teams: Match.teams
       }, {
         headers: {
           authorization: `${sessionStorage.getItem("accessToken")}`
@@ -99,23 +98,13 @@ function MatchEdit({axiosJWT}) {
         <label className="create-titles">
           Team 1:
             <input
-              className="Team_1"
+              className="Teams"
               type="text"
-              name="Team 1"
-              defaultValue={Match.team_1}
-              onChange={(e) => setMatch({...Match, team_1: e.target.value})}
+              name="Teams"
+              defaultValue={Match.teams}
+              onChange={(e) => setMatch({...Match, teams: e.target.value})}
             />
         </label>
-        <label className="create-titles">
-            Team 2:
-            <input
-                className="Team_2"
-                type="text"
-                name="Team 2"
-                defaultValue={Match.team_2}
-                onChange={(e) => setMatch({...Match, team_2: e.target.value})}
-                />
-          </label> 
             <input className="submit-button" type="submit" value="Submit" />
             <AddRefAndCoach axiosJWT={axiosJWT} matchId={matchId.matchId} />
         </form>

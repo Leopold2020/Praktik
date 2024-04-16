@@ -12,7 +12,12 @@ function CreatePage({axiosJWT}) {
     role: 'referee',
     bank_clering: undefined, 
     bank_number: undefined });
-  const [match, setMatch] = useState({ date: '', location: '', field: '', team1: '', team2: '' });
+  const [match, setMatch] = useState({ 
+    date: '',
+    location: '', 
+    field: '', 
+    teams: '' 
+  });
   const [arrow_ref, setArrowRef] = useState('↓');
   const [arrow_match, setArrowMatch] = useState('↓');
 
@@ -74,8 +79,7 @@ function CreatePage({axiosJWT}) {
         date: match.date,
         location: match.location,
         field: match.field,
-        team_1: match.team1,
-        team_2: match.team2
+        teams: match.teams
       }, {
         headers: {
           'Authorization': sessionStorage.getItem('accessToken')
@@ -84,6 +88,13 @@ function CreatePage({axiosJWT}) {
         console.log(response)
         if (response.status === 200) {
           console.log('Match added successfully');
+          alert('Match added successfully');
+          setMatch({
+            date: '',
+            location: '', 
+            field: '', 
+            teams: ''
+          });
         }
       })
 
@@ -194,10 +205,19 @@ function CreatePage({axiosJWT}) {
       <h2 className='create-page-button' onClick={toggleMatchFields}>Create Match {arrow_match}</h2>
       {showMatchFields && (
       <form className='create-form'>
-        <label className='create-label'>
+        {/* <label className='create-label'>
           Date:
           <input
             type="text"
+            className='create-input'
+            value={match.date}
+            onChange={(e) => setMatch({ ...match, date: e.target.value })}
+          />
+        </label> */}
+        <label className='create-label'>
+          year:
+          <input
+            type="date"
             className='create-input'
             value={match.date}
             onChange={(e) => setMatch({ ...match, date: e.target.value })}
@@ -222,15 +242,15 @@ function CreatePage({axiosJWT}) {
           />
         </label>
         <label className='create-label'>
-          Team 1:
+          Teams:
           <input
             type="text"
             className='create-input'
-            value={match.team1}
-            onChange={(e) => setMatch({ ...match, team1: e.target.value })}
+            value={match.teams}
+            onChange={(e) => setMatch({ ...match, teams: e.target.value })}
           />
         </label>
-        <label className='create-label'>
+        {/* <label className='create-label'>
           Team 2:
           <input
             type="text"
@@ -238,7 +258,7 @@ function CreatePage({axiosJWT}) {
             value={match.team2}
             onChange={(e) => setMatch({ ...match, team2: e.target.value })}
           />
-        </label>
+        </label> */}
         <button 
           type="button"
           className='create-button'

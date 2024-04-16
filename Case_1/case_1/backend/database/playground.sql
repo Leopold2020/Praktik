@@ -93,9 +93,12 @@ SELECT fu();
 
 CREATE TABLE test (
     id SERIAL PRIMARY KEY,
-    username VARCHAR(100)
+    username VARCHAR(100) UNIQUE
 );
+
+ALTER TABLE test DROP CONSTRAINT test_username_key;
 
 DELETE FROM account WHERE quote_literal(firstname) = quote_literal('test')
 
 SELECT firstname AS test FROM account;
+
