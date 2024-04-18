@@ -26,6 +26,10 @@ Once all previous steps are completed you launch the project by running "npm sta
 
 /case_1 is the project directory for the website and here is where npm start is launched
 
+It follows the structure of a newly created react project, with index.js rendering app.js which renders all other pages depending on which page should be open. 
+
+in the src folder there are three folders pages, components and assets. The "pages" folder contains all pages that are 
+
 ### Backend
 
 /case_1/backend the directory for backend here you will find a file called index.js, launch it with node indes.js or nodemon indes.js to start the backend.
