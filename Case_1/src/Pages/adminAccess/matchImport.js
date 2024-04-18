@@ -29,24 +29,15 @@ function MatchImport({axiosJWT}) {
             const sheetName = workbook.SheetNames[0];
             const worksheet = workbook.Sheets[sheetName];
             const json = XLSX.utils.sheet_to_json(worksheet);
-            if (teamImportWay) {
-                const newJson = test(json, keyValueName.date, keyValueName.location, keyValueName.field, keyValueName.team_1, keyValueName.team_2);
-                setData(newJson);
-            } else if (!teamImportWay) {
-                for (let i = 0; i < json.length; i++) {
-                    let teams = json[i].team.split(" - ");
-                    json[i].team_1 = teams[0];
-                    json[i].team_2 = teams[1];
-                }
-            } else {
-                alert("Please select a team import way.");
-            }
+            console.log(json); 
+            const newJson = convertNames(json, keyValueName.date, keyValueName.location, keyValueName.field, keyValueName.teams);
+            setData(newJson);
         };
         reader.readAsBinaryString(file);
         }
     };
 
-    function test(original, date, location, field, teams) {
+    function convertNames(original, date, location, field, teams) {
         try {
             let newJson = [];
             for (let i = 0; i < original.length; i++) {
@@ -94,7 +85,7 @@ function MatchImport({axiosJWT}) {
         <>
         <h1>Excel to Json Converter</h1>
         <input
-            type="date"
+            type="text"
             value={keyValueName.date}
             name="date"
             placeholder="date"
@@ -128,8 +119,8 @@ function MatchImport({axiosJWT}) {
             onChange={(e) => setFile(e.target.files[0])}
         />
         <button onClick={handleConvert}>Convert</button>
-        <button onClick={() => setTeamImportWay(!teamImportWay)}>Team Import Way</button>
-        {teamImportWay === true ? (<h2>true</h2>):(<h2>false</h2>)}
+        {/* <button onClick={() => setTeamImportWay(!teamImportWay)}>Team Import Way</button>
+        {teamImportWay === true ? (<h2>true</h2>):(<h2>false</h2>)} */}
         <button onClick={uploadToDb}>upload into db</button>
         {data.map((match, index) => (
             <table key={index}>
