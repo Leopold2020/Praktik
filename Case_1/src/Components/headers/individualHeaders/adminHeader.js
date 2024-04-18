@@ -12,13 +12,11 @@ function Header () {
   return(
       <>
       <ul className="links">
-          <li>test</li>
-          <li>{active}</li>
           {
             active === "home" ? 
-            <li ><Link>Selected</Link></li>
+              <li className='active'><Link>Home</Link></li>
             :
-            <li onClick={()=>handleClick("home")}><Link to="">Home</Link></li>
+              <li onClick={()=>handleClick("home")}><Link to="">Home</Link></li>
           }
           <li onClick={()=>handleClick("login")}><Link to="/login">Login</Link></li>
           <li onClick={()=>handleClick("create")}><Link to="/create">Create</Link></li>
