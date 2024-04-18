@@ -48,7 +48,8 @@ function PersonalAssignment({axiosJWT}) {
             <h1>Personal Assignment</h1>
             <div>
                 <h2>All Assignments</h2>
-                {allAssignments.map((assignment) => (
+                {allAssignments === null ? <p>No assignments</p> : 
+                allAssignments.map((assignment) => (
                     <div key={assignment.id} onClick={() => navigate(`/match/info/${assignment.match_id}`)}>
                         <p>Match: {assignment.location}</p>
                         <p>Field: {assignment.field}</p>
@@ -61,8 +62,8 @@ function PersonalAssignment({axiosJWT}) {
 
             <div>
                 <h2>Coming Assignments</h2>
-                {comingAssignments.map((assignment) => (
-                    <div key={assignment.id} onClick={() => navigate(`/match/info/${assignment.match_id}`)}>
+                {comingAssignments === null ? <p>No assignments</p> : 
+                comingAssignments.map((assignment) => (                    <div key={assignment.id} onClick={() => navigate(`/match/info/${assignment.match_id}`)}>
                         <p>Match: {assignment.location}</p>
                         <p>Field: {assignment.field}</p>
                         <p>Date: {assignment.date}</p>
