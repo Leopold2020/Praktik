@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import "./coachMatchReview.css";
+import "./coachMatches.css";
 
 function CoachMatches({axiosJWT}) {
     const [allAssignments, setAllAssignments] = useState([]);
@@ -47,9 +48,9 @@ function CoachMatches({axiosJWT}) {
 
     return (
         <div>
-            <h1>Personal Assignment</h1>
+            <h1 className="personal-assign-title">Personal Assignment</h1>
 
-            <h2>Coming Assignments</h2>
+            <h2 className="assignment-title">Coming Assignments</h2>
             <table className="coachTable">
                 <tbody>
                     <tr>
@@ -59,7 +60,16 @@ function CoachMatches({axiosJWT}) {
                         <td>Time</td>
                         <td>Teams</td>
                     </tr>
-                    {comingAssignments.map((comingAssignment) => (
+                    {comingAssignments === null ? 
+                    <tr>
+                        <td>N/A</td>
+                        <td>N/A</td>
+                        <td>N/A</td>
+                        <td>N/A</td>
+                        <td>N/A</td>
+                    </tr>
+                    :
+                    comingAssignments.map((comingAssignment) => (
                         <tr key={comingAssignment.id} className="coachInstance" onClick={() => navigate(`/coach/matchreview/${comingAssignment.match_id}`)}>
                             <td>{comingAssignment.location}</td>
                             <td>{comingAssignment.field}</td>
@@ -71,7 +81,7 @@ function CoachMatches({axiosJWT}) {
                 </tbody>
             </table>
 
-            <h2>All Assignments</h2>
+            <h2 className="assignment-title">All Assignments</h2>
             <table className="coachTable">
                 <tbody>
                     <tr>
@@ -81,7 +91,16 @@ function CoachMatches({axiosJWT}) {
                         <td>Time</td>
                         <td>Teams</td>
                     </tr>
-                    {allAssignments.map((assignment) => (
+                    {allAssignments === null ? 
+                    <tr>
+                        <td>N/A</td>
+                        <td>N/A</td>
+                        <td>N/A</td>
+                        <td>N/A</td>
+                        <td>N/A</td>
+                    </tr>
+                     :
+                    allAssignments.map((assignment) => (
                         <tr key={assignment.id} className="coachInstance" onClick={() => navigate(`/coach/matchreview/${assignment.match_id}`)}>
                             <td>{assignment.location}</td>
                             <td>{assignment.field}</td>

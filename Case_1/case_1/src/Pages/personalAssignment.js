@@ -48,7 +48,8 @@ function PersonalAssignment({axiosJWT}) {
             <h1>Personal Assignment</h1>
             <div>
                 <h2>All Assignments</h2>
-                {allAssignments.map((assignment) => (
+                {allAssignments === null ? <p>No assignments</p> : 
+                allAssignments.map((assignment) => (
                     <div key={assignment.id} onClick={() => navigate(`/match/info/${assignment.match_id}`)}>
                         <p>Match: {assignment.location}</p>
                         <p>Field: {assignment.field}</p>
@@ -56,12 +57,14 @@ function PersonalAssignment({axiosJWT}) {
                         <p>Time: {assignment.time}</p>
                         <p>Teams: {assignment.team_1} - {assignment.team_2}</p>
                     </div>
-                ))}
+                ))
+                }
             </div>
 
             <div>
                 <h2>Coming Assignments</h2>
-                {comingAssignments.map((assignment) => (
+                {comingAssignments === null ? <p>No assignments</p> : 
+                comingAssignments.map((assignment) => (
                     <div key={assignment.id} onClick={() => navigate(`/match/info/${assignment.match_id}`)}>
                         <p>Match: {assignment.location}</p>
                         <p>Field: {assignment.field}</p>
@@ -69,7 +72,8 @@ function PersonalAssignment({axiosJWT}) {
                         <p>Time: {assignment.time}</p>
                         <p>Teams: {assignment.team_1} - {assignment.team_2}</p>
                     </div>
-                ))}
+                ))
+                }
             </div>
 
         </div>
