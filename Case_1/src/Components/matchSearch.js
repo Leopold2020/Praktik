@@ -2,8 +2,7 @@ import { useState } from 'react';
 
 function MatchSearch(props) {
     const [searchMatch, setSearchMatch] = useState({
-        team_1: '1',
-        team_2: '',
+        teams: '',
         location: '',
         field: '',
         year: '',

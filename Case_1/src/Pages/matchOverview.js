@@ -40,7 +40,7 @@ function MatchOverview({axiosJWT}) {
                     <div>
                         <div className='item-div'>
                             <p className='item-title'>Teams:</p>
-                            <a className='match-link' href={`/matchviewer/${match.id}`}>{match.team_1} vs {match.team_2}</a>
+                            <a className='match-link' href={`/matchviewer/${match.id}`}>{match.teams}</a>
                         </div>
                         <div className='item-div'>
                             <p className='item-title'>Date:</p>

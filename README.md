@@ -7,8 +7,8 @@ The reason for the names on the two first folders "data_managment" and "case_1" 
 
 # instructions to launch the project
 To launch the project you need to download to your computer
-node
-postgresql
+node 18.17.1
+postgresql 15
 
 Go into /case_1 and launch a npm install to download all neccesary libraries.
 
@@ -28,7 +28,11 @@ Once all previous steps are completed you launch the project by running "npm sta
 
 It follows the structure of a newly created react project, with index.js rendering app.js which renders all other pages depending on which page should be open. 
 
-in the src folder there are three folders pages, components and assets. The "pages" folder contains all pages that are 
+in the src folder there are three folders "pages", "components" and "assets". The "pages" folder contains all pages that are present in the website. It contains four folders, "adminAccess" which contain pages admins should only be able to se. "coachAccess" Which contain pages that coaches access. "refereeAccess", folder for referees, and the "publicAccess" which contian pages you can access without logging in. The othe files outside these folders are pages that two or more of the diffrent roles can access.
+
+The components folder contain components that the pages from "pages" folder import, the components are in folders that have names somewhat simular to the file that is calling it. The "matchSearch" file is for the overview file, but i did not have time to finish it.
+
+In the "admin" folder there are two files for importing excel files, one for matches, one for accounts. You need to name the name for the table to be inported.
 
 ### Backend
 
@@ -37,3 +41,11 @@ in the src folder there are three folders pages, components and assets. The "pag
 In /case_1/backend has two folders one called database and another called components. The database folder contains the db.js file, which contains the information to connect to postgresqt. The other three files in the database folder are for sql code to be copied over to postgresql to ensure that the sql functions and tables are the same on all instences of this project.
 
 Between the two folders in the backend folder the components folder is the one containing functions called upon in the index.js file in the backend folder. This was done to shorten and split up the index.js file so it would be more readable.
+
+
+# Issues
+
+Some issues that need fixing.
+When importing accounts password for all accounts created are "placeholder"
+Email has not been implomented.
+Css need improving on several pages.

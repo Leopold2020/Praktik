@@ -7,8 +7,7 @@ function RefereeMatchReview({axiosJWT}) {
         date: '',
         location: '',
         field: '',
-        team_1: '',
-        team_2: ''
+        teams: ''
     });
     const [assignment, setAssignment] = useState();
     const [referees, setReferees] = useState([]);
@@ -100,7 +99,7 @@ function RefereeMatchReview({axiosJWT}) {
         
     return (
         <div>
-            <h1>Match Review</h1>
+            {/* <h1>Match Review</h1>
             <div className="match-form">
                 <div className="match-form_2">
                     <a className="match-link_2">{match.team_1} vs {match.team_2}</a>
@@ -108,7 +107,7 @@ function RefereeMatchReview({axiosJWT}) {
                     <p className="match-location_2">{match.location}</p>
                     <p className="match-field_2">{match.field}</p>
                 </div>
-            </div>
+            </div> */}
 
             {/* {assignment ? (
                 <button onClick={() => handleReferee(assignment.account_on_site)}>
@@ -125,6 +124,7 @@ function RefereeMatchReview({axiosJWT}) {
             ) : (
                 <p>Not Assigned</p>
             )}
+            
 
             <h2>Referees</h2>
             <table className="refereeTable">
@@ -148,7 +148,6 @@ function RefereeMatchReview({axiosJWT}) {
                     ))}
                 </tbody>
             </table>
-
             <h2>Coaches</h2>
             <table className="refereeTable">
                 <tbody>

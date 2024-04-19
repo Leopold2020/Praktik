@@ -44,8 +44,8 @@
 }
 
 .active {
-  /* background-color: rgb(153, 9, 44, 0.3); */
-  border: #99092C 2px solid;
+  background-color: rgb(153, 9, 44, 0.3);
+  border: #8e5765 2px solid;
 }
 
 .account {
