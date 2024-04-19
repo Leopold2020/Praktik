@@ -1,4 +1,4 @@
-# Intership
+# Internship
 
 This program was made in on a 10 week intership in Booff swedish football club.
 It is not fully functional and will require fixes to set up on the internet.
