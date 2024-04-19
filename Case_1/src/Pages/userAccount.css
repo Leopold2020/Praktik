@@ -8,11 +8,12 @@
   width: fit-content;
   margin: auto;
   margin-bottom: 0.6rem;
+  margin-top: 0.5rem;
 }
 
 .info-container{
-  width: 35rem;
-  height: 27rem;
+  width: 38rem;
+  height: 29rem;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -21,16 +22,17 @@
 }
 
 .small-container{
-  width: 31rem;
+  width: 34rem;
   margin: auto;
   align-items: center;
   border: solid 2px rgba(0, 0, 0, 0.486);
 }
 
 .table-acc-info{
-  width: 30rem;
+  width: 33rem;
   list-style-type: none;
-  padding: 0.5rem;
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
   margin: auto;
   /* height: 20rem;S */
   height: fit-content;
