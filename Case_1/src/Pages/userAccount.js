@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./userAccount.css";
 
 
 function UserAccount ({axiosJWT}) {
@@ -130,16 +131,44 @@ function UserAccount ({axiosJWT}) {
 
     return (
         <div>
-            <h1>User Account</h1>
+            <h1 className="usr-acc-title">User Account</h1>
             <div>
 
-                <h2>Account Information</h2>
-                <p>First Name: {user.firstname}</p>
-                <p>Last Name: {user.lastname}</p>
-                <p>Phone: {user.phone}</p>
-                <p>Email: {user.email}</p>
-                <p>Role: {user.role}</p>
-                <p>Account Confirmed: {user.accountConfirm ? 'Yes' : 'No'}</p>
+                <div className="info-container">
+                    <div className="small-container">
+                    <h2 className="sub-title">Account Information</h2>
+                        <table className="table-acc-info">
+                            <tbody>
+                            <tr>
+                                
+                                <th className="info-text">First Name</th> 
+                                <th className="info-value">{user.firstname}</th>
+                                
+                            </tr>
+                            <tr>
+                                <th className="info-text">Last Name</th> 
+                                <th className="info-value">{user.lastname}</th>
+                            </tr>
+                            <tr>
+                                <th className="info-text">Phone</th> 
+                                <th className="info-value">{user.phone}</th>
+                            </tr>
+                            <tr>
+                                <th className="info-text">Email</th> 
+                                <th className="info-value">{user.email}</th>
+                            </tr>
+                            <tr>
+                                <th className="info-text">Role</th> 
+                                <th className="info-value">{user.role}</th>
+                            </tr>
+                            <tr>
+                                <th className="info-text">Account Confirmed</th> 
+                                <th className="info-value">{user.accountConfirm ? 'Yes' : 'No'}</th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
                 <h2>Update Account</h2>
                 <label>First Name: </label>
