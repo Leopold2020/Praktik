@@ -51,6 +51,7 @@ function CreatePage({axiosJWT}) {
           'Authorization': sessionStorage.getItem('accessToken')
         }
       }).then((response) => {
+        console.log(response)
         if (response.status === 200) {
           console.log('account added successfully');
         } else {

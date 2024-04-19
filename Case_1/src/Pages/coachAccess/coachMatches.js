@@ -73,7 +73,7 @@ function CoachMatches({axiosJWT}) {
                             <td>{comingAssignment.field}</td>
                             <td>{comingAssignment.date}</td>
                             <td>{comingAssignment.time}</td>
-                            <td>{comingAssignment.team_1} - {comingAssignment.team_2}</td>
+                            <td>{comingAssignment.teams}</td>
                         </tr>
                     ))}
                 </tbody>

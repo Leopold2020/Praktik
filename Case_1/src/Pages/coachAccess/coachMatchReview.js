@@ -7,8 +7,7 @@ function MatchReview({axiosJWT}) {
         date: '',
         location: '',
         field: '',
-        team_1: '',
-        team_2: ''
+        teams: ''
     });
     const [referees, setReferees] = useState([]);
     const [coach, setCoach] = useState([]);
@@ -73,7 +72,7 @@ function MatchReview({axiosJWT}) {
             <h1>Match Review</h1>
             <div className="match-form">
                 <div className="match-form_2">
-                    <a className="match-link_2">{match.team_1} vs {match.team_2}</a>
+                    <a className="match-link_2">{match.teams}</a>
                     <p className="match-date_2">{match.date}</p>
                     <p className="match-location_2">{match.location}</p>
                     <p className="match-field_2">{match.field}</p>

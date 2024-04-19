@@ -121,7 +121,7 @@ const getMatchAssignment = async (match_id) => {
 const getAllAccountsAssignment = async (account_id) => {
     try {
         return await pool.query(
-            `SELECT assignment.id, assignment.match_id, match.date, match.location, match.field, account.assigned_role, match.TEAM_1, match.TEAM_2
+            `SELECT assignment.id, assignment.match_id, match.date, match.location, match.field, account.assigned_role, match.teams
             FROM (assignment
                 INNER JOIN account ON assignment.account_id = account.id
                 INNER JOIN match ON assignment.match_id = match.id)
@@ -150,7 +150,7 @@ const getAllAccountsAssignment = async (account_id) => {
 const getComingAccountsAssignment = async (account_id) => {
     try {
         return await pool.query(
-            `SELECT assignment.id, assignment.match_id, match.date, match.location, match.field, account.assigned_role, match.TEAM_1, match.TEAM_2
+            `SELECT assignment.id, assignment.match_id, match.date, match.location, match.field, account.assigned_role, match.teams
             FROM (assignment
                 INNER JOIN account ON assignment.account_id = account.id
                 INNER JOIN match ON assignment.match_id = match.id)
