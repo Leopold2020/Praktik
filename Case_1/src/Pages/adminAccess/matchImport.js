@@ -25,11 +25,10 @@ function MatchImport({axiosJWT}) {
         const reader = new FileReader();
         reader.onload = (e) => {
             const data = e.target.result;
-            const workbook = XLSX.read(data, { type: "binary" });
+            const workbook = XLSX.read(data, { type: "binary", cellText: false, cellDates: true});
             const sheetName = workbook.SheetNames[0];
             const worksheet = workbook.Sheets[sheetName];
-            const json = XLSX.utils.sheet_to_json(worksheet);
-            console.log(json); 
+            const json = XLSX.utils.sheet_to_json(worksheet, {raw: false, dateNF: 'YYYY-MM-DD HH:mm:ss'});
             const newJson = convertNames(json, keyValueName.date, keyValueName.location, keyValueName.field, keyValueName.teams);
             setData(newJson);
         };
