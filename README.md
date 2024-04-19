@@ -1,6 +1,6 @@
-# Intership
+# Internship
 
-This program was made in on a 10 week intership in Booff swedish fotball club.
+This program was made in on a 10 week intership in Booff swedish football club.
 It is not fully functional and will require fixes to set up on the internet.
 
 The reason for the names on the two first folders "data_managment" and "case_1" is because when the intership started we were given three cases, basically three tasks, but the first case where we were to build a website kept growing in scope so we did not manage to start on the other cases. The "data_managment" came from being asked to help in some data that Jörgen requested help with in the middle of the project which led to that one bing created and added to the tasks.
@@ -42,10 +42,9 @@ In /case_1/backend has two folders one called database and another called compon
 
 Between the two folders in the backend folder the components folder is the one containing functions called upon in the index.js file in the backend folder. This was done to shorten and split up the index.js file so it would be more readable.
 
-
 # Issues
 
-Some issues that need fixing.
 When importing accounts password for all accounts created are "placeholder"
 Email has not been implomented.
 Css need improving on several pages.
+

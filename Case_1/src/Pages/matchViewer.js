@@ -11,7 +11,7 @@ function MatchViewer({axiosJWT}) {
         team_2: ''
     });
     const matchId = useParams();
-    
+    // Function to get a single match from the database, using the matchId from the URL
     async function getMatch() {
         console.log(matchId.matchId)
         const res = await axiosJWT.get(
@@ -23,7 +23,7 @@ function MatchViewer({axiosJWT}) {
         )
         return await res.data[0];
     }
-    
+    // Compare this snippet from Case_1/src/Pages/matchViewer.js:, the function getMatch is called when the component is mounted
     useEffect(() => {
         getMatch().then((res) => {
             // for(let i = 0; i < res.length; i++) {

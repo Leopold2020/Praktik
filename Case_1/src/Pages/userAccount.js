@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
+import "./userAccount.css";
 
-
+// Function to get the user account information from the database using the accessToken from the sessionStorage, and then updates the state with the user account information
 function UserAccount ({axiosJWT}) {
     const [user, setUser] = useState({
         firstname: '',
@@ -10,6 +11,7 @@ function UserAccount ({axiosJWT}) {
         role: '',
         accountConfirm: false
     });
+    // Function to handle the change of the user account information
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
 
@@ -19,15 +21,15 @@ function UserAccount ({axiosJWT}) {
             [e.target.name]: e.target.value
         });
     };
-
+// Function to handle the change of the old password input
     function handleOldPasswordChange(e) {
         setOldPassword(e.target.value);
     };
-
+// .. As above
     function handleNewPasswordChange(e) {
         setNewPassword(e.target.value);
     };
-
+// Function to get the user account information from the database using the accessToken from the sessionStorage, and then updates the state with the user account information
     async function fetchUser() {
         try {
             axiosJWT.get(`http://localhost:5000/account/self`, {
@@ -49,7 +51,7 @@ function UserAccount ({axiosJWT}) {
             console.log(error);
         }
     };
-
+// Function to update the user account information in the database using the accessToken from the sessionStorage
     async function updateAccount() {
         try {
             axiosJWT.post('http://localhost:5000/account/update', {
@@ -68,7 +70,7 @@ function UserAccount ({axiosJWT}) {
             console.log(error);
         }
     };
-
+// Function to change the password in the database using the accessToken from the sessionStorage
     async function changePassword() {
         try {
             axiosJWT.post('http://localhost:5000/account/update/password', {
@@ -89,7 +91,7 @@ function UserAccount ({axiosJWT}) {
             console.log(error);
         }
     };
-
+// Function to confirm the account in the database using the accessToken from the sessionStorage
     async function confirmAccount() {
         try {
             axiosJWT.post('http://localhost:5000/account/confirm', {
@@ -105,7 +107,7 @@ function UserAccount ({axiosJWT}) {
             console.log(error);       
         }
     }
-
+// Function to delete the account in the database using the accessToken from the sessionStorage
     async function deleteAccount() {
         try {
             axiosJWT.delete('http://localhost:5000/account/delete', {
@@ -130,16 +132,44 @@ function UserAccount ({axiosJWT}) {
 
     return (
         <div>
-            <h1>User Account</h1>
+            <h1 className="usr-acc-title">User Account</h1>
             <div>
 
-                <h2>Account Information</h2>
-                <p>First Name: {user.firstname}</p>
-                <p>Last Name: {user.lastname}</p>
-                <p>Phone: {user.phone}</p>
-                <p>Email: {user.email}</p>
-                <p>Role: {user.role}</p>
-                <p>Account Confirmed: {user.accountConfirm ? 'Yes' : 'No'}</p>
+                <div className="info-container">
+                    <div className="small-container">
+                    <h2 className="sub-title">Account Information</h2>
+                        <table className="table-acc-info">
+                            <tbody>
+                            <tr>
+                                
+                                <th className="info-text">First Name</th> 
+                                <th className="info-value">{user.firstname}</th>
+                                
+                            </tr>
+                            <tr>
+                                <th className="info-text">Last Name</th> 
+                                <th className="info-value">{user.lastname}</th>
+                            </tr>
+                            <tr>
+                                <th className="info-text">Phone</th> 
+                                <th className="info-value">{user.phone}</th>
+                            </tr>
+                            <tr>
+                                <th className="info-text">Email</th> 
+                                <th className="info-value">{user.email}</th>
+                            </tr>
+                            <tr>
+                                <th className="info-text">Role</th> 
+                                <th className="info-value">{user.role}</th>
+                            </tr>
+                            <tr>
+                                <th className="info-text">Account Confirmed</th> 
+                                <th className="info-value">{user.accountConfirm ? 'Yes' : 'No'}</th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
                 <h2>Update Account</h2>
                 <label>First Name: </label>

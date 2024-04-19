@@ -6,7 +6,7 @@ function MatchOverview({axiosJWT}) {
     const [match, setMatch] = useState([]);
     const navigate = useNavigate();
 
-
+    // Function to get all matches from the database
     const getAllMatches = async () => {
         try {
             await axiosJWT.get(`http://localhost:${process.env.REACT_APP_PORT || 5000}/match/get/all`, {
@@ -27,7 +27,7 @@ function MatchOverview({axiosJWT}) {
             console.error(error.message);
         }
     }
-
+// Compare this snippet from Case_1/src/Pages/matchOverview.js:, the function getAllMatches is called when the component is mounted
     useEffect(() => {
         getAllMatches();
     }, []);
