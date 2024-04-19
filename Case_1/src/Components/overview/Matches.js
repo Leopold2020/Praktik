@@ -11,7 +11,7 @@ function Matches({matches}) {
             {/* <h1>Matches</h1> */}
             {matches !== null ? (
             <div>
-            <CSVLink data={matches} filename={"matches.csv"} className="btn btn-primary" separator=';'>Download all Matches to excel</CSVLink>
+            <CSVLink data={matches} filename={"matches.csv"} className="btn btn-primary" separator=';' >Download all Matches to excel</CSVLink>
               <table className='table'>
                 <tbody>
                 <tr>
