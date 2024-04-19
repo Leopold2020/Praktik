@@ -1,6 +1,6 @@
 # Intership
 
-This program was made in on a 10 week intership in Booff swedish fotball club.
+This program was made in on a 10 week intership in Booff swedish football club.
 It is not fully functional and will require fixes to set up on the internet.
 
 The reason for the names on the two first folders "data_managment" and "case_1" is because when the intership started we were given three cases, basically three tasks, but the first case where we were to build a website kept growing in scope so we did not manage to start on the other cases. The "data_managment" came from being asked to help in some data that Jörgen requested help with in the middle of the project which led to that one bing created and added to the tasks.
