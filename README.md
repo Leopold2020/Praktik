@@ -3,7 +3,7 @@
 This program was made in on a 10 week intership in Booff swedish football club.
 It is not fully functional and will require fixes to set up on the internet.
 
-The reason for the names on the two first folders "data_managment" and "case_1" is because when the intership started we were given three cases, basically three tasks, but the first case where we were to build a website kept growing in scope so we did not manage to start on the other cases. The "data_managment" came from being asked to help in some data that Jörgen requested help with in the middle of the project which led to that one bing created and added to the tasks.
+The reason for the names on the two first folders "data_managment" and "case_1" is because when the intership started we were given three cases, basically three tasks, but the first case where we were to build a website kept growing in scope so we did not manage to start on the other cases, hence the name. The "data_managment" came from being asked to help in some data that Jörgen requested help with in the middle of the project which led to that one bing created and added to the tasks.
 
 # instructions to launch the project
 To launch the project you need to download to your computer
@@ -38,13 +38,13 @@ In the "admin" folder there are two files for importing excel files, one for mat
 
 /case_1/backend the directory for backend here you will find a file called index.js, launch it with node indes.js or nodemon indes.js to start the backend.
 
-In /case_1/backend has two folders one called database and another called components. The database folder contains the db.js file, which contains the information to connect to postgresqt. The other three files in the database folder are for sql code to be copied over to postgresql to ensure that the sql functions and tables are the same on all instences of this project.
+In /case_1/backend has two folders one called database and another called components. The database folder contains the db.js file, which contains the information to connect to postgresqt. The other three files in the database folder are for sql code to be copied over to postgresql to ensure that the sql functions and tables are the same on all instences of this project. The reason for so many functions to there are for sql, is that it helps prevent sql injection, this is the biggest reason for the many functions inside sql.
 
 Between the two folders in the backend folder the components folder is the one containing functions called upon in the index.js file in the backend folder. This was done to shorten and split up the index.js file so it would be more readable.
 
 # Issues
 
-When importing accounts password for all accounts created are "placeholder"
-Email has not been implomented.
-Css need improving on several pages.
-
+When importing accounts password for all accounts created are "placeholder", the idea was for random passwords to be created and sent to the assigned email. But the email function was never implemented.
+Email has not been implemented.
+Css could be improved.
+Having to go back fixing code for being given new requirments have led to several mistakes troughout the code, that we did not have the time too fix or locate. So there are issues that have been missed.

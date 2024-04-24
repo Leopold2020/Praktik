@@ -69,15 +69,14 @@ function CreatePage({axiosJWT}) {
   * @param {string} date - the date of the match, both date and time
   * @param {string} location - the location of the match
   * @param {string} field - the field of the match
-  * @param {string} team1 - the first team in the match
-  * @param {string} team2 - the second team in the match
+  * @param {string} teams - the teams playing the match
   * @return - the match is added to the database
   * @throws - if the match is not added
   */
   const handleMatchSubmit = async () => {
     try {
       await axiosJWT.post(`http://localhost:${process.env.REACT_APP_PORT || 5000}/match/add`, {
-        date: match.date,
+        date: match.date.split('T')[0] + ' ' + match.date.split('T')[1],
         location: match.location,
         field: match.field,
         teams: match.teams
@@ -206,19 +205,10 @@ function CreatePage({axiosJWT}) {
       <h2 className='create-page-button' onClick={toggleMatchFields}>Create Match {arrow_match}</h2>
       {showMatchFields && (
       <form className='create-form'>
-        {/* <label className='create-label'>
-          Date:
-          <input
-            type="text"
-            className='create-input'
-            value={match.date}
-            onChange={(e) => setMatch({ ...match, date: e.target.value })}
-          />
-        </label> */}
         <label className='create-label'>
-          year:
+          date:
           <input
-            type="date"
+            type="datetime-local"
             className='create-input'
             value={match.date}
             onChange={(e) => setMatch({ ...match, date: e.target.value })}
